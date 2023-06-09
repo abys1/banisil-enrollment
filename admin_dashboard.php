@@ -1,3 +1,12 @@
+<?php 
+      session_start();
+      if (isset($_GET['logout'])) {
+      session_unset();
+      session_destroy();
+      header("Location: login.php?Logout");
+      exit();
+      }
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -129,42 +138,30 @@
                     <!-- Start XP Col -->
                     <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
                         <div class="xp-profilebar text-right">
-							 <nav class="navbar p-0">
-                        <ul class="nav navbar-nav flex-row ml-auto">   
-                           
-                            </li>
-                            <li class="nav-item">
-                     
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link" href="#" data-toggle="dropdown">
-								<img src="img/admin.png" style="width:40px; border-radius:50%;"/>
-								<span class="xp-user-live"></span>
-								</a>
-								<ul class="dropdown-menu small-menu">
-                                    <li>
-                                        <a href="#">
-										  <span class="material-icons">
-person_outline
-</span>Profile
-
-										</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><span class="material-icons">
-settings
-</span>Settings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><span class="material-icons">
-logout</span>Logout</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    
-               
-            </nav>
+                    <nav class="navbar p-0">
+                              <ul class="nav navbar-nav flex-row ml-auto">   
+                                
+                                  </li>
+                                  <li class="nav-item">
+                          
+                                  </li>
+                                  <li class="nav-item dropdown">
+                                      <a class="nav-link" href="#" data-toggle="dropdown">
+                      <img src="img/admin.png" style="width:40px; border-radius:50%;"/>
+                      <span class="xp-user-live"></span>
+                      </a>
+                      <ul class="dropdown-menu small-menu">
+                          <li>
+                            <a href="#">
+                            <span class="material-icons">person_outline</span>Profile</a>
+                          </li>
+                          <li>
+                              <a href="admin_dashboard.php?logout=true"><span class="material-icons">logout</span>Logout</a>
+                          </li>
+                      </ul>
+                          </li>
+                      </ul>   
+                    </nav>
 							
                         </div>
                     </div>
@@ -237,7 +234,7 @@ logout</span>Logout</a>
                             <div class="card bg-primary text-white mb-4">
                                 <div class="card-body"><?php echo $teacherCount; ?>Teachers</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
+                                    <a class="small text-white stretched-link" href="admin_teacher.php">View Details</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                 </div>
                             </div>
@@ -247,7 +244,7 @@ logout</span>Logout</a>
                             <div class="card bg-primary text-white mb-4">
                                 <div class="card-body">10 Pending Students</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
+                                    <a class="small text-white stretched-link" href="admin_pending.php">View Details</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                 </div>
                             </div>

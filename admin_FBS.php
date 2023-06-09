@@ -118,62 +118,48 @@
 
                     <!-- Start XP Col -->
                     <div class="col-md-5 col-lg-3 order-3 order-md-2">
-                        <div class="xp-searchbar">
-                            <form>
-                                <div class="input-group">
-                                  <input type="search" class="form-control" 
-								  placeholder="Search">
-                                  <div class="input-group-append">
-                                    <button class="btn" type="submit" id="button-addon2">
-                                      <i class="fas fa-search"></i>
-                                  </button>
-                                  
-                                  </div>
-                                </div>
-                            </form>
-                        </div>
+                      <div class="xp-searchbar">
+                        <form>
+                          <div class="input-group">
+                            <input type="search" class="form-control" placeholder="Search" id="searchInput">
+                            <div class="input-group-append">
+                              <button class="btn" type="submit" id="searchButton">
+                                <i class="fas fa-search"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
                     </div>
                     <!-- End XP Col -->
 
                     <!-- Start XP Col -->
                     <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
                         <div class="xp-profilebar text-right">
-							 <nav class="navbar p-0">
-                        <ul class="nav navbar-nav flex-row ml-auto">   
-                           
-                            </li>
-                            <li class="nav-item">
-                     
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link" href="#" data-toggle="dropdown">
-								<img src="img/admin.png" style="width:40px; border-radius:50%;"/>
-								<span class="xp-user-live"></span>
-								</a>
-								<ul class="dropdown-menu small-menu">
-                                    <li>
-                                        <a href="#">
-										  <span class="material-icons">
-person_outline
-</span>Profile
-
-										</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><span class="material-icons">
-settings
-</span>Settings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><span class="material-icons">
-logout</span>Logout</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    
-               
-            </nav>
+                    <nav class="navbar p-0">
+                              <ul class="nav navbar-nav flex-row ml-auto">   
+                                
+                                  </li>
+                                  <li class="nav-item">
+                          
+                                  </li>
+                                  <li class="nav-item dropdown">
+                                      <a class="nav-link" href="#" data-toggle="dropdown">
+                      <img src="img/admin.png" style="width:40px; border-radius:50%;"/>
+                      <span class="xp-user-live"></span>
+                      </a>
+                      <ul class="dropdown-menu small-menu">
+                          <li>
+                            <a href="#">
+                            <span class="material-icons">person_outline</span>Profile</a>
+                          </li>
+                          <li>
+                              <a href="admin_dashboard.php?logout=true"><span class="material-icons">logout</span>Logout</a>
+                          </li>
+                      </ul>
+                          </li>
+                      </ul>   
+                    </nav>
 							
                         </div>
                     </div>
@@ -219,16 +205,18 @@ logout</span>Logout</a>
 
     $offset = ($page - 1) * $limit;
 
-    $sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.lastname, tbl_userinfo.grade, tbl_userinfo.strand, tbl_userinfo.lrn, tbl_user_level.level
+    $sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.lastname, tbl_userinfo.grade, tbl_userinfo.strand, tbl_userinfo.lrn, tbl_user_level.level,
+            tbl_user_status.status
             FROM tbl_userinfo
             JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
-            WHERE tbl_user_level.level = 'STUDENT' AND tbl_userinfo.strand = 'FBS'
+            JOIN tbl_user_status ON tbl_user_status.status_id = tbl_userinfo.user_id
+            WHERE tbl_user_level.level = 'STUDENT' AND tbl_userinfo.strand = 'FBS' AND tbl_user_status.status = 1
             LIMIT $limit OFFSET $offset";
 
     $result = mysqli_query($conn, $sql);
     ?>
 
-<table class="table table-striped table-hover">
+<table class="table table-striped table-hover" id="fbs_table">
   <thead>
     <tr>
       <th>ID</th>
@@ -248,12 +236,12 @@ logout</span>Logout</a>
         <td><?php echo $row['strand']; ?></td>
         <td><?php echo $row['lrn'] ?></td>
         <td>
-          <a href="#editEmployeeModal" class="edit" data-toggle="modal">
-            <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
-          </a>
-          <a href="#deleteEmployeeModal" class="view" data-toggle="modal">
-            <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
-          </a>
+        <a href="admin_student_edit.php?user_id=<?php echo $row['user_id']?>" class="edit">
+        <i class="fas fa-pencil" data-toggle="tooltip" title="Edit">&#xE254;</i>
+        </a>
+        <a href="admin_student_delete.php?user_id=<?php echo $row['user_id']?>" class="delete">
+        <i class="fas fa-trash" data-toggle="tooltip" title="delete"></i>
+        </a>
         </td>
       </tr>
     <?php endforeach; ?>
@@ -261,7 +249,7 @@ logout</span>Logout</a>
 </table>
 
 <div class="clearfix">
-  <div class="hint-text">Showing <b><?php echo min($limit, $rowCount) ?></b> out of <b><?php echo $rowCount ?></b> entries</div>
+<div class="hint-text">Showing <b><?php echo mysqli_num_rows($result) ?></b> out of <b><?php echo mysqli_num_rows($result) ?></b> entries</div>
   <ul class="pagination">
     <?php if ($page > 1): ?>
       <li class="page-item"><a href="?page=<?php echo ($page - 1) ?>" class="page-link">Previous</a></li>
@@ -399,7 +387,41 @@ logout</span>Logout</a>
 
 
 
+<script>
+// Get the input element, button, and table
+var input = document.getElementById("searchInput");
+var button = document.getElementById("searchButton");
+var table = document.getElementById("fbs_table");
 
+// Add event listener for the button click
+button.addEventListener("click", function(event) {
+  event.preventDefault(); // Prevent form submission
+
+  var filter = input.value.toLowerCase();
+  var rows = table.getElementsByTagName("tr");
+
+  // Loop through all table rows and hide those that don't match the search query
+  for (var i = 0; i < rows.length; i++) {
+    var cells = rows[i].getElementsByTagName("td");
+    var found = false;
+
+    for (var j = 0; j < cells.length; j++) {
+      var cellValue = cells[j].textContent || cells[j].innerText;
+
+      if (cellValue.toLowerCase().indexOf(filter) > -1) {
+        found = true;
+        break;
+      }
+    }
+
+    if (found) {
+      rows[i].style.display = "";
+    } else {
+      rows[i].style.display = "none";
+    }
+  }
+});
+</script>
 
 
 

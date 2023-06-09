@@ -118,62 +118,48 @@
 
                     <!-- Start XP Col -->
                     <div class="col-md-5 col-lg-3 order-3 order-md-2">
-                        <div class="xp-searchbar">
-                            <form>
-                                <div class="input-group">
-                                  <input type="search" class="form-control" 
-								  placeholder="Search">
-                                  <div class="input-group-append">
-                                    <button class="btn" type="submit" id="button-addon2">
-                                      <i class="fas fa-search"></i>
-                                  </button>
-                                  
-                                  </div>
-                                </div>
-                            </form>
-                        </div>
+                      <div class="xp-searchbar">
+                        <form>
+                          <div class="input-group">
+                            <input type="search" class="form-control" placeholder="Search" id="searchInput">
+                            <div class="input-group-append">
+                              <button class="btn" type="submit" id="searchButton">
+                                <i class="fas fa-search"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
                     </div>
                     <!-- End XP Col -->
 
                     <!-- Start XP Col -->
                     <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
                         <div class="xp-profilebar text-right">
-							 <nav class="navbar p-0">
-                        <ul class="nav navbar-nav flex-row ml-auto">   
-                           
-                            </li>
-                            <li class="nav-item">
-                     
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link" href="#" data-toggle="dropdown">
-								<img src="img/admin.png" style="width:40px; border-radius:50%;"/>
-								<span class="xp-user-live"></span>
-								</a>
-								<ul class="dropdown-menu small-menu">
-                                    <li>
-                                        <a href="#">
-										  <span class="material-icons">
-person_outline
-</span>Profile
-
-										</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><span class="material-icons">
-settings
-</span>Settings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><span class="material-icons">
-logout</span>Logout</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    
-               
-            </nav>
+                    <nav class="navbar p-0">
+                              <ul class="nav navbar-nav flex-row ml-auto">   
+                                
+                                  </li>
+                                  <li class="nav-item">
+                          
+                                  </li>
+                                  <li class="nav-item dropdown">
+                                      <a class="nav-link" href="#" data-toggle="dropdown">
+                      <img src="img/admin.png" style="width:40px; border-radius:50%;"/>
+                      <span class="xp-user-live"></span>
+                      </a>
+                      <ul class="dropdown-menu small-menu">
+                          <li>
+                            <a href="#">
+                            <span class="material-icons">person_outline</span>Profile</a>
+                          </li>
+                          <li>
+                              <a href="admin_dashboard.php?logout=true"><span class="material-icons">logout</span>Logout</a>
+                          </li>
+                      </ul>
+                          </li>
+                      </ul>   
+                    </nav>
 							
                         </div>
                     </div>
@@ -204,15 +190,10 @@ logout</span>Logout</a>
        
       </div>
     </div>
-    <table class="table table-striped table-hover">
+    <table class="table table-striped table-hover" id="pending_table">
       <thead>
         <tr>
-          <th>
-            <span class="custom-checkbox">
-								<input type="checkbox" id="selectAll">
-								<label for="selectAll"></label>
-							</span>
-          </th>
+          <th>ID</th>
           <th>Full Name</th>
           <th>Grade</th>
           <th>Program/Strand</th>
@@ -222,136 +203,21 @@ logout</span>Logout</a>
       </thead>
       <tbody>
         <tr>
-          <td>
-            <span class="custom-checkbox">
-			<input type="checkbox" id="checkbox1" name="options[]" value="1">
-			<label for="checkbox1"></label>
-							</span>
-          </td>
+          <td>1</td>
           <td>Thomas Sue</td>
           <td>12</td>
           <td>STEM</td>
           <td>128503070025</td>
           <td>
-            <a href="admin_confirm.html" class="edit" data-toggle="modal">
+            <a href="admin_confirm.html" class="confirm" data-toggle="modal">
                 <i class="material-icons" data-toggle="tooltip" title="Confirm">&#xE5CA;</i>
             </a>
-            <a href="#decline" class="view" data-toggle="modal">
+            <a href="#decline" class="decline" data-toggle="modal">
                 <i class="material-icons" data-toggle="tooltip" title="Decline">&#xE5CD;</i>
             </a>
-            
-        <a href="#view" class="view" data-toggle="modal">
-          <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
-      </a>
-      
-    
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span class="custom-checkbox">
-								<input type="checkbox" id="checkbox2" 
-								name="options[]" value="1">
-								<label for="checkbox2"></label>
-							</span>
-          </td>
-          <td>Mang Juan</td>
-          <td>12</td>
-          <td>FBS</td>
-          <td>128508070025</td>
-          <td>
-            <a href="#confirm" class="edit" data-toggle="modal">
-                <i class="material-icons" data-toggle="tooltip" title="Confirm">&#xE5CA;</i>
+            <a href="#decline" class="edit" data-toggle="modal">
+                <i class="material-icons" data-toggle="tooltip" title="Edit">create</i>
             </a>
-            <a href="#decline" class="view" data-toggle="modal">
-                <i class="material-icons" data-toggle="tooltip" title="Decline">&#xE5CD;</i>
-            </a>
-            
-        <a href="#view" class="view" data-toggle="modal">
-          <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
-      </a>
-      
-    
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span class="custom-checkbox">
-								<input type="checkbox" id="checkbox3"
-								name="options[]" value="1">
-								<label for="checkbox3"></label>
-							</span>
-          </td>
-          <td>Justine Lopez</td>
-          <td>11</td>
-          <td>SMAW</td>
-          <td>128503070025</td>
-          <td>
-            <a href="#confirm" class="edit" data-toggle="modal">
-                <i class="material-icons" data-toggle="tooltip" title="Confirm">&#xE5CA;</i>
-            </a>
-            <a href="#decline" class="view" data-toggle="modal">
-                <i class="material-icons" data-toggle="tooltip" title="Decline">&#xE5CD;</i>
-            </a>
-            
-        <a href="#view" class="view" data-toggle="modal">
-          <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
-      </a>
-      
-    
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span class="custom-checkbox">
-								<input type="checkbox" id="checkbox4" 
-								name="options[]" value="1">
-								<label for="checkbox4"></label>
-							</span>
-          </td>
-          <td>Jhonel Kim</td>
-          <td>11</td>
-          <td>ABM</td>
-          <td>128503070025</td>
-          <td>
-            <a href="#confirm" class="edit" data-toggle="modal">
-                <i class="material-icons" data-toggle="tooltip" title="Confirm">&#xE5CA;</i>
-            </a>
-            <a href="#decline" class="view" data-toggle="modal">
-                <i class="material-icons" data-toggle="tooltip" title="Decline">&#xE5CD;</i>
-            </a>
-            
-        <a href="#view" class="view" data-toggle="modal">
-          <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
-      </a>
-      
-    
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span class="custom-checkbox">
-								<input type="checkbox" id="checkbox5" 
-								name="options[]" value="1">
-								<label for="checkbox5"></label>
-							</span>
-          </td>
-          <td>Jisoo Park</td>
-          <td>12</td>
-          <td>HUMMS</td>
-          <td>128503070025</td>
-          <td>
-            <a href="#confirm" class="edit" data-toggle="modal">
-                <i class="material-icons" data-toggle="tooltip" title="Confirm">&#xE5CA;</i>
-            </a>
-            <a href="#decline" class="view" data-toggle="modal">
-                <i class="material-icons" data-toggle="tooltip" title="Decline">&#xE5CD;</i>
-            </a>
-            
-        <a href="#view" class="view" data-toggle="modal">
-          <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
-      </a>
-      
           </td>
         </tr>
       </tbody>
@@ -387,10 +253,41 @@ logout</span>Logout</a>
 <!----------html code compleate----------->
 
 
+<script>
+// Get the input element, button, and table
+var input = document.getElementById("searchInput");
+var button = document.getElementById("searchButton");
+var table = document.getElementById("pending_table");
 
+// Add event listener for the button click
+button.addEventListener("click", function(event) {
+  event.preventDefault(); // Prevent form submission
 
+  var filter = input.value.toLowerCase();
+  var rows = table.getElementsByTagName("tr");
 
+  // Loop through all table rows and hide those that don't match the search query
+  for (var i = 0; i < rows.length; i++) {
+    var cells = rows[i].getElementsByTagName("td");
+    var found = false;
 
+    for (var j = 0; j < cells.length; j++) {
+      var cellValue = cells[j].textContent || cells[j].innerText;
+
+      if (cellValue.toLowerCase().indexOf(filter) > -1) {
+        found = true;
+        break;
+      }
+    }
+
+    if (found) {
+      rows[i].style.display = "";
+    } else {
+      rows[i].style.display = "none";
+    }
+  }
+});
+</script>
 
 
   

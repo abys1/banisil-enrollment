@@ -44,7 +44,7 @@ if (isset($_POST['btnSave'])) {
     $updateResult = mysqli_query($conn, $updateQuery);
 
     if ($updateResult && mysqli_affected_rows($conn) > 0) {
-      header("Location: admin_student.php?message=Record updated successfully");
+      header("Location: admin_student.php?msg=Record updated successfully");
       exit();
     } else {
       echo "Error updating record or no matching record found.";

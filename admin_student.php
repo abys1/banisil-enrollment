@@ -1,12 +1,4 @@
-<?php
-session_start();
-if (isset($_GET['logout'])) {
-  session_unset();
-  session_destroy();
-  header("Location: login.php?Logout");
-  exit();
-  }
-?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -15,6 +7,8 @@ if (isset($_GET['logout'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
         <title>BNHS</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 	    <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -28,7 +22,8 @@ if (isset($_GET['logout'])) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 	
-	
+
+        
 	<!--google material icon-->
       <link href="https://fonts.googleapis.com/css2?family=Material+Icons"rel="stylesheet">
       <style>
@@ -133,19 +128,18 @@ if (isset($_GET['logout'])) {
 
                     <!-- Start XP Col -->
                     <div class="col-md-5 col-lg-3 order-3 order-md-2">
-                        <div class="xp-searchbar">
-                            <form>
-                                <div class="input-group">
-                                  <input type="search" class="form-control" 
-								                  placeholder="Search">
-                                  <div class="input-group-append">
-                                    <button class="btn" type="submit" id="button-addon2">
-                                      <i class="fas fa-search"></i>
-                                  </button>
-                                  </div>
-                                </div>
-                            </form>
-                        </div>
+                      <div class="xp-searchbar">
+                        <form>
+                          <div class="input-group">
+                            <input type="search" class="form-control" placeholder="Search" id="searchInput">
+                            <div class="input-group-append">
+                              <button class="btn" type="submit" id="searchButton">
+                                <i class="fas fa-search"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
                     </div>
                     <!-- End XP Col -->
 
@@ -170,10 +164,7 @@ if (isset($_GET['logout'])) {
                             <span class="material-icons">person_outline</span>Profile</a>
                           </li>
                           <li>
-                            <a href="#"><span class="material-icons">settings</span>Settings</a>
-                          </li>
-                          <li>
-                              <a href="admin_student.php?logout=true"><span class="material-icons">logout</span>Logout</a>
+                              <a href="admin_dashboard.php?logout=true"><span class="material-icons">logout</span>Logout</a>
                           </li>
                       </ul>
                           </li>
@@ -202,6 +193,15 @@ if (isset($_GET['logout'])) {
 				<div class="col-md-12">
 				<div class="table-wrapper">
     <div class="table-title">
+    <?php
+    if (isset($_GET["msg"])) {
+      $msg = $_GET["msg"];
+      echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+      ' . $msg . '
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>';
+    }
+    ?>
       <div class="row">
         <div class="col-sm-6 p-0 d-flex justify-content-lg-start justify-content-center">
           <h2 class="ml-lg-2">Manage Student</h2>
@@ -226,16 +226,17 @@ if (isset($_GET['logout'])) {
       $totalPages = ceil($rowCount / $limit);
       $offset = ($page - 1) * $limit;
 
-      $sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.lastname, tbl_userinfo.grade, tbl_userinfo.strand, tbl_userinfo.lrn, tbl_user_level.level
+      $sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.lastname, tbl_userinfo.grade, tbl_userinfo.strand, tbl_userinfo.lrn, tbl_user_level.level, tbl_user_status.status
               FROM tbl_userinfo
               JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
-              WHERE tbl_user_level.level = 'STUDENT'
+              JOIN tbl_user_status ON tbl_user_status.status_id = tbl_userinfo.user_id
+              WHERE tbl_user_level.level = 'STUDENT' AND tbl_user_status.status = 1
               LIMIT $limit OFFSET $offset";
 
       $result = mysqli_query($conn, $sql);
       ?>
 
-      <table class="table table-striped table-hover">
+      <table class="table table-striped table-hover" id="student_table">
         <thead>
           <tr>
             <th>ID</th>
@@ -249,7 +250,7 @@ if (isset($_GET['logout'])) {
         <tbody>
           <?php foreach ($result as $row): ?>
           <tr>
-            <td><?php echo 'ID' . ' ' . $row['user_id'] ?></td>
+            <td><?php echo $row['user_id'] ?></td>
             <td><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></td>
             <td><?php echo $row['grade']; ?></td>
             <td><?php echo $row['strand']; ?></td>
@@ -258,7 +259,7 @@ if (isset($_GET['logout'])) {
             <a href="admin_student_edit.php?user_id=<?php echo $row['user_id']?>" class="edit">
               <i class="fas fa-pencil" data-toggle="tooltip" title="Edit">&#xE254;</i>
             </a>
-            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
+            <a href="admin_student_delete.php?user_id=<?php echo $row['user_id']?>" class="delete">
               <i class="fas fa-trash" data-toggle="tooltip" title="delete"></i>
             </a>
             </td>
@@ -268,7 +269,7 @@ if (isset($_GET['logout'])) {
       </table>
 
 <div class="clearfix">
-  <div class="hint-text">Showing <b><?php echo min($limit, $rowCount) ?></b> out of <b><?php echo $rowCount ?></b> entries</div>
+<div class="hint-text">Showing <b><?php echo mysqli_num_rows($result) ?></b> out of <b><?php echo mysqli_num_rows($result) ?></b> entries</div>
   <ul class="pagination">
     <?php if ($page > 1): ?>
       <li class="page-item"><a href="?page=<?php echo ($page - 1) ?>" class="page-link">Previous</a></li>
@@ -291,81 +292,11 @@ if (isset($_GET['logout'])) {
 </div>
 </div>
 
-<!-- Delete Modal HTML -->
-<div id="deleteEmployeeModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form>
-        <div class="modal-header">
-          <h4 class="modal-title">Delete Employee</h4>
-          <button type="button" class="close" data-dismiss="modal" 
-		  aria-hidden="true">&times;</button>
-        </div>
-        <div class="modal-body">
-          <p>Are you sure you want to delete these Records?</p>
-          <p class="text-warning"><small>This action cannot be undone.</small></p>
-        </div>
-        <div class="modal-footer">
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-          <input type="submit" class="btn btn-danger" value="Delete">
-        </div>
-      </form>
-    </div>
-	</div>
-  </div>
-
 <!-- Add New Student Modal -->
-<?php 
-include 'dbcon.php';
-if(isset($_POST['btnAdd'])){
-
-  $firstname = $_POST['firstname'];
-  $lastname = $_POST['lastname'];
-  $username = $_POST['username'];
-  $password = $_POST['password'];
-  $cfpassword =$_POST['password'];
-  $encrypted = password_hash($password, PASSWORD_DEFAULT);
-  $contact = $_POST['contact'];
-  $gender = $_POST['gender'];
-  $birthday = $_POST['birthday'];
-  $age = $_POST['age'];
-  $grade = $_POST['grade'];
-  $strand = $_POST['strand'];
-  $lrn = $_POST['lrn'];
-  $street = $_POST['street'];
-  $barangay = $_POST['barangay'];
-  $city = $_POST['city'];
-
-  $sql = "INSERT INTO tbl_userinfo (firstname, lastname, gender, birthday, age, grade, strand, lrn) VALUES ('$firstname', '$lastname', '$gender', '$birthday', '$age', '$grade', '$strand', '$lrn')";
-
-  if($conn->query($sql) === TRUE){
-    $userinfo_id = $conn->insert_id;
-    $sql = "INSERT INTO tbl_usercredentials (userinfo_id, username, password) VALUES ('$userinfo_id', '$username', '$encrypted')";
-
-    if($conn->query($sql) === TRUE){
-      $sql = "INSERT INTO tbl_contactinfo (userinfo_id, contact_num, city, barangay, street) VALUES ('$userinfo_id', '$contact', '$city', '$barangay', '$street')";
-
-      if($conn->query($sql) === TRUE){
-        $sql = "INSERT INTO tbl_user_level (userinfo_id, level) VALUES ('$userinfo_id', 'STUDENT')";
-
-        if($conn->query($sql) === TRUE){
-          $sql = "INSERT INTO tbl_user_status (userinfo_id, status) VALUES ('$userinfo_id', 1)";
-
-          if($conn->query($sql) === TRUE){
-            header("Location: admin_student.php?msg=Added Successfully");
-            exit();
-          }
-        }
-      }
-    }
-  }
-}
-?>
-
 <div id="addEmployeeModal" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form action="#" method="POST">
+      <form action="admin_student_add.php" method="POST">
         <div class="modal-header">
           <h5 class="modal-title">Add Student</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -516,9 +447,43 @@ if(isset($_POST['btnAdd'])){
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
+<script>
+// Get the input element, button, and table
+var input = document.getElementById("searchInput");
+var button = document.getElementById("searchButton");
+var table = document.getElementById("student_table");
 
+// Add event listener for the button click
+button.addEventListener("click", function(event) {
+  event.preventDefault(); // Prevent form submission
 
+  var filter = input.value.toLowerCase();
+  var rows = table.getElementsByTagName("tr");
+
+  // Loop through all table rows and hide those that don't match the search query
+  for (var i = 0; i < rows.length; i++) {
+    var cells = rows[i].getElementsByTagName("td");
+    var found = false;
+
+    for (var j = 0; j < cells.length; j++) {
+      var cellValue = cells[j].textContent || cells[j].innerText;
+
+      if (cellValue.toLowerCase().indexOf(filter) > -1) {
+        found = true;
+        break;
+      }
+    }
+
+    if (found) {
+      rows[i].style.display = "";
+    } else {
+      rows[i].style.display = "none";
+    }
+  }
+});
+</script>
 
   
      <!-- Optional JavaScript -->
