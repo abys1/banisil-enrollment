@@ -255,12 +255,12 @@ if (isset($_GET['logout'])) {
             <td><?php echo $row['strand']; ?></td>
             <td><?php echo $row['lrn'] ?></td>
             <td>
-              <a href="#editEmployeeModal" class="edit" data-toggle="modal">
-                <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
-              </a>
-              <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
-                <i class="material-icons" data-toggle="tooltip" title="delete">&#xE8F4;</i>
-              </a>
+            <a href="admin_student_edit.php?user_id=<?php echo $row['user_id']?>" class="edit">
+              <i class="fas fa-pencil" data-toggle="tooltip" title="Edit">&#xE254;</i>
+            </a>
+            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
+              <i class="fas fa-trash" data-toggle="tooltip" title="delete"></i>
+            </a>
             </td>
           </tr>
           <?php endforeach; ?>
@@ -291,64 +291,81 @@ if (isset($_GET['logout'])) {
 </div>
 </div>
 
-<!-- Edit Modal HTML -->
-<div id="editEmployeeModal" class="modal fade">
+<!-- Delete Modal HTML -->
+<div id="deleteEmployeeModal" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form action="admin_student_edit.php" method="POST">
+      <form>
         <div class="modal-header">
-          <h4 class="modal-title">Edit Student Info</h4>
+          <h4 class="modal-title">Delete Employee</h4>
           <button type="button" class="close" data-dismiss="modal" 
 		  aria-hidden="true">&times;</button>
         </div>
         <div class="modal-body">
-          <div class="form-group">
-            <label>First Name</label>
-            <input type="text" class="form-control" name="firstname">
-          </div>
-          <div class="form-group">
-            <label>Last Name</label>
-            <input type="text" class="form-control" name="lastname">
-          </div>
-          <div class="mb-3">
-                <label class="form-label">Grade:</label>
-                <select class="form-select" name="grade">
-                <option value="" disabled selected>Select Grade</option>
-                <option value="grade11">Grade 11</option>
-                <option value="grade12">Grade 12</option>
-                <option value="transferee">Transferee</option>
-                </select>
-          </div>
-          <div class="mb-3">
-                  <label class="form-label">Strand/Program: </label>
-                  <select class="form-select" name="strand">
-                  <option value="" disabled selected>Select Strand</option>
-                  <option value="abm">ABM</option>
-                  <option value="stem">STEM</option>
-                  <option value="humms">HUMMS</option>
-                  <option value="eim">EIM</option>
-                  <option value="fbs">FBS</option>
-                  <option value="smaw">SMAW</option>
-                  </select>
-          </div>
-          <div class="mb-3">
-                    <label class="form-label">LRN</label>
-                    <input type="text" class="form-control" name="lrn" id="lrn">
-          </div>
+          <p>Are you sure you want to delete these Records?</p>
+          <p class="text-warning"><small>This action cannot be undone.</small></p>
+        </div>
         <div class="modal-footer">
           <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-          <input type="submit" class="btn btn-info" value="Save" name="btnSave">
+          <input type="submit" class="btn btn-danger" value="Delete">
         </div>
       </form>
     </div>
+	</div>
   </div>
-</div>
 
 <!-- Add New Student Modal -->
+<?php 
+include 'dbcon.php';
+if(isset($_POST['btnAdd'])){
+
+  $firstname = $_POST['firstname'];
+  $lastname = $_POST['lastname'];
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+  $cfpassword =$_POST['password'];
+  $encrypted = password_hash($password, PASSWORD_DEFAULT);
+  $contact = $_POST['contact'];
+  $gender = $_POST['gender'];
+  $birthday = $_POST['birthday'];
+  $age = $_POST['age'];
+  $grade = $_POST['grade'];
+  $strand = $_POST['strand'];
+  $lrn = $_POST['lrn'];
+  $street = $_POST['street'];
+  $barangay = $_POST['barangay'];
+  $city = $_POST['city'];
+
+  $sql = "INSERT INTO tbl_userinfo (firstname, lastname, gender, birthday, age, grade, strand, lrn) VALUES ('$firstname', '$lastname', '$gender', '$birthday', '$age', '$grade', '$strand', '$lrn')";
+
+  if($conn->query($sql) === TRUE){
+    $userinfo_id = $conn->insert_id;
+    $sql = "INSERT INTO tbl_usercredentials (userinfo_id, username, password) VALUES ('$userinfo_id', '$username', '$encrypted')";
+
+    if($conn->query($sql) === TRUE){
+      $sql = "INSERT INTO tbl_contactinfo (userinfo_id, contact_num, city, barangay, street) VALUES ('$userinfo_id', '$contact', '$city', '$barangay', '$street')";
+
+      if($conn->query($sql) === TRUE){
+        $sql = "INSERT INTO tbl_user_level (userinfo_id, level) VALUES ('$userinfo_id', 'STUDENT')";
+
+        if($conn->query($sql) === TRUE){
+          $sql = "INSERT INTO tbl_user_status (userinfo_id, status) VALUES ('$userinfo_id', 1)";
+
+          if($conn->query($sql) === TRUE){
+            header("Location: admin_student.php?msg=Added Successfully");
+            exit();
+          }
+        }
+      }
+    }
+  }
+}
+?>
+
 <div id="addEmployeeModal" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form action="admin_student_add.php" method="POST">
+      <form action="#" method="POST">
         <div class="modal-header">
           <h5 class="modal-title">Add Student</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -479,28 +496,7 @@ if (isset($_GET['logout'])) {
   </div>
 </div>
 		   
-<!-- Delete Modal HTML -->
-<div id="deleteEmployeeModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form>
-        <div class="modal-header">
-          <h4 class="modal-title">Delete Employee</h4>
-          <button type="button" class="close" data-dismiss="modal" 
-		  aria-hidden="true">&times;</button>
-        </div>
-        <div class="modal-body">
-          <p>Are you sure you want to delete these Records?</p>
-          <p class="text-warning"><small>This action cannot be undone.</small></p>
-        </div>
-        <div class="modal-footer">
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-          <input type="submit" class="btn btn-danger" value="Delete">
-        </div>
-      </form>
-    </div>
-	</div>
-  </div>
+
 				
 			  </div>
 			 

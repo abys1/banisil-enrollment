@@ -256,12 +256,12 @@ $result = mysqli_query($conn, $sql);
       <td><?php echo $row['strand']; ?></td>
       <td><?php echo $row['contact_num'] ?></td>
       <td>
-        <a href="#editEmployeeModal" class="edit" data-toggle="modal">
-          <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
-        </a>
-        <a href="#viewEmployeeModal" class="view" data-toggle="modal">
-          <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
-        </a>
+          <a href="admin_teacher_edit.php?user_id=<?php echo $row['user_id']?>" class="edit">
+          <i class="fas fa-pencil" data-toggle="tooltip" title="Edit">&#xE254;</i>
+          </a>
+          <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
+          <i class="fas fa-trash" data-toggle="tooltip" title="delete"></i>
+          </a>
       </td>
     </tr>
     <?php endwhile; ?>
@@ -290,8 +290,30 @@ $result = mysqli_query($conn, $sql);
     <?php endif; ?>
   </ul>
 </div>
-
 </div>
+
+<!-- Delete Modal HTML -->
+<div id="deleteEmployeeModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form>
+        <div class="modal-header">
+          <h4 class="modal-title">Delete Employee</h4>
+          <button type="button" class="close" data-dismiss="modal" 
+		  aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete these Records?</p>
+          <p class="text-warning"><small>This action cannot be undone.</small></p>
+        </div>
+        <div class="modal-footer">
+          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+          <input type="submit" class="btn btn-danger" value="Delete">
+        </div>
+      </form>
+    </div>
+	</div>
+  </div>
 
 <?php 
 include 'dbcon.php';
@@ -462,35 +484,7 @@ if(isset($_POST['btnAdd'])){
         </form>
       </div>
     </div>
-  </div>
-  
-
-  
-
-
-<!-- Delete Modal HTML -->
-<div id="deleteEmployeeModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form>
-        <div class="modal-header">
-          <h4 class="modal-title">Delete Employee</h4>
-          <button type="button" class="close" data-dismiss="modal" 
-		  aria-hidden="true">&times;</button>
-        </div>
-        <div class="modal-body">
-          <p>Are you sure you want to delete these Records?</p>
-          <p class="text-warning"><small>This action cannot be undone.</small></p>
-        </div>
-        <div class="modal-footer">
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-          <input type="submit" class="btn btn-danger" value="Delete">
-        </div>
-      </form>
-    </div>
-	</div>
-  </div>
-				
+  </div>		
 		   
 			  </div>
 			 
