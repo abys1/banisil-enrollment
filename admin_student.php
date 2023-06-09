@@ -1,3 +1,12 @@
+<?php
+session_start();
+if (isset($_GET['logout'])) {
+  session_unset();
+  session_destroy();
+  header("Location: login.php?Logout");
+  exit();
+  }
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -5,7 +14,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-        <title>crud dashboard</title>
+        <title>BNHS</title>
 	    <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -128,12 +137,11 @@
                             <form>
                                 <div class="input-group">
                                   <input type="search" class="form-control" 
-								  placeholder="Search">
+								                  placeholder="Search">
                                   <div class="input-group-append">
                                     <button class="btn" type="submit" id="button-addon2">
                                       <i class="fas fa-search"></i>
                                   </button>
-                                  
                                   </div>
                                 </div>
                             </form>
@@ -144,42 +152,33 @@
                     <!-- Start XP Col -->
                     <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
                         <div class="xp-profilebar text-right">
-							 <nav class="navbar p-0">
-                        <ul class="nav navbar-nav flex-row ml-auto">   
-                           
-                            </li>
-                            <li class="nav-item">
-                     
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link" href="#" data-toggle="dropdown">
-								<img src="img/admin.png" style="width:40px; border-radius:50%;"/>
-								<span class="xp-user-live"></span>
-								</a>
-								<ul class="dropdown-menu small-menu">
-                                    <li>
-                                        <a href="#">
-										  <span class="material-icons">
-person_outline
-</span>Profile
-
-										</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><span class="material-icons">
-settings
-</span>Settings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><span class="material-icons">
-logout</span>Logout</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    
-               
-            </nav>
+                    <nav class="navbar p-0">
+                              <ul class="nav navbar-nav flex-row ml-auto">   
+                                
+                                  </li>
+                                  <li class="nav-item">
+                          
+                                  </li>
+                                  <li class="nav-item dropdown">
+                                      <a class="nav-link" href="#" data-toggle="dropdown">
+                      <img src="img/admin.png" style="width:40px; border-radius:50%;"/>
+                      <span class="xp-user-live"></span>
+                      </a>
+                      <ul class="dropdown-menu small-menu">
+                          <li>
+                            <a href="#">
+                            <span class="material-icons">person_outline</span>Profile</a>
+                          </li>
+                          <li>
+                            <a href="#"><span class="material-icons">settings</span>Settings</a>
+                          </li>
+                          <li>
+                              <a href="admin_student.php?logout=true"><span class="material-icons">logout</span>Logout</a>
+                          </li>
+                      </ul>
+                          </li>
+                      </ul>   
+                    </nav>
 							
                         </div>
                     </div>
@@ -214,64 +213,136 @@ logout</span>Logout</a>
         </div>
       </div>
     </div>
-    <table class="table table-striped table-hover">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Full Name</th>
-          <th>Grade</th>
-          <th>Program/Strand</th>
-          <th>LRN</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-      <tr>
-          <?php
-            include 'dbcon.php';
-            $sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.lastname, tbl_userinfo.grade, tbl_userinfo.strand, tbl_userinfo.lrn, tbl_user_level.level
-            FROM tbl_userinfo
-            JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
-            WHERE tbl_user_level.level = 'STUDENT'";
+    <?php
+      include 'dbcon.php';
+      $limit = 10; 
+      $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
-            $result = mysqli_query($conn, $sql);
+      $sqlCount = "SELECT COUNT(*) AS total FROM tbl_userinfo
+             JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
+             WHERE tbl_user_level.level = 'STUDENT'";
+      $resultCount = mysqli_query($conn, $sqlCount);
+      $rowCount = mysqli_fetch_assoc($resultCount)['total'];
+      $totalPages = ceil($rowCount / $limit);
+      $offset = ($page - 1) * $limit;
 
-            while($row = mysqli_fetch_assoc($result))
-              {
-                ?>
-                <td><?php echo $row['user_id'] ?></td>
-                <td><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></td>
-                <td><?php echo $row['grade']; ?></td>
-                <td><?php echo $row['strand']; ?></td>
-                <td><?php echo $row['lrn'] ?></td>
-                <td>
-                <a href="#editEmployeeModal" class="edit" data-toggle="modal">
-                <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                <a href="#viewEmployeeModal" class="view" data-toggle="modal">
-                <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
-                </a>
-                </td>
-        </tr>
-            <?php
-                }
-                  ?>  
-      </tbody>
-    </table>
-    <div class="clearfix">
-      <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-      <ul class="pagination">
-        <li class="page-item disabled"><a href="#">Previous</a></li>
-        <li class="page-item"><a href="#" class="page-link">1</a></li>
-        <li class="page-item"><a href="#" class="page-link">2</a></li>
-        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-        <li class="page-item"><a href="#" class="page-link">4</a></li>
-        <li class="page-item"><a href="#" class="page-link">5</a></li>
-        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-      </ul>
+      $sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.lastname, tbl_userinfo.grade, tbl_userinfo.strand, tbl_userinfo.lrn, tbl_user_level.level
+              FROM tbl_userinfo
+              JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
+              WHERE tbl_user_level.level = 'STUDENT'
+              LIMIT $limit OFFSET $offset";
+
+      $result = mysqli_query($conn, $sql);
+      ?>
+
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Full Name</th>
+            <th>Grade</th>
+            <th>Program/Strand</th>
+            <th>LRN</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($result as $row): ?>
+          <tr>
+            <td><?php echo 'ID' . ' ' . $row['user_id'] ?></td>
+            <td><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></td>
+            <td><?php echo $row['grade']; ?></td>
+            <td><?php echo $row['strand']; ?></td>
+            <td><?php echo $row['lrn'] ?></td>
+            <td>
+              <a href="#editEmployeeModal" class="edit" data-toggle="modal">
+                <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+              </a>
+              <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
+                <i class="material-icons" data-toggle="tooltip" title="delete">&#xE8F4;</i>
+              </a>
+            </td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+
+<div class="clearfix">
+  <div class="hint-text">Showing <b><?php echo min($limit, $rowCount) ?></b> out of <b><?php echo $rowCount ?></b> entries</div>
+  <ul class="pagination">
+    <?php if ($page > 1): ?>
+      <li class="page-item"><a href="?page=<?php echo ($page - 1) ?>" class="page-link">Previous</a></li>
+    <?php else: ?>
+      <li class="page-item disabled"><span class="page-link">Previous</span></li>
+    <?php endif; ?>
+
+    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+      <li class="page-item <?php if ($i == $page) echo 'active' ?>">
+        <a href="?page=<?php echo $i ?>" class="page-link"><?php echo $i ?></a>
+      </li>
+    <?php endfor; ?>
+
+    <?php if ($page < $totalPages): ?>
+      <li class="page-item"><a href="?page=<?php echo ($page + 1) ?>" class="page-link">Next</a></li>
+    <?php else: ?>
+      <li class="page-item disabled"><span class="page-link">Next</span></li>
+    <?php endif; ?>
+  </ul>
+</div>
+</div>
+
+<!-- Edit Modal HTML -->
+<div id="editEmployeeModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form>
+        <div class="modal-header">
+          <h4 class="modal-title">Edit Student Info</h4>
+          <button type="button" class="close" data-dismiss="modal" 
+		  aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" class="form-control" name="firstname">
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" class="form-control" name="lastname">
+          </div>
+          <div class="mb-3">
+                <label class="form-label">Grade:</label>
+                <select class="form-select" name="grade">
+                <option value="" disabled selected>Select Grade</option>
+                <option value="grade11">Grade 11</option>
+                <option value="grade12">Grade 12</option>
+                <option value="transferee">Transferee</option>
+                </select>
+          </div>
+          <div class="mb-3">
+                  <label class="form-label">Strand/Program: </label>
+                  <select class="form-select" name="strand">
+                  <option value="" disabled selected>Select Strand</option>
+                  <option value="abm">ABM</option>
+                  <option value="stem">STEM</option>
+                  <option value="humms">HUMMS</option>
+                  <option value="eim">EIM</option>
+                  <option value="fbs">FBS</option>
+                  <option value="smaw">SMAW</option>
+                  </select>
+          </div>
+          <div class="mb-3">
+                    <label class="form-label">LRN</label>
+                    <input type="text" class="form-control" name="lrn" id="lrn">
+          </div>
+        <div class="modal-footer">
+          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+          <input type="submit" class="btn btn-info" value="Save">
+        </div>
+      </form>
     </div>
   </div>
 </div>
-
 
 <!-- Modal -->
 <?php 
@@ -365,6 +436,7 @@ if(isset($_POST['btnAdd'])){
                 <input type="password" class="form-control" name="cfpassword" id="cfpassword">
               </div>
             </div>
+
             <div class="col-6">
               <div class="mb-3">
                 <label class="form-label">Contact Number</label>

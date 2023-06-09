@@ -1,12 +1,11 @@
 <?php
-include 'dbcon.php';
-$sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.lastname, tbl_userinfo.grade, tbl_userinfo.strand, tbl_userinfo.lrn, tbl_user_level.level, tbl_contactinfo.contact_num
-FROM tbl_userinfo
-JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
-JOIN tbl_contactinfo ON tbl_contactinfo.contact_id = tbl_userinfo.user_id
-WHERE tbl_user_level.level = 'TEACHER'";
-
-$result = mysqli_query($conn, $sql);
+session_start();
+if (isset($_GET['logout'])) {
+  session_unset();
+  session_destroy();
+  header("Location: login.php");
+  exit();
+  }
 ?>
 <!doctype html>
 <html lang="en">
@@ -133,7 +132,7 @@ $result = mysqli_query($conn, $sql);
                             <form>
                                 <div class="input-group">
                                   <input type="search" class="form-control" 
-								  placeholder="Search">
+								                  placeholder="Search">
                                   <div class="input-group-append">
                                     <button class="btn" type="submit" id="button-addon2">
                                         <i class="fas fa-search"></i>
@@ -162,28 +161,19 @@ $result = mysqli_query($conn, $sql);
 								<span class="xp-user-live"></span>
 								</a>
 								<ul class="dropdown-menu small-menu">
-                                    <li>
-                                        <a href="#">
-										  <span class="material-icons">
-person_outline
-</span>Profile
-
-										</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><span class="material-icons">
-settings
-</span>Settings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><span class="material-icons">
-logout</span>Logout</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    
-               
+                <li>
+                            <a href="#">
+                            <span class="material-icons">person_outline</span>Profile</a>
+                          </li>
+                          <li>
+                            <a href="#"><span class="material-icons">settings</span>Settings</a>
+                          </li>
+                          <li>
+                              <a href="?logout"><span class="material-icons">logout</span>Logout</a>
+                          </li>
+                      </ul>
+                          </li>
+                      </ul>   
             </nav>
 							
                         </div>
@@ -219,54 +209,88 @@ logout</span>Logout</a>
         </div>
       </div>
     </div>
-    <table class="table table-striped table-hover">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Full Name</th>
-          <th>Grade Handle</th>
-          <th>Program/Strand Handle</th>
-          <th>Contact Number</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-      <tr>
-          <?php
-            while($row = mysqli_fetch_assoc($result))
-              {
-                ?>
-                <td><?php echo 'ID' . ' ' . $row['user_id'] ?></td>
-                <td><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></td>
-                <td><?php echo $row['grade']; ?></td>
-                <td><?php echo $row['strand']; ?></td>
-                <td><?php echo $row['contact_num'] ?></td>
-                <td>
-                <a href="#editEmployeeModal" class="edit" data-toggle="modal">
-                <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                <a href="#viewEmployeeModal" class="view" data-toggle="modal">
-                <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
-                </a>
-                </td>
-        </tr>
-            <?php
-                }
-                  ?>  
-      </tbody>
-    </table>
-    <div class="clearfix">
-      <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-      <ul class="pagination">
-        <li class="page-item disabled"><a href="#">Previous</a></li>
-        <li class="page-item"><a href="#" class="page-link">1</a></li>
-        <li class="page-item"><a href="#" class="page-link">2</a></li>
-        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-        <li class="page-item"><a href="#" class="page-link">4</a></li>
-        <li class="page-item"><a href="#" class="page-link">5</a></li>
-        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-      </ul>
-    </div>
-  </div>
+    <?php
+include 'dbcon.php';
+
+
+$limit = 10; 
+$page = isset($_GET['page']) ? $_GET['page'] : 1; 
+
+$sqlCount = "SELECT COUNT(*) AS total FROM tbl_userinfo
+             JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
+             WHERE tbl_user_level.level = 'TEACHER'";
+$resultCount = mysqli_query($conn, $sqlCount);
+$rowCount = mysqli_fetch_assoc($resultCount)['total'];
+
+$totalPages = ceil($rowCount / $limit);
+
+$offset = ($page - 1) * $limit;
+
+$sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.lastname, tbl_userinfo.grade, tbl_userinfo.strand, tbl_userinfo.lrn, tbl_user_level.level, tbl_contactinfo.contact_num
+        FROM tbl_userinfo
+        JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
+        JOIN tbl_contactinfo ON tbl_contactinfo.contact_id = tbl_userinfo.user_id
+        WHERE tbl_user_level.level = 'TEACHER'
+        LIMIT $limit OFFSET $offset";
+
+$result = mysqli_query($conn, $sql);
+?>
+
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Full Name</th>
+      <th>Grade Handle</th>
+      <th>Program/Strand Handle</th>
+      <th>Contact Number</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php while ($row = mysqli_fetch_assoc($result)): ?>
+    <tr>
+      <td><?php echo 'ID' . ' ' . $row['user_id'] ?></td>
+      <td><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></td>
+      <td><?php echo $row['grade']; ?></td>
+      <td><?php echo $row['strand']; ?></td>
+      <td><?php echo $row['contact_num'] ?></td>
+      <td>
+        <a href="#editEmployeeModal" class="edit" data-toggle="modal">
+          <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+        </a>
+        <a href="#viewEmployeeModal" class="view" data-toggle="modal">
+          <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
+        </a>
+      </td>
+    </tr>
+    <?php endwhile; ?>
+  </tbody>
+</table>
+
+<div class="clearfix">
+  <div class="hint-text">Showing <b><?php echo min($limit, $rowCount) ?></b> out of <b><?php echo $rowCount ?></b> entries</div>
+  <ul class="pagination">
+    <?php if ($page > 1): ?>
+      <li class="page-item"><a href="?page=<?php echo ($page - 1) ?>" class="page-link">Previous</a></li>
+    <?php else: ?>
+      <li class="page-item disabled"><span class="page-link">Previous</span></li>
+    <?php endif; ?>
+
+    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+      <li class="page-item <?php if ($i == $page) echo 'active' ?>">
+        <a href="?page=<?php echo $i ?>" class="page-link"><?php echo $i ?></a>
+      </li>
+    <?php endfor; ?>
+
+    <?php if ($page < $totalPages): ?>
+      <li class="page-item"><a href="?page=<?php echo ($page + 1) ?>" class="page-link">Next</a></li>
+    <?php else: ?>
+      <li class="page-item disabled"><span class="page-link">Next</span></li>
+    <?php endif; ?>
+  </ul>
+</div>
+
 </div>
 
 <?php 
