@@ -1,13 +1,3 @@
-<?php
-include 'dbcon.php';
-$sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.lastname, tbl_userinfo.grade, tbl_userinfo.strand, tbl_userinfo.lrn, tbl_user_level.level
-FROM tbl_userinfo
-JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
-WHERE tbl_user_level.level = 'STUDENT'";
-
-$result = mysqli_query($conn, $sql);
-?>
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -227,12 +217,7 @@ logout</span>Logout</a>
     <table class="table table-striped table-hover">
       <thead>
         <tr>
-          <th>
-            <span class="custom-checkbox">
-								<input type="checkbox" id="selectAll">
-								<label for="selectAll"></label>
-							</span>
-          </th>
+          <th>ID</th>
           <th>Full Name</th>
           <th>Grade</th>
           <th>Program/Strand</th>
@@ -243,6 +228,14 @@ logout</span>Logout</a>
       <tbody>
       <tr>
           <?php
+            include 'dbcon.php';
+            $sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.lastname, tbl_userinfo.grade, tbl_userinfo.strand, tbl_userinfo.lrn, tbl_user_level.level
+            FROM tbl_userinfo
+            JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
+            WHERE tbl_user_level.level = 'STUDENT'";
+
+            $result = mysqli_query($conn, $sql);
+
             while($row = mysqli_fetch_assoc($result))
               {
                 ?>
@@ -317,7 +310,10 @@ if(isset($_POST['btnAdd'])){
         if($conn->query($sql) === TRUE){
           $sql = "INSERT INTO tbl_user_status (userinfo_id, status) VALUES ('$userinfo_id', 1)";
 
-          $conn->query($sql) === TRUE;
+          if($conn->query($sql) === TRUE){
+            header("Location: admin_student.php?msg=Added Successfully");
+            exit();
+          }
         }
       }
     }
@@ -420,7 +416,6 @@ if(isset($_POST['btnAdd'])){
                   <option value="eim">EIM</option>
                   <option value="fbs">FBS</option>
                   <option value="smaw">SMAW</option>
-                 
                   </select>
                 </div>
                 </div>
