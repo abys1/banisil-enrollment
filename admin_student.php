@@ -295,7 +295,7 @@ if (isset($_GET['logout'])) {
 <div id="editEmployeeModal" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form>
+      <form action="admin_student_edit.php" method="POST">
         <div class="modal-header">
           <h4 class="modal-title">Edit Student Info</h4>
           <button type="button" class="close" data-dismiss="modal" 
@@ -337,65 +337,18 @@ if (isset($_GET['logout'])) {
           </div>
         <div class="modal-footer">
           <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-          <input type="submit" class="btn btn-info" value="Save">
+          <input type="submit" class="btn btn-info" value="Save" name="btnSave">
         </div>
       </form>
     </div>
   </div>
 </div>
 
-<!-- Modal -->
-<?php 
-include 'dbcon.php';
-if(isset($_POST['btnAdd'])){
-
-  $firstname = $_POST['firstname'];
-  $lastname = $_POST['lastname'];
-  $username = $_POST['username'];
-  $password = $_POST['password'];
-  $cfpassword =$_POST['password'];
-  $encrypted = password_hash($password, PASSWORD_DEFAULT);
-  $contact = $_POST['contact'];
-  $gender = $_POST['gender'];
-  $birthday = $_POST['birthday'];
-  $age = $_POST['age'];
-  $grade = $_POST['grade'];
-  $strand = $_POST['strand'];
-  $lrn = $_POST['lrn'];
-  $street = $_POST['street'];
-  $barangay = $_POST['barangay'];
-  $city = $_POST['city'];
-
-  $sql = "INSERT INTO tbl_userinfo (firstname, lastname, gender, birthday, age, grade, strand, lrn) VALUES ('$firstname', '$lastname', '$gender', '$birthday', '$age', '$grade', '$strand', '$lrn')";
-
-  if($conn->query($sql) === TRUE){
-    $userinfo_id = $conn->insert_id;
-    $sql = "INSERT INTO tbl_usercredentials (userinfo_id, username, password) VALUES ('$userinfo_id', '$username', '$encrypted')";
-
-    if($conn->query($sql) === TRUE){
-      $sql = "INSERT INTO tbl_contactinfo (userinfo_id, contact_num, city, barangay, street) VALUES ('$userinfo_id', '$contact', '$city', '$barangay', '$street')";
-
-      if($conn->query($sql) === TRUE){
-        $sql = "INSERT INTO tbl_user_level (userinfo_id, level) VALUES ('$userinfo_id', 'STUDENT')";
-
-        if($conn->query($sql) === TRUE){
-          $sql = "INSERT INTO tbl_user_status (userinfo_id, status) VALUES ('$userinfo_id', 1)";
-
-          if($conn->query($sql) === TRUE){
-            header("Location: admin_student.php?msg=Added Successfully");
-            exit();
-          }
-        }
-      }
-    }
-  }
-}
-?>
-
+<!-- Add New Student Modal -->
 <div id="addEmployeeModal" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form action="#" method="POST">
+      <form action="admin_student_add.php" method="POST">
         <div class="modal-header">
           <h5 class="modal-title">Add Student</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -525,10 +478,7 @@ if(isset($_POST['btnAdd'])){
     </div>
   </div>
 </div>
-
-
-
-
+		   
 <!-- Delete Modal HTML -->
 <div id="deleteEmployeeModal" class="modal fade">
   <div class="modal-dialog">
@@ -552,7 +502,6 @@ if(isset($_POST['btnAdd'])){
 	</div>
   </div>
 				
-		   
 			  </div>
 			 
 			 
