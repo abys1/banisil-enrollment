@@ -202,22 +202,12 @@ logout</span>Logout</a>
         <div class="col-sm-6 p-0 d-flex justify-content-lg-start justify-content-center">
           <h2 class="ml-lg-2">Manage Student</h2>
         </div>
-        <div class="col-sm-6 p-0 d-flex justify-content-lg-end justify-content-center">
-          <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal">
-		  <i class="material-icons">&#xE147;</i> <span>Add New Employee</span></a>
-
-        </div>
       </div>
     </div>
     <table class="table table-striped table-hover">
       <thead>
         <tr>
-          <th>
-            <span class="custom-checkbox">
-								<input type="checkbox" id="selectAll">
-								<label for="selectAll"></label>
-							</span>
-          </th>
+          <th>ID</th>
           <th>Full Name</th>
           <th>Grade</th>
           <th>Program/Strand</th>
@@ -226,110 +216,36 @@ logout</span>Logout</a>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>
-            <span class="custom-checkbox">
-			<input type="checkbox" id="checkbox1" name="options[]" value="1">
-			<label for="checkbox1"></label>
-							</span>
-          </td>
-          <td>Thomas Sue</td>
-          <td>12</td>
-          <td>EIM</td>
-          <td>128503070025</td>
-          <td>
+      <tr>
+          <?php
+          include 'dbcon.php';
+
+          $sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.lastname, tbl_userinfo.grade, tbl_userinfo.strand, tbl_userinfo.lrn, tbl_user_level.level
+          FROM tbl_userinfo
+          JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
+          WHERE tbl_user_level.level = 'STUDENT' AND tbl_userinfo.strand = 'EIM'";
+
+          $result = mysqli_query($conn, $sql);
+
+          while($row = mysqli_fetch_assoc($result))
+          {
+            ?>
+            <td><?php echo $row['user_id'] ?></td>
+            <td><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></td>
+            <td><?php echo $row['grade']; ?></td>
+            <td><?php echo $row['strand']; ?></td>
+            <td><?php echo $row['lrn'] ?></td>
+            <td>
             <a href="#editEmployeeModal" class="edit" data-toggle="modal">
-			<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-      <a href="#viewEmployeeModal" class="view" data-toggle="modal">
-        <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
-    </a>
-    
+            <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+            <a href="#viewEmployeeModal" class="view" data-toggle="modal">
+            <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
+            </a>
           </td>
-        </tr>
-        <tr>
-          <td>
-            <span class="custom-checkbox">
-								<input type="checkbox" id="checkbox2" 
-								name="options[]" value="1">
-								<label for="checkbox2"></label>
-							</span>
-          </td>
-          <td>Mang Juan</td>
-          <td>12</td>
-          <td>EIM</td>
-          <td>128508070025</td>
-          <td>
-            <a href="#editEmployeeModal" class="edit" data-toggle="modal">
-			<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-      <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
-        <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
-    </a>
-    
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span class="custom-checkbox">
-								<input type="checkbox" id="checkbox3"
-								name="options[]" value="1">
-								<label for="checkbox3"></label>
-							</span>
-          </td>
-          <td>Justine Lopez</td>
-          <td>11</td>
-          <td>EIM</td>
-          <td>128503070025</td>
-          <td>
-            <a href="#editEmployeeModal" class="edit" data-toggle="modal">
-			<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-      <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
-        <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
-    </a>
-    
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span class="custom-checkbox">
-								<input type="checkbox" id="checkbox4" 
-								name="options[]" value="1">
-								<label for="checkbox4"></label>
-							</span>
-          </td>
-          <td>Jhonel Kim</td>
-          <td>11</td>
-          <td>EIM</td>
-          <td>128503070025</td>
-          <td>
-            <a href="#editEmployeeModal" class="edit" data-toggle="modal">
-			<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-      <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
-        <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
-    </a>
-    
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span class="custom-checkbox">
-								<input type="checkbox" id="checkbox5" 
-								name="options[]" value="1">
-								<label for="checkbox5"></label>
-							</span>
-          </td>
-          <td>Jisoo Park</td>
-          <td>12</td>
-          <td>EIM</td>
-          <td>128503070025</td>
-          <td>
-            <a href="#editEmployeeModal" class="edit" data-toggle="modal">
-			<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-      <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
-        <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
-    </a>
-    
-          </td>
-        </tr>
+    </tr>
+        <?php
+            }
+              ?>  
       </tbody>
     </table>
     <div class="clearfix">

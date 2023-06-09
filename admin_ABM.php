@@ -211,22 +211,12 @@ logout</span>Logout</a>
         <div class="col-sm-6 p-0 d-flex justify-content-lg-start justify-content-center">
           <h2 class="ml-lg-2">Manage Student</h2>
         </div>
-        <div class="col-sm-6 p-0 d-flex justify-content-lg-end justify-content-center">
-          <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal">
-		  <i class="material-icons">&#xE147;</i> <span>Add New </span></a>
-
-        </div>
       </div>
     </div>
     <table class="table table-striped table-hover">
       <thead>
         <tr>
-          <th>
-            <span class="custom-checkbox">
-								<input type="checkbox" id="selectAll">
-								<label for="selectAll"></label>
-							</span>
-          </th>
+          <th>ID</th>
           <th>Full Name</th>
           <th>Grade</th>
           <th>Program/Strand</th>
@@ -236,109 +226,33 @@ logout</span>Logout</a>
       </thead>
       <tbody>
         <tr>
-          <td>
-            <span class="custom-checkbox">
-			<input type="checkbox" id="checkbox1" name="options[]" value="1">
-			<label for="checkbox1"></label>
-							</span>
-          </td>
-          <td>Thomas Sue</td>
-          <td>12</td>
-          <td>ABM</td>
-          <td>128503070025</td>
-          <td>
+          <?php
+          $sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.lastname, tbl_userinfo.grade, tbl_userinfo.strand, tbl_userinfo.lrn, tbl_user_level.level
+          FROM tbl_userinfo
+          JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
+          WHERE tbl_user_level.level = 'STUDENT' AND tbl_userinfo.strand = 'ABM'";
+
+          $result = mysqli_query($conn, $sql);
+
+          while($row = mysqli_fetch_assoc($result))
+          {
+            ?>
+            <td><?php echo $row['user_id'] ?></td>
+            <td><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></td>
+            <td><?php echo $row['grade']; ?></td>
+            <td><?php echo $row['strand']; ?></td>
+            <td><?php echo $row['lrn'] ?></td>
+            <td>
             <a href="#editEmployeeModal" class="edit" data-toggle="modal">
-			<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-      <a href="#viewEmployeeModal" class="view" data-toggle="modal">
-        <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
-    </a>
-    
+            <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+            <a href="#viewEmployeeModal" class="view" data-toggle="modal">
+            <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
+            </a>
           </td>
-        </tr>
-        <tr>
-          <td>
-            <span class="custom-checkbox">
-								<input type="checkbox" id="checkbox2" 
-								name="options[]" value="1">
-								<label for="checkbox2"></label>
-							</span>
-          </td>
-          <td>Mang Juan</td>
-          <td>12</td>
-          <td>ABM</td>
-          <td>128508070025</td>
-          <td>
-            <a href="#editEmployeeModal" class="edit" data-toggle="modal">
-			<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-      <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
-        <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
-    </a>
-    
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span class="custom-checkbox">
-								<input type="checkbox" id="checkbox3"
-								name="options[]" value="1">
-								<label for="checkbox3"></label>
-							</span>
-          </td>
-          <td>Justine Lopez</td>
-          <td>11</td>
-          <td>ABM</td>
-          <td>128503070025</td>
-          <td>
-            <a href="#editEmployeeModal" class="edit" data-toggle="modal">
-			<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-      <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
-        <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
-    </a>
-    
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span class="custom-checkbox">
-								<input type="checkbox" id="checkbox4" 
-								name="options[]" value="1">
-								<label for="checkbox4"></label>
-							</span>
-          </td>
-          <td>Jhonel Kim</td>
-          <td>11</td>
-          <td>ABM</td>
-          <td>128503070025</td>
-          <td>
-            <a href="#editEmployeeModal" class="edit" data-toggle="modal">
-			<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-      <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
-        <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
-    </a>
-    
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span class="custom-checkbox">
-								<input type="checkbox" id="checkbox5" 
-								name="options[]" value="1">
-								<label for="checkbox5"></label>
-							</span>
-          </td>
-          <td>Jisoo Park</td>
-          <td>12</td>
-          <td>ABM</td>
-          <td>128503070025</td>
-          <td>
-            <a href="#editEmployeeModal" class="edit" data-toggle="modal">
-			<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-      <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
-        <i class="material-icons" data-toggle="tooltip" title="View">&#xE8F4;</i>
-    </a>
-    
-          </td>
-        </tr>
+    </tr>
+        <?php
+            }
+              ?>  
       </tbody>
     </table>
     <div class="clearfix">
@@ -356,68 +270,53 @@ logout</span>Logout</a>
   </div>
 </div>
 <!-- Edit Modal HTML -->
-<div id="addEmployeeModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form>
-        <div class="modal-header">
-          <h4 class="modal-title">Add Student</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" class="form-control" name="name">
-          </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label>Address</label>
-            <textarea class="form-control" required></textarea>
-          </div>
-          <div class="form-group">
-            <label>Phone</label>
-            <input type="text" class="form-control" required>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-          <input type="submit" class="btn btn-success" value="Add">
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-<!-- Edit Modal HTML -->
 <div id="editEmployeeModal" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
       <form>
         <div class="modal-header">
-          <h4 class="modal-title">Add Student</h4>
+          <h4 class="modal-title">Edit Student Info</h4>
           <button type="button" class="close" data-dismiss="modal" 
 		  aria-hidden="true">&times;</button>
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label>Name</label>
-            <input type="text" class="form-control" required>
+            <label>First Name</label>
+            <input type="text" class="form-control" name="firstname">
           </div>
           <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" class="form-control" name="lastname">
+          </div>
+          <!-- <div class="form-group">
             <label>Email</label>
-            <input type="email" class="form-control" required>
+            <input type="email" class="form-control">
+          </div> -->
+          <div class="mb-3">
+                <label class="form-label">Grade:</label>
+                <select class="form-select" name="grade">
+                <option value="" disabled selected>Select Grade</option>
+                <option value="grade11">Grade 11</option>
+                <option value="grade12">Grade 12</option>
+                <option value="transferee">Transferee</option>
+                </select>
           </div>
-          <div class="form-group">
-            <label>Address</label>
-            <textarea class="form-control" required></textarea>
+          <div class="mb-3">
+                  <label class="form-label">Strand/Program: </label>
+                  <select class="form-select" name="strand">
+                  <option value="" disabled selected>Select Strand</option>
+                  <option value="abm">ABM</option>
+                  <option value="stem">STEM</option>
+                  <option value="humms">HUMMS</option>
+                  <option value="eim">EIM</option>
+                  <option value="fbs">FBS</option>
+                  <option value="smaw">SMAW</option>
+                  </select>
           </div>
-          <div class="form-group">
-            <label>Phone</label>
-            <input type="text" class="form-control" required>
+          <div class="mb-3">
+                    <label class="form-label">LRN</label>
+                    <input type="text" class="form-control" name="lrn" id="lrn">
           </div>
-        </div>
         <div class="modal-footer">
           <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
           <input type="submit" class="btn btn-info" value="Save">

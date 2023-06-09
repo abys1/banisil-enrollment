@@ -187,19 +187,55 @@ logout</span>Logout</a>
                     <h1 class="mt-4">Dashboard</h1>
                     <ol class="breadcrumb mb-4"></ol>
                     <div class="row">
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">50 Enrolled Students</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
+                    <?php
+                        include 'dbcon.php';
+                        $sql = "SELECT COUNT(tbl_userinfo.user_id) AS student_count
+                                FROM tbl_userinfo
+                                JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
+                                WHERE tbl_user_level.level = 'STUDENT'";
+
+                        $result = mysqli_query($conn, $sql);
+
+                        if ($result) {
+                            $row = mysqli_fetch_assoc($result);
+                            $studentCount = $row['student_count'];
+                        } else {
+
+                            $studentCount = "No Records Found";
+                        }
+                        mysqli_close($conn);
+                    ?>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-primary text-white mb-4">
+                            <div class="card-body"><?php echo $studentCount; ?> Enrolled Students</div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" href="admin_student.php">View Details</a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                             </div>
                         </div>
+                    </div>
+                        
+                    <?php
+                        include 'dbcon.php';
+                        $sql = "SELECT COUNT(tbl_userinfo.user_id) AS teacher_count
+                                FROM tbl_userinfo
+                                JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
+                                WHERE tbl_user_level.level = 'TEACHER'";
 
+                        $result = mysqli_query($conn, $sql);
+
+                        if ($result) {
+                            $row = mysqli_fetch_assoc($result);
+                            $teacherCount = $row['teacher_count'];
+                        } else {
+
+                            $teacherCount = "No Records Found";
+                        }
+                        mysqli_close($conn);
+                    ?>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">8 Teachers</div>
+                                <div class="card-body"><?php echo $teacherCount; ?>Teachers</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <a class="small text-white stretched-link" href="#">View Details</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
@@ -216,28 +252,10 @@ logout</span>Logout</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">Program</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-		
-
-		   
-			  </div>
-			 
-			 
-			 <!---footer---->
-			 
-			 
-		</div>
-		
-
-</div>
-</div>
+			        </div>
+		        </div>
+            </div>
+        </div>
 
 
 <!----------html code compleate----------->
