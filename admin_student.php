@@ -229,13 +229,12 @@
       $totalPages = ceil($rowCount / $limit);
       $offset = ($page - 1) * $limit;
 
-      $sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.lastname, tbl_userinfo.strand, tbl_userinfo.lrn, tbl_user_level.level, tbl_user_status.status
-      
-      FROM tbl_userinfo
-      JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
-      JOIN tbl_user_status ON tbl_user_status.status_id = tbl_userinfo.user_id
-      
-      WHERE tbl_user_level.level = 'STUDENT' AND tbl_user_status.status = 1
+      $sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.middlename, tbl_userinfo.lastname, tbl_userinfo.suffix, tbl_enrollment.userinfo_id, tbl_enrollment.admit_type, tbl_enrollment.grade, tbl_enrollment.program, tbl_enrollment.term, tbl_enrollment.lrn, tbl_enrollment.lsa, tbl_user_status.status, tbl_user_level.level
+              FROM tbl_userinfo
+              JOIN tbl_enrollment ON tbl_userinfo.user_id = tbl_enrollment.userinfo_id
+              JOIN tbl_user_status ON tbl_userinfo.user_id = tbl_user_status.userinfo_id
+              JOIN tbl_user_level ON tbl_userinfo.user_id = tbl_user_level.userinfo_id
+              WHERE tbl_user_level.level = 'STUDENT'
               LIMIT $limit OFFSET $offset";
 
       $result = mysqli_query($conn, $sql);
@@ -250,23 +249,36 @@
             <th>Program/Strand</th>
             <th>LRN</th>
             <th>Actions</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
           <?php foreach ($result as $row): ?>  
           <tr>
             <td><?php echo $row['user_id'] ?></td>
-            <td><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></td>
+            <td><?php echo $row['firstname'] . ' ' . $row['middlename'] . ' ' . $row['lastname'] . ' ' . $row['suffix']; ?></td>
             <td><?php echo $row['grade']; ?></td>
-            <td><?php echo $row['strand']; ?></td>
+            <td><?php echo $row['program']; ?></td>
             <td><?php echo $row['lrn'] ?></td>
             <td>
-            <a href="admin_student_edit.php?user_id=<?php echo $row['user_id']?>" class="edit">
-              <i class="fas fa-pencil" data-toggle="tooltip" title="Edit">&#xE254;</i>
+            <a href="admin_student_edit.php?user_id=<?php echo $row['user_id']?>&userinfo_id=<?php echo $row['userinfo_id']?>"class="confirm">
+                <i class="material-icons" data-toggle="tooltip" title="Edit">create</i>
             </a>
-            <a href="admin_student_delete.php?user_id=<?php echo $row['user_id']?>" class="delete">
-              <i class="fas fa-trash" data-toggle="tooltip" title="delete"></i>
+            <a href="admin_student_activate.php?user_id=<?php echo $row['user_id']?>"class="confirm">
+                <i class="material-icons" data-toggle="tooltip" title="Confirm">&#xE5CA;</i>
             </a>
+            <a href="admin_student_deactivate.php?user_id=<?php echo $row['user_id']?>"class="decline">
+                <i class="material-icons" data-toggle="tooltip" title="Decline">&#xE5CD;</i>
+            </a>
+            </td>
+            <td>
+            <?php
+            if($row['status'] == 1){
+              echo '<i class="material-icons" data-toggle="tooltip" title="Activated">power_settings_new</i>';
+            } else {
+              echo '<i class="material-icons" data-toggle="tooltip" title="Deactivated" style="transform: rotate(180deg);">power_settings_new</i>';
+            }
+            ?>
             </td>
           </tr>
           <?php endforeach; ?>
@@ -312,116 +324,113 @@
           <label style="margin-bottom: 20px;">Personal Information</label>
           </div>
           <div class="row">
-            <div class="col-6">
-              <div class="mb-3">
-                <label class="form-label">First Name</label>
-                <input type="text" class="form-control" name="firstname" id="firstname">
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="mb-3">
-                <label class="form-label">Last Name</label>
-                <input type="text" class="form-control" name="lastname" id="lastname">
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="mb-3">
-                <label class="form-label">Username</label>
-                <input type="text" class="form-control" name="username" id="username">
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="mb-3">
-                <label class="form-label">Password</label>
-                <input type="password" class="form-control" name="password" id="password">
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="mb-3">
-                <label class="form-label">Confirm Password</label>
-                <input type="password" class="form-control" name="cfpassword" id="cfpassword">
-              </div>
-            </div>
+          <div class="col-md-6 mt-md-0 mt-3">
+            <label>First Name <span style="color: red;">*</span></label>
+            <input type="text" class="form-control" name="firstname" required>
+        </div>
+        <div class="col-md-6 mt-md-0 mt-3">
+            <label>Middle Name</span></label>
+            <input type="text" class="form-control" name="middlename">
+        </div>
+        <div class="col-md-6 mt-md-0 mt-3">
+            <label>Last Name <span style="color: red;">*</span></label>
+            <input type="text" class="form-control" name="lastname" required>
+        </div>
+        <div class="col-md-6 mt-md-0 mt-3">
+            <label>Suffix Name</label>
+            <input type="text" class="form-control" name="suffixname">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mt-md-0 mt-3">
+            <label>Age <span style="color: red;">*</span></label>
+            <input type="number" class="form-control" name="age" required>
+        </div>
+        <div class="col-md-6 mt-md-0 mt-3">
+            <label>Birthday <span style="color: red;">*</span></label>
+            <input type="date" class="form-control" name="birthday" required>
+        </div>
+        <div class="col-md-6 mt-md-0 mt-3">
+          <label>Grade<span style="color: red;">*</span></label>
+          <select id="sub" name="gender">
+            <option value="" selected hidden>Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="prefer">Prefer not to say</option>
+            </select>
+    </div>
+    </div>
+  
+        <div class="h3">Contact Information</div>
+    <div class="row">
+    <div class="col-md-6 mt-md-0 mt-3">
+            <label>Email <span style="color: red;">*</span></label>
+            <input type="text" class="form-control" name="email" required>
+        </div>
+        <div class="col-md-6 mt-md-0 mt-3">
+            <label>Contact Number <span style="color: red;">*</span></label>
+            <input type="number" class="form-control" name="contact_number" required>
+        </div>
+        <div class="col-md-6 mt-md-0 mt-3">
+            <label>Street<span style="color: red;">*</span></label>
+            <input type="text" class="form-control" name="street" required>
+        </div>
+        <div class="col-md-6 mt-md-0 mt-3">
+            <label>Barangay<span style="color: red;">*</span></label>
+            <input type="text" class="form-control" name="barangay" required>
+        </div>
+        <div class="col-md-6 mt-md-0 mt-3">
+          <label>City<span style="color: red;">*</span></label>
+          <input type="text" class="form-control" name="city" required>
+    </div>
+    <div class="h3">Enrollment</div>
+    <div class=" col-md-6 mt-md-0 mt-3">
+        <label>Admit Type<span style="color: red;">*</span></label>
+        <select id="sub" name="admit" required>
+            <option value="" selected hidden>Choose Option</option>
+            <option value="old">Old Student</option>
+            <option value="new">New Student</option>
+            <option value="transferee">Transferee</option>
+        </select>
+    </div>
+    <div class="col-md-6 mt-md-0 mt-3">
+          <label>Grade<span style="color: red;">*</span></label>
+          <select id="sub" name="grade" required>
+            <option value="" selected hidden>Choose Option</option>
+            <option value="11">Grade 11</option>
+            <option value="12">Grade 12</option>
+            </select>
+    </div>
 
-            <div class="col-6">
-              <div class="mb-3">
-                <label class="form-label">Contact Number</label>
-                <input type="text" class="form-control" name="contact" id="contact">
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="mb-3">
-                <label class="form-label">Age</label>
-                <input type="number" class="form-control" name="age" id="age">
-              </div>
-            </div>
-            <div class="col-6">
-            <div class="mb-3">
-              <label class="form-label">Gender</label>
-              <select class="form-select" name="gender">
-              <option value="" disabled selected>Select gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="not-specified">Prefer not to say</option>
-              </select>
-            </div>
-            </div>
-            <div class="col-6">
-                <div class="mb-3">
-                  <label class="form-label">Birthday</label>
-                  <input type="date" class="form-control" name="birthday" id="birthday">
-                </div>
-              </div>
-            <div class="col-6">
-              <div class="mb-3">
-                <label class="form-label">Grade</label>
-                <select class="form-select" name="grade">
-                <option value="" disabled selected>Select Grade</option>
-                <option value="grade11">Grade 11</option>
-                <option value="grade12">Grade 12</option>
-                <option value="transferee">Transferee</option>
-                </select>
-              </div>
-              </div>
-              <div class="col-6">
-                <div class="mb-3">
-                  <label class="form-label">Strand/Program</label>
-                  <select class="form-select" name="strand">
-                  <option value="" disabled selected>Select Strand</option>
-                  <option value="abm">ABM</option>
-                  <option value="stem">STEM</option>
-                  <option value="humms">HUMMS</option>
-                  <option value="eim">EIM</option>
-                  <option value="fbs">FBS</option>
-                  <option value="smaw">SMAW</option>
-                  <option value="ict">ICT</option>
-                  </select>
-                </div>
-                </div>
-                <div class="col-6">
-                  <div class="mb-3">
-                    <label class="form-label">LRN</label>
-                    <input type="text" class="form-control" name="lrn" id="lrn">
-                  </div>
-              </div>
-                <div class="col-6">
-                  <div class="mb-3">
-                    <label class="form-label">Street</label>
-                    <input type="text" class="form-control" name="street" id="street">
-                  </div>
-              </div>
-              <div class="col-6">
-                <div class="mb-3">
-                  <label class="form-label">Barangay</label>
-                  <input type="text" class="form-control" name="barangay" id="barangay">
-                </div>
-            </div>
-            <div class="col-6">
-              <div class="mb-3">
-                <label class="form-label">City</label>
-                <input type="text" class="form-control" name="city" id="city">
-              </div>
-          </div>
+     <div class="col-md-6 mt-md-0 mt-3">
+          <label>Strand<span style="color: red;">*</span></label>
+          <select id="sub" name="strand" required>
+            <option value="" selected hidden>Choose Option</option>
+            <option value="abm">ABM</option>
+            <option value="humss">Humss</option>
+            <option value="stem">Stem</option>
+            <option value="eim">EIM</option>
+            <option value="fbs">FBS</option>
+            <option value="smaw">Smaw</option>
+          </select>
+    </div>
+
+    <div class="col-md-6 mt-md-0 mt-3">
+          <label>Term<span style="color: red;">*</span></label>
+          <select id="sub" name="term" required>
+            <option value="" selected hidden>Choose Option</option>
+            <option value="1st">1st Term</option>
+            <option value="2nd">2nd Term</option>
+          </select>
+    </div>
+    <div class="col-md-6 mt-md-0 mt-3">
+          <label>LRN<span style="color: red;">*</span></label>
+          <input type="number" class="form-control" name="lrn" required>
+    </div>
+    <div class="col-md-6 mt-md-0 mt-3">
+        <label>Last school attended</label>
+        <input type="text" class="form-control" name="last" value="For transferee only" onclick="clearValue(this)">
+    </div>
               
         </div>
         <div class="modal-footer">
@@ -513,7 +522,10 @@ button.addEventListener("click", function(event) {
 		   });
 		  
 		});
-		
+
+    function clearValue(input) {
+    input.value = '';
+  }
 </script>
   
   

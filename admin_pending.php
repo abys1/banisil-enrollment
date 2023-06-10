@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
         <title>crud dashboard</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 	    <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -183,6 +184,15 @@
 				<div class="col-md-12">
 				<div class="table-wrapper">
     <div class="table-title">
+    <?php
+    if (isset($_GET["msg"])) {
+      $msg = $_GET["msg"];
+      echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+      ' . $msg . '
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>';
+    }
+    ?>
       <div class="row">
         <div class="col-sm-6 p-0 d-flex justify-content-lg-start justify-content-center">
           <h2 class="ml-lg-2">Manage Enroll Student</h2>
@@ -190,13 +200,116 @@
        
       </div>
     </div>
-    <table class="table table-striped table-hover" id="pending_table">
+    </div>
+    <?php
+      include 'dbcon.php';
+      $limit = 10; 
+      $page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+      $sqlCount = "SELECT COUNT(*) AS total FROM tbl_userinfo
+             JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
+             WHERE tbl_user_level.level = 'STUDENT'";
+      $resultCount = mysqli_query($conn, $sqlCount);
+      $rowCount = mysqli_fetch_assoc($resultCount)['total'];
+      $totalPages = ceil($rowCount / $limit);
+      $offset = ($page - 1) * $limit;
+
+      $sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.middlename, tbl_userinfo.lastname, tbl_userinfo.suffix, tbl_enrollment.userinfo_id, tbl_enrollment.admit_type, tbl_enrollment.grade, tbl_enrollment.program, tbl_enrollment.term, tbl_enrollment.lrn, tbl_user_status.status, tbl_user_level.level,
+              tbl_contactinfo.email, tbl_contactinfo.contact_num, tbl_contactinfo.city, tbl_contactinfo.barangay, tbl_contactinfo.street
+              FROM tbl_userinfo
+              JOIN tbl_enrollment ON tbl_userinfo.user_id = tbl_enrollment.userinfo_id
+              JOIN tbl_user_status ON tbl_userinfo.user_id = tbl_user_status.userinfo_id
+              JOIN tbl_user_level ON tbl_userinfo.user_id = tbl_user_level.userinfo_id
+              JOIN tbl_contactinfo ON tbl_userinfo.user_id = tbl_contactinfo.userinfo_id
+              WHERE tbl_user_level.level = 'STUDENT'      
+              LIMIT $limit OFFSET $offset";
+
+      $result = mysqli_query($conn, $sql);
+      ?>
+
+      <table class="table table-striped table-hover" id="student_table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Full Name</th>
+            <th>Admit Type</th>
+            <th>Grade</th>
+            <th>Program/Strand</th>
+            <th>Term</th>
+            <th>LRN</th>
+            <th>Actions</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($result as $row): ?>  
+          <tr>
+            <td><?php echo $row['user_id'] ?></td>
+            <td><?php echo $row['firstname'] . ' ' . $row['middlename'] . ' ' . $row['lastname'] . ' ' . $row['suffix']; ?></td>
+            <td><?php echo $row['admit_type']; ?></td>
+            <td><?php echo $row['grade']; ?></td>
+            <td><?php echo $row['program'] ?></td>
+            <td><?php echo $row['term'] ?></td>
+            <td><?php echo $row['lrn'] ?></td>
+            <td>
+            <a href="admin_add_student_account.php?user_id=<?php echo $row['user_id']?>&userinfo_id=<?php echo $row['userinfo_id']?>" class="edit">
+              <i class="material-icons" data-toggle="tooltip" title="Add Student Account">add</i>
+            </a>
+            <a href="admin_confirm.php?user_id=<?php echo $row['user_id']?>&status=<?php echo $row['status']?>" class="confirm">
+                <i class="material-icons" data-toggle="tooltip" title="Confirm">&#xE5CA;</i>
+            </a>
+            <a href="admin_decline.php?user_id=<?php echo $row['user_id']?>&status=<?php echo $row['status']?>" class="decline">
+                <i class="material-icons" data-toggle="tooltip" title="Decline">&#xE5CD;</i>
+            </a>
+            <a href="admin_edit.php?user_id=<?php echo $row['user_id']?>&userinfo_id=<?php echo $row['userinfo_id']?>" class="edit">
+                <i class="material-icons" data-toggle="tooltip" title="Edit">create</i>
+            </a>
+            </td>
+            <td>
+            <?php
+            if($row['status'] == 0){
+              echo '<i class="material-icons" data-toggle="tooltip" title="Pending">access_time</i>';
+            } else {
+              echo '<i class="material-icons" data-toggle="tooltip" title="Accepted">check</i>';
+            }
+            ?>
+            </td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+
+<div class="clearfix">
+<div class="hint-text">Showing <b><?php echo mysqli_num_rows($result) ?></b> out of <b><?php echo mysqli_num_rows($result) ?></b> entries</div>
+  <ul class="pagination">
+    <?php if ($page > 1): ?>
+      <li class="page-item"><a href="?page=<?php echo ($page - 1) ?>" class="page-link">Previous</a></li>
+    <?php else: ?>
+      <li class="page-item disabled"><span class="page-link">Previous</span></li>
+    <?php endif; ?>
+
+    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+      <li class="page-item <?php if ($i == $page) echo 'active' ?>">
+        <a href="?page=<?php echo $i ?>" class="page-link"><?php echo $i ?></a>
+      </li>
+    <?php endfor; ?>
+
+    <?php if ($page < $totalPages): ?>
+      <li class="page-item"><a href="?page=<?php echo ($page + 1) ?>" class="page-link">Next</a></li>
+    <?php else: ?>
+      <li class="page-item disabled"><span class="page-link">Next</span></li>
+    <?php endif; ?>
+  </ul>
+</div>
+    <!-- <table class="table table-striped table-hover" id="pending_table">
       <thead>
         <tr>
           <th>ID</th>
           <th>Full Name</th>
+          <th>Admit Type</th>
           <th>Grade</th>
           <th>Program/Strand</th>
+          <th>Term</th>
           <th>LRN</th>
           <th>Actions</th>
         </tr>
@@ -205,8 +318,10 @@
         <tr>
           <td>1</td>
           <td>Thomas Sue</td>
+          <td>Transferee</td>
           <td>12</td>
           <td>STEM</td>
+          <td>1st SEM</td>
           <td>128503070025</td>
           <td>
             <a href="admin_confirm.html" class="confirm" data-toggle="modal">
@@ -234,7 +349,7 @@
         <li class="page-item"><a href="#" class="page-link">Next</a></li>
       </ul>
     </div>
-  </div>
+  </div> -->
 </div>
 
 			  </div>
@@ -251,7 +366,7 @@
 
 
 <!----------html code compleate----------->
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
 <script>
 // Get the input element, button, and table

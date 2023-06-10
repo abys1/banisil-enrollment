@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <style>
+  .h3 {
+    margin-top: 20px; /* Adjust the value as per your requirements */
+  }
+</style>
 </head>
 <body>
 <div class="wrapper rounded bg-white">
@@ -18,11 +23,11 @@
 Kindly fill-out the online application form for a fast and efficient admissions procedure.</p>
 
 <div class="form">
-    <form action="student_enrollment_add.php" method="POST"></form>
+    <form action="student_enrollment_add.php" method="POST">
     <div class="row">
         <div class="col-md-6 mt-md-0 mt-3">
             <label>First Name <span style="color: red;">*</span></label>
-            <input type="text" class="form-control" name="firstname">
+            <input type="text" class="form-control" name="firstname" required>
         </div>
         <div class="col-md-6 mt-md-0 mt-3">
             <label>Middle Name</span></label>
@@ -30,59 +35,59 @@ Kindly fill-out the online application form for a fast and efficient admissions 
         </div>
         <div class="col-md-6 mt-md-0 mt-3">
             <label>Last Name <span style="color: red;">*</span></label>
-            <input type="text" class="form-control" name="lastname">
+            <input type="text" class="form-control" name="lastname" required>
         </div>
         <div class="col-md-6 mt-md-0 mt-3">
             <label>Suffix Name</label>
             <input type="text" class="form-control" name="suffixname">
         </div>
+    </div>
+    <div class="row">
         <div class="col-md-6 mt-md-0 mt-3">
+            <label>Age <span style="color: red;">*</span></label>
+            <input type="number" class="form-control" name="age" required>
+        </div>
+        <div class="col-md-6 mt-md-0 mt-3">
+            <label>Birthday <span style="color: red;">*</span></label>
+            <input type="date" class="form-control" name="birthday" required>
+        </div>
+        <div class="col-md-6 mt-md-0 mt-3">
+          <label>Grade<span style="color: red;">*</span></label>
+          <select id="sub" name="gender">
+            <option value="" selected hidden>Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="prefer">Prefer not to say</option>
+            </select>
+    </div>
+    </div>
+  
+        <div class="h3">Contact Information</div>
+    <div class="row">
+    <div class="col-md-6 mt-md-0 mt-3">
             <label>Email <span style="color: red;">*</span></label>
-            <input type="text" class="form-control" name="email">
+            <input type="text" class="form-control" name="email" required>
         </div>
         <div class="col-md-6 mt-md-0 mt-3">
             <label>Contact Number <span style="color: red;">*</span></label>
-            <input type="text" class="form-control" name="contact_number">
+            <input type="number" class="form-control" name="contact_number" required>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 mt-md-0 mt-3">
-            <label>Birthday <span style="color: red;">*</span></label>
-            <input type="date" class="form-control" name="birthday">
-        </div>
-        <div class="col-md-6 mt-md-0 mt-3">
-            <label>Gender<span style="color: red;">*</span></label>
-            <div class="d-flex align-items-center mt-2">
-                <label class="option">
-                    <input type="radio" name="gender">Male
-                    <span class="checkmark"></span>
-                </label>
-                <label class="option ms-4">
-                    <input type="radio" name="gender">Female
-                    <span class="checkmark"></span>
-                </label>
-            </div>
-        </div>
-    </div>
-  
-        <div class="h3">Current Address</div>
-    <div class="row">
         <div class="col-md-6 mt-md-0 mt-3">
             <label>Street<span style="color: red;">*</span></label>
-            <input type="text" class="form-control" name="street">
+            <input type="text" class="form-control" name="street" required>
         </div>
         <div class="col-md-6 mt-md-0 mt-3">
             <label>Barangay<span style="color: red;">*</span></label>
-            <input type="text" class="form-control" name="barangay">
+            <input type="text" class="form-control" name="barangay" required>
         </div>
         <div class="col-md-6 mt-md-0 mt-3">
           <label>City<span style="color: red;">*</span></label>
-          <input type="text" class="form-control" name="city">
+          <input type="text" class="form-control" name="city" required>
     </div>
     <div class="h3">Enrollment</div>
     <div class=" col-md-6 mt-md-0 mt-3">
         <label>Admit Type<span style="color: red;">*</span></label>
-        <select id="sub" name="admit">
+        <select id="sub" name="admit" required>
             <option value="" selected hidden>Choose Option</option>
             <option value="old">Old Student</option>
             <option value="new">New Student</option>
@@ -91,7 +96,7 @@ Kindly fill-out the online application form for a fast and efficient admissions 
     </div>
     <div class="col-md-6 mt-md-0 mt-3">
           <label>Grade<span style="color: red;">*</span></label>
-          <select id="sub" name="grade">
+          <select id="sub" name="grade" required>
             <option value="" selected hidden>Choose Option</option>
             <option value="11">Grade 11</option>
             <option value="12">Grade 12</option>
@@ -99,8 +104,8 @@ Kindly fill-out the online application form for a fast and efficient admissions 
     </div>
 
      <div class="col-md-6 mt-md-0 mt-3">
-          <label>Program<span style="color: red;">*</span></label>
-          <select id="sub" name="strand">
+          <label>Strand<span style="color: red;">*</span></label>
+          <select id="sub" name="strand" required>
             <option value="" selected hidden>Choose Option</option>
             <option value="abm">ABM</option>
             <option value="humss">Humss</option>
@@ -113,37 +118,22 @@ Kindly fill-out the online application form for a fast and efficient admissions 
 
     <div class="col-md-6 mt-md-0 mt-3">
           <label>Term<span style="color: red;">*</span></label>
-          <select id="sub" name="term">
+          <select id="sub" name="term" required>
             <option value="" selected hidden>Choose Option</option>
             <option value="1st">1st Term</option>
             <option value="2nd">2nd Term</option>
           </select>
     </div>
-    <div class="h3">This is for Transferee</div>
-
     <div class="col-md-6 mt-md-0 mt-3">
-          <label>Last school attended</label>
-          <input type="text" class="form-control" name="last">
+          <label>LRN<span style="color: red;">*</span></label>
+          <input type="number" class="form-control" name="lrn" required>
     </div>
     <div class="col-md-6 mt-md-0 mt-3">
-          <label>Program</label>
-          <select id="sub" name="program">
-            <option value="" selected hidden>Choose Option</option>
-            <option value="abm">ABM</option>
-            <option value="humss">Humss</option>
-            <option value="stem">Stem</option>
-            <option value="eim">EIM</option>
-            <option value="fbs">FBS</option>
-            <option value="smaw">Smaw</option>
-            <option value="ict">ICT</option>
-          </select>
+        <label>Last school attended</label>
+        <input type="text" class="form-control" name="last" value="For transferee only" onclick="clearValue(this)">
     </div>
 
-    <div class="col-md-6 mt-md-0 mt-3">
-          <label>LRN</label>
-          <input type="tel" class="form-control" name="lrn">
-    </div>
-    <div class="h3">Create Account</div>
+    <!-- <div class="h3">Create Account</div>
 
 <div class="col-md-6 mt-md-0 mt-3">
       <label>User Name<span style="color: red;">*</span></label>
@@ -156,9 +146,10 @@ Kindly fill-out the online application form for a fast and efficient admissions 
 <div class="col-md-6 mt-md-0 mt-3">
       <label>Confirm Password<span style="color: red;">*</span></label>
       <input type="text" class="form-control" name="cfpassword">
-</div>
+</div> -->
 
-<div class="btn btn-primary mt-3" id="submit-btn" name="btnSubmit" type="submit">Submit</div>
+<button class="btn btn-primary mt-3" id="submit-btn" name="btnSubmit" type="submit">Submit</button>
+</form>
 </div>
 
 </div>
@@ -173,6 +164,9 @@ Kindly fill-out the online application form for a fast and efficient admissions 
   });
 });
 
+  function clearValue(input) {
+    input.value = '';
+  }
 </script>
 </body>
 </html>

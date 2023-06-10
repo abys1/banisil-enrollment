@@ -1,43 +1,45 @@
-<?php 
+<?php
 include 'dbcon.php';
 
-  $firstname = $_POST['firstname'];
-  $lastname = $_POST['lastname'];
-  $username = $_POST['username'];
-  $password = $_POST['password'];
-  $cfpassword =$_POST['password'];
-  $encrypted = password_hash($password, PASSWORD_DEFAULT);
-  $contact = $_POST['contact'];
-  $gender = $_POST['gender'];
-  $birthday = $_POST['birthday'];
-  $age = $_POST['age'];
-  $grade = $_POST['grade'];
-  $strand = $_POST['strand'];
-  $street = $_POST['street'];
-  $barangay = $_POST['barangay'];
-  $city = $_POST['city'];
+$firstname = $_POST['firstname'];
+$middlename = $_POST['middlename'];
+$lastname = $_POST['lastname'];
+$suffix = $_POST['suffixname'];
+$email = $_POST['email'];
+$contact = $_POST['contact_number'];
+$age = $_POST['age'];
+$birthday = $_POST['birthday'];
+$street = $_POST['street'];
+$barangay = $_POST['barangay'];
+$city = $_POST['city'];
+$grade = $_POST['grade'];
+$strand = $_POST['strand'];
 
-  $sql = "INSERT INTO tbl_userinfo (firstname, lastname, gender, birthday, age, grade, strand, lrn) VALUES ('$firstname', '$lastname', '$gender', '$birthday', '$age', '$grade', '$strand', '')";
+//validation here
 
-  if($conn->query($sql) === TRUE){
+
+$sql = "INSERT INTO tbl_userinfo (firstname, middlename, lastname, suffix, gender, birthday, age)
+VALUES ('$firstname', '$middlename', '$lastname', '$suffix', '', '$birthday', '$age')";
+
+if($conn->query($sql) === TRUE) {
     $userinfo_id = $conn->insert_id;
-    $sql = "INSERT INTO tbl_usercredentials (userinfo_id, username, password) VALUES ('$userinfo_id', '$username', '$encrypted')";
+    $sql = "INSERT INTO tbl_contactinfo (userinfo_id, email, contact_num, city, barangay, street) VALUES ('$userinfo_id', '$email', '$contact', '$city', '$barangay', '$street')";
 
     if($conn->query($sql) === TRUE){
-      $sql = "INSERT INTO tbl_contactinfo (userinfo_id, contact_num, city, barangay, street) VALUES ('$userinfo_id', '$contact', '$city', '$barangay', '$street')";
-
-      if($conn->query($sql) === TRUE){
-        $sql = "INSERT INTO tbl_user_level (userinfo_id, level) VALUES ('$userinfo_id', 'TEACHER')";
+        $sql = "INSERT INTO tbl_enrollment (userinfo_id, admit_type, grade, program, term, lrn, lsa) VALUES ('$userinfo_id', '', '$grade', '$strand', '', '', '')";
 
         if($conn->query($sql) === TRUE){
-          $sql = "INSERT INTO tbl_user_status (userinfo_id, status) VALUES ('$userinfo_id', 1)";
+            $sql = "INSERT INTO tbl_user_level (userinfo_id, level) VALUES ('$userinfo_id', 'TEACHER')";
 
-          if($conn->query($sql) === TRUE){
-            header("Location:admin_teacher.php?msg=Added Successfully");
-            exit();
-          }
+            if($conn->query($sql) === TRUE) {
+                $sql = "INSERT INTO tbl_user_status (userinfo_id, status) VALUES ('$userinfo_id', 0)";
+
+                if($conn->query($sql) === TRUE){
+                    header("Location: admin_teacher.php?msg=Teacher Account Added Successfully");
+                    exit();
+                }
+            }
         }
-      }
     }
-  }
+}
 ?>

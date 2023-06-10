@@ -199,8 +199,10 @@
     $page = isset($_GET['page']) ? $_GET['page'] : 1; 
 
     $sqlCount = "SELECT COUNT(*) AS total FROM tbl_userinfo
-                JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
-                WHERE tbl_user_level.level = 'STUDENT' AND tbl_userinfo.strand = 'ABM'";
+              JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
+              JOIN tbl_enrollment ON tbl_enrollment.userinfo_id = tbl_userinfo.user_id
+              WHERE tbl_user_level.level = 'STUDENT' AND tbl_enrollment.program = 'ABM'";
+
     $resultCount = mysqli_query($conn, $sqlCount);
     $rowCount = mysqli_fetch_assoc($resultCount)['total'];
 
@@ -208,12 +210,12 @@
 
     $offset = ($page - 1) * $limit;
 
-    $sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.lastname, tbl_userinfo.grade, tbl_userinfo.strand, tbl_userinfo.lrn, tbl_user_level.level,
-            tbl_user_status.status
+    $sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.middlename, tbl_userinfo.lastname, tbl_userinfo.suffix, tbl_enrollment.userinfo_id, tbl_enrollment.admit_type, tbl_enrollment.grade, tbl_enrollment.program, tbl_enrollment.term, tbl_enrollment.lrn, tbl_enrollment.lsa, tbl_user_status.status, tbl_user_level.level
             FROM tbl_userinfo
-            JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
-            JOIN tbl_user_status ON tbl_user_status.status_id = tbl_userinfo.user_id
-            WHERE tbl_user_level.level = 'STUDENT' AND tbl_userinfo.strand = 'ABM' AND tbl_user_status.status = 1
+            JOIN tbl_enrollment ON tbl_userinfo.user_id = tbl_enrollment.userinfo_id
+            JOIN tbl_user_status ON tbl_userinfo.user_id = tbl_user_status.userinfo_id
+            JOIN tbl_user_level ON tbl_userinfo.user_id = tbl_user_level.userinfo_id
+            WHERE tbl_user_level.level = 'STUDENT' AND tbl_enrollment.program = 'ABM' AND tbl_user_status.status = '1'
             LIMIT $limit OFFSET $offset";
 
     $result = mysqli_query($conn, $sql);
@@ -236,7 +238,7 @@
         <td><?php echo $row['user_id'] ?></td>
         <td><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></td>
         <td><?php echo $row['grade']; ?></td>
-        <td><?php echo $row['strand']; ?></td>
+        <td><?php echo $row['program']; ?></td>
         <td><?php echo $row['lrn'] ?></td>
         <td>
         <a href="admin_student_edit.php?user_id=<?php echo $row['user_id']?>" class="edit">
