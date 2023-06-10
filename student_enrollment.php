@@ -18,38 +18,47 @@
 Kindly fill-out the online application form for a fast and efficient admissions procedure.</p>
 
 <div class="form">
+    <form action="student_enrollment_add.php" method="POST"></form>
     <div class="row">
         <div class="col-md-6 mt-md-0 mt-3">
-            <label>First Name</label>
-            <input type="text" class="form-control" required>
+            <label>First Name <span style="color: red;">*</span></label>
+            <input type="text" class="form-control" name="firstname">
         </div>
         <div class="col-md-6 mt-md-0 mt-3">
-            <label>Middle Name</label>
-            <input type="text" class="form-control" required>
+            <label>Middle Name</span></label>
+            <input type="text" class="form-control" name="middlename">
         </div>
         <div class="col-md-6 mt-md-0 mt-3">
-            <label>Last Name</label>
-            <input type="text" class="form-control" required>
+            <label>Last Name <span style="color: red;">*</span></label>
+            <input type="text" class="form-control" name="lastname">
         </div>
         <div class="col-md-6 mt-md-0 mt-3">
             <label>Suffix Name</label>
-            <input type="text" class="form-control" required>
+            <input type="text" class="form-control" name="suffixname">
+        </div>
+        <div class="col-md-6 mt-md-0 mt-3">
+            <label>Email <span style="color: red;">*</span></label>
+            <input type="text" class="form-control" name="email">
+        </div>
+        <div class="col-md-6 mt-md-0 mt-3">
+            <label>Contact Number <span style="color: red;">*</span></label>
+            <input type="text" class="form-control" name="contact_number">
         </div>
     </div>
     <div class="row">
         <div class="col-md-6 mt-md-0 mt-3">
-            <label>Birthday</label>
-            <input type="date" class="form-control" required>
+            <label>Birthday <span style="color: red;">*</span></label>
+            <input type="date" class="form-control" name="birthday">
         </div>
         <div class="col-md-6 mt-md-0 mt-3">
-            <label>Gender</label>
+            <label>Gender<span style="color: red;">*</span></label>
             <div class="d-flex align-items-center mt-2">
                 <label class="option">
-                    <input type="radio" name="radio">Male
+                    <input type="radio" name="gender">Male
                     <span class="checkmark"></span>
                 </label>
                 <label class="option ms-4">
-                    <input type="radio" name="radio">Female
+                    <input type="radio" name="gender">Female
                     <span class="checkmark"></span>
                 </label>
             </div>
@@ -59,24 +68,21 @@ Kindly fill-out the online application form for a fast and efficient admissions 
         <div class="h3">Current Address</div>
     <div class="row">
         <div class="col-md-6 mt-md-0 mt-3">
-            <label>Street</label>
-            <input type="text" class="form-control" required>
+            <label>Street<span style="color: red;">*</span></label>
+            <input type="text" class="form-control" name="street">
         </div>
         <div class="col-md-6 mt-md-0 mt-3">
-            <label>Barangay</label>
-            <input type="text" class="form-control" required>
+            <label>Barangay<span style="color: red;">*</span></label>
+            <input type="text" class="form-control" name="barangay">
         </div>
         <div class="col-md-6 mt-md-0 mt-3">
-          <label>City</label>
-          <input type="text" class="form-control" required>
+          <label>City<span style="color: red;">*</span></label>
+          <input type="text" class="form-control" name="city">
     </div>
-    <div class="col-md-6 mt-md-0 mt-3">
-          <label>Province</label>
-          <input type="text" class="form-control" required>
-    </div>
+    <div class="h3">Enrollment</div>
     <div class=" col-md-6 mt-md-0 mt-3">
-        <label>Admit Type</label>
-        <select id="sub" required>
+        <label>Admit Type<span style="color: red;">*</span></label>
+        <select id="sub" name="admit">
             <option value="" selected hidden>Choose Option</option>
             <option value="old">Old Student</option>
             <option value="new">New Student</option>
@@ -84,8 +90,8 @@ Kindly fill-out the online application form for a fast and efficient admissions 
         </select>
     </div>
     <div class="col-md-6 mt-md-0 mt-3">
-          <label>Grade</label>
-          <select id="sub"required>
+          <label>Grade<span style="color: red;">*</span></label>
+          <select id="sub" name="grade">
             <option value="" selected hidden>Choose Option</option>
             <option value="11">Grade 11</option>
             <option value="12">Grade 12</option>
@@ -93,8 +99,8 @@ Kindly fill-out the online application form for a fast and efficient admissions 
     </div>
 
      <div class="col-md-6 mt-md-0 mt-3">
-          <label>Program</label>
-          <select id="sub"required>
+          <label>Program<span style="color: red;">*</span></label>
+          <select id="sub" name="strand">
             <option value="" selected hidden>Choose Option</option>
             <option value="abm">ABM</option>
             <option value="humss">Humss</option>
@@ -106,8 +112,8 @@ Kindly fill-out the online application form for a fast and efficient admissions 
     </div>
 
     <div class="col-md-6 mt-md-0 mt-3">
-          <label>Term</label>
-          <select id="sub"required>
+          <label>Term<span style="color: red;">*</span></label>
+          <select id="sub" name="term">
             <option value="" selected hidden>Choose Option</option>
             <option value="1st">1st Term</option>
             <option value="2nd">2nd Term</option>
@@ -117,11 +123,11 @@ Kindly fill-out the online application form for a fast and efficient admissions 
 
     <div class="col-md-6 mt-md-0 mt-3">
           <label>Last school attended</label>
-          <input type="text" class="form-control" required>
+          <input type="text" class="form-control" name="last">
     </div>
     <div class="col-md-6 mt-md-0 mt-3">
           <label>Program</label>
-          <select id="sub"required>
+          <select id="sub" name="program">
             <option value="" selected hidden>Choose Option</option>
             <option value="abm">ABM</option>
             <option value="humss">Humss</option>
@@ -135,24 +141,24 @@ Kindly fill-out the online application form for a fast and efficient admissions 
 
     <div class="col-md-6 mt-md-0 mt-3">
           <label>LRN</label>
-          <input type="tel" class="form-control" required>
+          <input type="tel" class="form-control" name="lrn">
     </div>
     <div class="h3">Create Account</div>
 
 <div class="col-md-6 mt-md-0 mt-3">
-      <label>User Name</label>
-      <input type="text" class="form-control" required>
+      <label>User Name<span style="color: red;">*</span></label>
+      <input type="text" class="form-control" name="username">
 </div>
 <div class="col-md-6 mt-md-0 mt-3">
-      <label>Password</label>
-      <input type="text" class="form-control" required>
+      <label>Password<span style="color: red;">*</span></label>
+      <input type="text" class="form-control" name="password">
 </div>
 <div class="col-md-6 mt-md-0 mt-3">
-      <label>Confirm Password</label>
-      <input type="text" class="form-control" required>
+      <label>Confirm Password<span style="color: red;">*</span></label>
+      <input type="text" class="form-control" name="cfpassword">
 </div>
 
-<div class="btn btn-primary mt-3" id="submit-btn">Submit</div>
+<div class="btn btn-primary mt-3" id="submit-btn" name="btnSubmit" type="submit">Submit</div>
 </div>
 
 </div>

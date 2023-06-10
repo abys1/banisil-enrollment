@@ -18,7 +18,7 @@ include 'dbcon.php';
   $barangay = $_POST['barangay'];
   $city = $_POST['city'];
 
-  $sql = "INSERT INTO tbl_userinfo (firstname, lastname, gender, birthday, age, grade, strand, lrn) VALUES ('$firstname', '$lastname', '$gender', '$birthday', '$age', '$grade', '$strand', '$lrn')";
+  $sql = "INSERT INTO tbl_userinfo (firstname, lastname, gender, birthday, age, strand, lrn) VALUES ('$firstname', '$lastname', '$gender', '$birthday', '$age', '$strand', '$lrn')";
 
   if($conn->query($sql) === TRUE){
     $userinfo_id = $conn->insert_id;

@@ -229,11 +229,13 @@
       $totalPages = ceil($rowCount / $limit);
       $offset = ($page - 1) * $limit;
 
-      $sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.lastname, tbl_userinfo.grade, tbl_userinfo.strand, tbl_userinfo.lrn, tbl_user_level.level, tbl_user_status.status
-              FROM tbl_userinfo
-              JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
-              JOIN tbl_user_status ON tbl_user_status.status_id = tbl_userinfo.user_id
-              WHERE tbl_user_level.level = 'STUDENT' AND tbl_user_status.status = 1
+      $sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.lastname, tbl_userinfo.strand, tbl_userinfo.lrn, tbl_user_level.level, tbl_user_status.status
+      
+      FROM tbl_userinfo
+      JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
+      JOIN tbl_user_status ON tbl_user_status.status_id = tbl_userinfo.user_id
+      
+      WHERE tbl_user_level.level = 'STUDENT' AND tbl_user_status.status = 1
               LIMIT $limit OFFSET $offset";
 
       $result = mysqli_query($conn, $sql);
@@ -251,7 +253,7 @@
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($result as $row): ?>
+          <?php foreach ($result as $row): ?>  
           <tr>
             <td><?php echo $row['user_id'] ?></td>
             <td><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></td>

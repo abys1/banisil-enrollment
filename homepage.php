@@ -63,7 +63,7 @@
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="enroll.php">Enroll Now</a>
+                  <a class="nav-link" href="student_enrollment.php">Enroll Now</a>
                 </li>
 
                 <li class="nav-item">
