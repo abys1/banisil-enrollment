@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css/admin_student_edit.css">
+
+    
 </head>
 <body>
     
@@ -67,7 +69,7 @@ if (isset($_POST['btnSave'])) {
   mysqli_close($conn);
 }
 ?>
-
+<!-- Edit Modal -->
 <div id="editEmployeeModal" class="modal fade">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -80,16 +82,16 @@ if (isset($_POST['btnSave'])) {
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label>First Name</label>
-            <input type="text" class="form-control" name="firstname" value="<?php echo isset($row['firstname']) ? $row['firstname'] : '' ?>">
+            <label for="firstname">First Name</label>
+            <input type="text" class="form-control" id="firstname" name="firstname" value="<?php echo isset($row['firstname']) ? $row['firstname'] : '' ?>">
           </div>
           <div class="form-group">
-            <label>Last Name</label>
-            <input type="text" class="form-control" name="lastname" value="<?php echo isset($row['lastname']) ? $row['lastname'] : '' ?>">
+            <label for="lastname">Last Name</label>
+            <input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo isset($row['lastname']) ? $row['lastname'] : '' ?>">
           </div>
           <div class="mb-3">
-            <label class="form-label">Grade:</label>
-            <select class="form-select" name="grade">
+            <label class="form-label" for="grade">Grade:</label>
+            <select class="form-select" id="grade" name="grade">
               <option value="" disabled selected>Select Grade</option>
               <option value="grade11">Grade 11</option>
               <option value="grade12">Grade 12</option>
@@ -97,8 +99,8 @@ if (isset($_POST['btnSave'])) {
             </select>
           </div>
           <div class="mb-3">
-            <label class="form-label">Strand/Program:</label>
-            <select class="form-select" name="strand">
+            <label class="form-label" for="strand">Strand/Program:</label>
+            <select class="form-select" id="strand" name="strand">
               <option value="" disabled selected>Select Strand</option>
               <option value="abm">ABM</option>
               <option value="stem">STEM</option>
@@ -109,8 +111,8 @@ if (isset($_POST['btnSave'])) {
             </select>
           </div>
           <div class="mb-3">
-            <label class="form-label">LRN</label>
-            <input type="text" class="form-control" name="lrn" id="lrn" value="<?php echo isset($row['lrn']) ? $row['lrn'] : '' ?>">
+            <label class="form-label" for="lrn">LRN</label>
+            <input type="text" class="form-control" id="lrn" name="lrn" value="<?php echo isset($row['lrn']) ? $row['lrn'] : '' ?>">
           </div>
         </div>
         <div class="modal-footer">
@@ -119,11 +121,11 @@ if (isset($_POST['btnSave'])) {
           </a>
           <input type="submit" class="btn btn-info" value="Save" name="btnSave">
         </div>
-        
       </form>
     </div>
   </div>
 </div>
+
 
 </body>
 </html>
