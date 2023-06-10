@@ -156,7 +156,7 @@
                             <span class="material-icons">person_outline</span>Profile</a>
                           </li>
                           <li>
-                              <a href="admin_dashboard.php?logout=true"><span class="material-icons">logout</span>Logout</a>
+                              <a href="homepage.php?logout=true"><span class="material-icons">logout</span>Logout</a>
                           </li>
                       </ul>
                           </li>
