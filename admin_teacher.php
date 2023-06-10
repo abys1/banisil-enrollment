@@ -81,6 +81,9 @@
                         <li>
                             <a href="admin_SMAW.php">SMAW</a>
                         </li>
+                        <li>
+                            <a href="admin_ICT.php">ICT</a>
+                        </li>
                     </ul>
                 </li>
 
@@ -387,7 +390,7 @@ $result = mysqli_query($conn, $sql);
                     <option value="eim">EIM</option>
                     <option value="fbs">FBS</option>
                     <option value="smaw">SMAW</option>
-                   
+                    <option value="ict">ICT</option>
                     </select>
                   </div>
                   </div>  
