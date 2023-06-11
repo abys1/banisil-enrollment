@@ -28,64 +28,11 @@
   <link href="css/styless.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="css/responsivess.css" rel="stylesheet" />
-
+<link rel="stylesheet" href="css/homepage.css">
 
 
 
   <link rel="stylesheet" href="css/css-circular-prog-bar.css">
-  <style>
-  /* Styles for login popup form */
-  .login_popup {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    left: 0;
-    top: 1px;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-
-  .login_content {
-    position: absolute;
-    left: 50%; /* Center horizontally */
-    top: 40%; /* Center vertically */
-    transform: translate(-50%, -50%); /* Adjust center position */
-    background-color: #fff;
-    max-width: 400px;
-    padding: 20px;
-  }
-
-  .login_content h3 {
-    margin-top: 0;
-  }
-
-  .login_content input[type="text"],
-  .login_content input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-
-  .login_content button {
-    display: block;
-    margin: 0 auto; /* Center horizontally */
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-  }
-
-  .close_btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-</style>
 
 
 
@@ -304,14 +251,24 @@
       });
     }
   </script>
-  <script>
-    function showLoginPopup() {
-      document.getElementById("loginPopup").style.display = "block";
-    }
 
-    function closeLoginPopup() {
-      document.getElementById("loginPopup").style.display = "none";
-    }
+  <script>
+function showLoginPopup() {
+  var loginPopup = document.getElementById("loginPopup");
+  loginPopup.style.display = "block";
+  setTimeout(function() {
+    loginPopup.classList.add("show");
+  }, 100);
+}
+
+function closeLoginPopup() {
+  var loginPopup = document.getElementById("loginPopup");
+  loginPopup.classList.remove("show");
+  setTimeout(function() {
+    loginPopup.style.display = "none";
+  }, 500);
+}
+
   </script>
 
 
