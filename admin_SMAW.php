@@ -1,3 +1,7 @@
+<?php
+      session_start();
+      $user_id = $_SESSION['user_id'];
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -92,19 +96,10 @@
                         </li>
                     </ul>
                 </li>
-
-
                     </ul>
-                </li>
-               
-            
-               
-               
-            </ul>
-
-           
+                </li>           
+            </ul>          
         </nav>
-		
 		
 		
 		<!--------page-content---------------->

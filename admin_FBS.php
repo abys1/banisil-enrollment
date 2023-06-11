@@ -1,3 +1,7 @@
+<?php
+      session_start();
+      $user_id = $_SESSION['user_id'];
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -57,7 +61,7 @@
                 </li>
 
                 <li class="">
-                    <a href="admin_subject.php"><i class="fas fa-user"></i><span>Subject</span></a>
+                    <a href="admin_subject.php"><i class="fas fa-user"></i><span>Subjects</span></a>
                 </li>
                 
                 <li class="">
@@ -92,17 +96,9 @@
                         </li>
                     </ul>
                 </li>
-
-
                     </ul>
-                </li>
-               
-            
-               
-               
-            </ul>
-
-           
+                </li>           
+            </ul>          
         </nav>
 		
 		

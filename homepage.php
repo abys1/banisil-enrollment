@@ -140,7 +140,7 @@
                             header("Location: student.php");
                             exit();
                         } elseif ($userLevel === 'ADMIN') {
-                            header("Location: admin_dashboard.php?user_id=" . $row['user_id']);
+                            header("Location: admin_dashboard.php?");
                             exit();
                         }
                     }

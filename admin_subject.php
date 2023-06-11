@@ -1,4 +1,7 @@
-
+<?php
+      session_start();
+      $user_id = $_SESSION['user_id'];
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -45,9 +48,10 @@
 		
 		<!-------------------------sidebar------------>
 		     <!-- Sidebar  -->
-        <nav id="sidebar">
+		     <!-- Sidebar  -->
+         <nav id="sidebar">
             <div class="sidebar-header">
-            <h3><img src="img/logo.png" class="img-fluid"/><br>Banisil National High School</br></h3>
+                <h3><img src="img/logo.png" class="img-fluid"/><br>Banisil National High School</br></h3>
             </div>
             <ul class="list-unstyled components">
 			<li  class="active">
@@ -95,17 +99,9 @@
                         </li>
                     </ul>
                 </li>
-
-
                     </ul>
-                </li>
-               
-            
-               
-               
-            </ul>
-
-           
+                </li>           
+            </ul>          
         </nav>
 		
 		
