@@ -187,55 +187,53 @@
                     <h1 class="mt-4">Dashboard</h1>
                     <ol class="breadcrumb mb-4"></ol>
                     <div class="row">
-                    <?php
-                        include 'dbcon.php';
-                        $sql = "SELECT COUNT(tbl_userinfo.user_id) AS student_count
-                                FROM tbl_userinfo
-                                JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
-                                WHERE tbl_user_level.level = 'STUDENT'";
+                        <?php
+                            include 'dbcon.php';
+                            $sql = "SELECT COUNT(tbl_userinfo.user_id) AS totalStudents, tbl_user_status.status AS student_count
+                                    FROM tbl_userinfo
+                                    JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
+                                    JOIN tbl_user_status ON tbl_user_status.userinfo_id = tbl_userinfo.user_id
+                                    WHERE tbl_user_level.level = 'STUDENT' AND tbl_user_status.status = 1";
 
-                        $result = mysqli_query($conn, $sql);
+                            $result = mysqli_query($conn, $sql);
 
-                        if ($result) {
-                            $row = mysqli_fetch_assoc($result);
-                            $studentCount = $row['student_count'];
-                        } else {
+                            if ($result) {
+                                $row = mysqli_fetch_assoc($result);
+                                $studentCount = $row['student_count'];
+                            } else {
 
-                            $studentCount = "No Records Found";
-                        }
-                        mysqli_close($conn);
-                    ?>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-primary text-white mb-4">
-                            <div class="card-body"><?php echo $studentCount; ?> Enrolled Students</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="admin_student.php">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                        
-                    <?php
-                        include 'dbcon.php';
-                        $sql = "SELECT COUNT(tbl_userinfo.user_id) AS teacher_count
-                                FROM tbl_userinfo
-                                JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
-                                WHERE tbl_user_level.level = 'TEACHER'";
-
-                        $result = mysqli_query($conn, $sql);
-
-                        if ($result) {
-                            $row = mysqli_fetch_assoc($result);
-                            $teacherCount = $row['teacher_count'];
-                        } else {
-
-                            $teacherCount = "No Records Found";
-                        }
-                        mysqli_close($conn);
-                    ?>
+                                $studentCount = "No Records Found";
+                            }
+                            mysqli_close($conn);
+                        ?>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-primary text-white mb-4">
-                                <div class="card-body"><?php echo $teacherCount; ?>Teachers</div>
+                                <div class="card-body"><?php echo $studentCount; ?> Enrolled Students</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" href="admin_student.php">View Details</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <?php
+                            include 'dbcon.php';
+                            $sql = "SELECT COUNT(*) AS total FROM tbl_subjects WHERE status = '1'";
+
+                            $result = mysqli_query($conn, $sql);
+
+                            if ($result) {
+                                $row = mysqli_fetch_assoc($result);
+                                $teacherCount = $row['total'];
+                            } else {
+
+                                $teacherCount = "No Records Found";
+                            }
+                            mysqli_close($conn);
+                        ?>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-primary text-white mb-4">
+                                <div class="card-body"><?php echo $teacherCount;?> Subjects</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <a class="small text-white stretched-link" href="admin_teacher.php">View Details</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
@@ -243,11 +241,30 @@
                             </div>
                         </div>
 
+                        <?php
+                            include 'dbcon.php';
+                            $sql = "SELECT COUNT(tbl_userinfo.user_id) AS totalStudents, tbl_user_status.status AS student_count
+                                    FROM tbl_userinfo
+                                    JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
+                                    JOIN tbl_user_status ON tbl_user_status.userinfo_id = tbl_userinfo.user_id
+                                    WHERE tbl_user_level.level = 'STUDENT' AND tbl_user_status.status = 0";
+
+                            $result = mysqli_query($conn, $sql);
+
+                            if ($result) {
+                                $row = mysqli_fetch_assoc($result);
+                                $studentCount = $row['student_count'];
+                            } else {
+
+                                $studentCount = "No Records Found";
+                            }
+                            mysqli_close($conn);
+                        ?>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">10 Pending Students</div>
+                                <div class="card-body"><?php echo $studentCount;?> Pending Students</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="admin_pending.php">View Details</a>
+                                    <a class="small text-white stretched-link" href="admin_student.php">View Details</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                 </div>
                             </div>

@@ -76,11 +76,11 @@ if (isset($_GET['user_id']) && isset($_GET['userinfo_id'])) {
 </div>
 <div class="col-md-6 mt-md-0 mt-3">
       <label>Password<span style="color: red;">*</span></label>
-      <input type="text" class="form-control" name="password">
+      <input type="password" class="form-control" name="password">
 </div>
 <div class="col-md-6 mt-md-0 mt-3">
       <label>Confirm Password<span style="color: red;">*</span></label>
-      <input type="text" class="form-control" name="cfpassword">
+      <input type="password" class="form-control" name="cfpassword">
 </div>
 
 <button class="btn btn-primary mt-3" id="submit-btn" name="btnSubmit" type="submit">Submit</button>
