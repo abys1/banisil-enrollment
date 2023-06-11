@@ -224,7 +224,7 @@ if (isset($_GET['user_id']) && isset($_GET['userinfo_id'])) {
 </form>
 </div>
 
-</div>  
+</div>
 <script>
   $(document).ready(function() {
   $("#submit-btn").click(function() {

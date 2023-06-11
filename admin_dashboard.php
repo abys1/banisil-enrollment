@@ -88,6 +88,9 @@
                         <li>
                             <a href="admin_SMAW.php">SMAW</a>
                         </li>
+                        <li>
+                            <a href="admin_ICT.php">ICT</a>
+                        </li>
                     </ul>
                 </li>
 

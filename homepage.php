@@ -61,17 +61,12 @@
                 <li class="nav-item ">
                   <a class="nav-link" href="about.php"> About </a>
                 </li>
-
-                <li class="nav-item ">
-                  <a class="nav-link" href="teacher.php"> Teacher </a>
-                </li>
-
                 <li class="nav-item">
                   <a class="nav-link" href="program.php"> Program </a>
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="enroll.php">Enroll Now</a>
+                  <a class="nav-link" href="student_enrollment.php">Enroll Now</a>
                 </li>
 
                 <li class="nav-item">
