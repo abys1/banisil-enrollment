@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-        <title>BNHS</title>
+    <title>Admin dashboard</title>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 	    <!-- Bootstrap CSS -->
@@ -65,7 +65,7 @@
                 </li>
 
                 <li class="">
-                    <a href="admin_teacher.php"><i class="fas fa-user"></i><span>Teachers</span></a>
+                    <a href="admin_subject.php"><i class="fas fa-user"></i><span>Subjects</span></a>
                 </li>
                 
                 <li class="">

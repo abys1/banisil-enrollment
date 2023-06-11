@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-        <title>crud dashboard</title>
+    <title>Admin dashboard</title>
 	    <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -49,7 +49,7 @@
                 </li>
 
                 <li class="">
-                    <a href="admin_teacher.php"><i class="fas fa-user"></i><span>Teachers</span></a>
+                    <a href="admin_subject.php"><i class="fas fa-user"></i><span>Subjects</span></a>
                 </li>
                 
                 <li class="">
