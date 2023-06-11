@@ -1,149 +1,395 @@
-<!DOCTYPE html>
+<?php
+      session_start();
+      $user_id = $_SESSION['user_id'];
+?>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schedule</title>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+        <title>Admin dashboard</title>
 
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/student_schedule.css">
-</head>
-<body>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	    <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+	    <!----css3---->
+        <link rel="stylesheet" href="css/custom.css">
+		
+		<!--google fonts -->
+	
+	    <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+	
+	
+	<!--google material icon-->
+      <link href="https://fonts.googleapis.com/css2?family=Material+Icons"rel="stylesheet">
 
-<div class="idance">
-    <div class="schedule content-block">
-        <div class="container">
-            <h2 data-aos="zoom-in-up" class="aos-init aos-animate">Student Schedule</h2>
+      <style>
+  .active {
+    font-size: 15px;
+  }
+  .inactive {
+    font-size: 15px;
+  }
 
-           <!-- Profile Picture -->
-<div class="profile-picture">
-    <img src="img/user.jpg" alt="Profile Picture" id="profile-image">
-    <div class="profile-dropdown" id="dropdown-content">
-        <a onclick="manageProfile()">Manage Profile</a>
-        <a onclick="logout()">Logout</a>
+      </style>
+  </head>
+  <body>
+  
+
+<div class="wrapper">
+
+
+        <div class="body-overlay"></div>
+		
+		<!-------------------------sidebar------------>
+		     <!-- Sidebar  -->
+		     <!-- Sidebar  -->
+         <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3><img src="img/logo.png" class="img-fluid"/><br>Banisil National High School</br></h3>
+            </div>
+            <ul class="list-unstyled components">
+			<li  class="active">
+                    <a href="student_schedule.php" class="dashboard"><i class="material-icons">dashboard</i>
+					<span>Schedule</span></a>
+                </li>          
+            </ul>          
+        </nav>
+		
+		<!--------page-content---------------->
+		
+		<div id="content">
+		   
+		   <!--top--navbar----design--------->
+		   
+		   <div class="top-navbar">
+		      <div class="xp-topbar">
+
+                <!-- Start XP Row -->
+                <div class="row"> 
+                    <!-- Start XP Col -->
+                    <div class="col-2 col-md-1 col-lg-1 order-2 order-md-1 align-self-center">
+                        <div class="xp-menubar">
+                               <span class="material-icons text-white">signal_cellular_alt
+							   </span>
+                         </div>
+                    </div> 
+                    <!-- End XP Col -->
+
+                    <!-- Start XP Col -->
+                    <div class="col-md-5 col-lg-3 order-3 order-md-2">
+                      <div class="xp-searchbar">
+                        <form>
+                          <div class="input-group">
+                            <input type="search" class="form-control" placeholder="Search" id="searchInput">
+                            <div class="input-group-append">
+                              <button class="btn" type="submit" id="searchButton">
+                                <i class="fas fa-search"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    <!-- End XP Col -->
+
+                    <!-- Start XP Col -->
+                    <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
+                        <div class="xp-profilebar text-right">
+                    <nav class="navbar p-0">
+                              <ul class="nav navbar-nav flex-row ml-auto">   
+                                
+                                  </li>
+                                  <li class="nav-item">
+                          
+                                  </li>
+                                  <li class="nav-item dropdown">
+                                      <a class="nav-link" href="#" data-toggle="dropdown">
+                      <img src="img/admin.png" style="width:40px; border-radius:50%;"/>
+                      <span class="xp-user-live"></span>
+                      </a>
+                      <ul class="dropdown-menu small-menu">
+                          <li>
+                            <a href="#">
+                            <span class="material-icons">person_outline</span>Profile</a>
+                          </li>
+                          <li>
+                              <a href="admin_dashboard.php?logout=true"><span class="material-icons">logout</span>Logout</a>
+                          </li>
+                      </ul>
+                          </li>
+                      </ul>   
+                    </nav>
+							
+                        </div>
+                    </div>
+                    <!-- End XP Col -->
+
+                </div> 
+                <!-- End XP Row -->
+
+            </div>
+		   
+			
+		   </div>
+		   
+		   
+		   
+		   <!--------main-content------------->
+		   
+		   <div class="main-content">
+			  <div class="row">
+			    
+				<div class="col-md-12">
+				<div class="table-wrapper">
+    <div class="table-title">
+      <div class="row">
+        <div class="col-sm-6 p-0 d-flex justify-content-lg-start justify-content-center">
+          <h2 class="ml-lg-2">STEM Schedule</h2>
+        </div>
+      </div>
     </div>
+    <?php
+include 'dbcon.php';
+
+$limit = 10; 
+$page = isset($_GET['page']) ? $_GET['page'] : 1; 
+
+$sqlCount = "SELECT COUNT(*) AS total FROM tbl_subjects
+             WHERE subject_id = 'subject_id'";
+$resultCount = mysqli_query($conn, $sqlCount);
+$rowCount = mysqli_fetch_assoc($resultCount)['total'];
+
+$totalPages = ceil($rowCount / $limit);
+
+$offset = ($page - 1) * $limit;
+
+$sql = "SELECT tbl_enrollment.program, tbl_subjects.strand, tbl_subjects.grade, tbl_subjects.subjects, tbl_subjects.day, tbl_subjects.schedules, tbl_userinfo.user_id, tbl_user_level.level
+        FROM tbl_enrollment
+        JOIN tbl_subjects ON tbl_enrollment.program = tbl_subjects.strand
+        JOIN tbl_userinfo ON tbl_enrollment.userinfo_id = tbl_userinfo.user_id
+        JOIN tbl_user_level ON tbl_enrollment.userinfo_id = tbl_user_level.userinfo_id
+        WHERE tbl_enrollment.program IN ('ABM', 'STEM', 'HUMMS', 'EIM', 'FBS', 'SMAW', 'ICT') AND tbl_user_level.level = 'STUDENT'
+        LIMIT $limit OFFSET $offset";
+
+
+$result = mysqli_query($conn, $sql);
+if (!$result) {
+  die('Error: ' . mysqli_error($conn));
+}
+?>
+
+<table class="table table-striped table-hover" id="teacher_table">
+  <thead>
+    <tr>
+      <th>Strand</th>
+      <th>Grade</th>
+      <th>Subjects</th>
+      <th>Day</th>
+      <th>Schedules</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php while ($row = mysqli_fetch_assoc($result)): ?>
+    <tr>
+      <td><?php echo $row['strand']?></td>
+      <td><?php echo $row['grade']; ?></td>
+      <td><?php echo $row['subjects']; ?></td>
+      <td><?php echo $row['day']; ?></td>
+      <td><?php echo '<span class="active">' . $row['schedules'] . '</span>'; ?></td>
+    </tr>
+    <?php endwhile; ?>
+  </tbody>
+</table>
+
+<div class="clearfix">
+<div class="hint-text">Showing <b><?php echo mysqli_num_rows($result) ?></b> out of <b><?php echo mysqli_num_rows($result) ?></b> entries</div>
+  <ul class="pagination">
+    <?php if ($page > 1): ?>
+      <li class="page-item"><a href="?page=<?php echo ($page - 1) ?>" class="page-link">Previous</a></li>
+    <?php else: ?>
+      <li class="page-item disabled"><span class="page-link">Previous</span></li>
+    <?php endif; ?>
+
+    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+      <li class="page-item <?php if ($i == $page) echo 'active' ?>">
+        <a href="?page=<?php echo $i ?>" class="page-link"><?php echo $i ?></a>
+      </li>
+    <?php endfor; ?>
+
+    <?php if ($page < $totalPages): ?>
+      <li class="page-item"><a href="?page=<?php echo ($page + 1) ?>" class="page-link">Next</a></li>
+    <?php else: ?>
+      <li class="page-item disabled"><span class="page-link">Next</span></li>
+    <?php endif; ?>
+  </ul>
+</div>
 </div>
 
-            <div class="timetable">
-        
-              <!-- Schedule Top Navigation -->
-              <nav class="nav nav-tabs">
-                <a class="nav-link active">Mon</a>
-                <a class="nav-link">Tue</a>
-                <a class="nav-link">Wed</a>
-                <a class="nav-link">Thu</a>
-                <a class="nav-link">Fri</a>
-               
-              </nav>
-        
-              <div class="tab-content">
-                <div class="tab-pane show active">
-                  <div class="row">
-        
-                    <!-- Schedule Item 1 -->
-                    <div class="col-md-6">
-                      <div class="timetable-item">
-                        <div class="timetable-item-img">
-                          <img src="img/math.png" alt="Math">
-                        </div>
-                        <div class="timetable-item-main">
-                          <div class="timetable-item-time">07:30AM - 08:30AM</div>
-                          <div class="timetable-item-name">Math</div>
-                         
-                        </div>
-                      </div>
-                    </div>
-        
-                    <!-- Schedule Item 2 -->
-                    <div class="col-md-6">
-                      <div class="timetable-item">
-                        <div class="timetable-item-img">
-                          <img src="img/english.png" alt="English">
-                        </div>
-                        <div class="timetable-item-main">
-                          <div class="timetable-item-time">08:40AM - 09:40AM</div>
-                          <div class="timetable-item-name">English</div>
-                       
-                        </div>
-                      </div>
-                    </div>
-        
-                    <!-- Schedule Item 3 -->
-                    <div class="col-md-6">
-                      <div class="timetable-item">
-                        <div class="timetable-item-img">
-                          <img src="img/science.jpg" alt="Science">
-                        </div>
-                        <div class="timetable-item-main">
-                          <div class="timetable-item-time">09:40AM - 10:40AM</div>
-                          <div class="timetable-item-name">Science</div>
-                       
-                        </div>
-                      </div>
-                    </div>
-        
-                    <!-- Schedule Item 4 -->
-                    <div class="col-md-6">
-                      <div class="timetable-item">
-                        <div class="timetable-item-img">
-                          <img src="img/pd.jpeg" alt="Personal Development">
-                        </div>
-                        <div class="timetable-item-main">
-                          <div class="timetable-item-time">11:00AM - 11:50AM</div>
-                          <div class="timetable-item-name">Personal Development</div>
-                       
-                        </div>
-                      </div>
-                    </div>
-        
-                    <!-- Schedule Item 5 -->
-                    <div class="col-md-6">
-                      <div class="timetable-item">
-                        <div class="timetable-item-img">
-                          <img src="img/philo.jpg" alt="Philosophy">
-                        </div>
-                        <div class="timetable-item-main">
-                          <div class="timetable-item-time">1:15PM - 2:15PM</div>
-                          <div class="timetable-item-name">Philosophy</div>
-                      
-                        </div>
-                      </div>
-                    </div>
-        
-                    <!-- Schedule Item 6 -->
-                    <div class="col-md-6">
-                      <div class="timetable-item">
-                        <div class="timetable-item-img">
-                          <img src="img/pe.jpg" alt="PE">
-                        </div>
-                        <div class="timetable-item-main">
-                          <div class="timetable-item-time">2:20PM - 03:20PM</div>
-                          <div class="timetable-item-name">PE</div>
-                     
-                        </div>
-                      </div>
-                    </div>
-                      <!-- Schedule Item 7 -->
-                      <div class="col-md-6">
-                      <div class="timetable-item">
-                        <div class="timetable-item-img">
-                          <img src="img/entrep.png" alt="Entrepreneurship">
-                        </div>
-                        <div class="timetable-item-main">
-                          <div class="timetable-item-time">03:40PM - 04:40PM</div>
-                          <div class="timetable-item-name">Entrepreneurship</div>
-                     
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+<!-- Modal -->
+<div id="addEmployeeModal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form action="admin_subject_add.php" method="POST">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Subjects</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
+          <div class="modal-body">
+            <div class="error" id="error" style="display: none;"></div>
+            <div>
+            <label style="margin-bottom: 20px;">Subject Information</label>
+            </div>
+            <div class="row">
+            <div class="col-md-6 mt-md-0 mt-3">
+                  <label>Strand<span style="color: red;">*</span></label>
+                  <select id="sub" name="strand" required>
+                    <option value="" selected disabled>Select Strand</option>
+                    <option value="abm">ABM</option>
+                    <option value="humss">Humss</option>
+                    <option value="stem">Stem</option>
+                    <option value="eim">EIM</option>
+                    <option value="fbs">FBS</option>
+                    <option value="smaw">Smaw</option>
+                    <option value="ict">ICT</option>
+                  </select>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+                  <label>Grade<span style="color: red;">*</span></label>
+                  <select id="sub" name="grade" required>
+                    <option value="" selected disabled>Select Grade</option>
+                    <option value="11">Grade 11</option>
+                    <option value="12">Grade 12</option>
+                    </select>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+                <label>Subjects<span style="color: red;">*</span></label>
+                <input type="text" style="width: 338px" class="form-control" name="subject" required>
+            </div>
+            <div>
+            <label style="margin-bottom: 20px;">Schedule</label>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+                  <label>Day<span style="color: red;">*</span></label>
+                  <select id="sub" name="day" required>
+                    <option value="" selected disabled>Select Day</option>
+                    <option value="monday">Monday</option>
+                    <option value="tuesday">Tuesday</option>
+                    <option value="wednesday">Wednesday</option>
+                    <option value="thursday">Thursday</option>
+                    <option value="friday">Friday</option>
+                  </select>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+                <label>Time<span style="color: red;">*</span></label>
+                <input type="time" class="form-control" name="schedules">
+            </div>
       </div>
-  </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" name="btnAdd">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>		
+		   
+			  </div>
+			 
+			 
+			 <!---footer---->
+			 
+			 
+		</div>
+		
+
+</div>
+</div>
+
+
+<!----------html code compleate----------->
+
+
+<script>
+// Get the input element, button, and table
+var input = document.getElementById("searchInput");
+var button = document.getElementById("searchButton");
+var table = document.getElementById("teacher_table");
+
+// Add event listener for the button click
+button.addEventListener("click", function(event) {
+  event.preventDefault(); // Prevent form submission
+
+  var filter = input.value.toLowerCase();
+  var rows = table.getElementsByTagName("tr");
+
+  // Loop through all table rows and hide those that don't match the search query
+  for (var i = 0; i < rows.length; i++) {
+    var cells = rows[i].getElementsByTagName("td");
+    var found = false;
+
+    for (var j = 0; j < cells.length; j++) {
+      var cellValue = cells[j].textContent || cells[j].innerText;
+
+      if (cellValue.toLowerCase().indexOf(filter) > -1) {
+        found = true;
+        break;
+      }
+    }
+
+    if (found) {
+      rows[i].style.display = "";
+    } else {
+      rows[i].style.display = "none";
+    }
+  }
+});
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
   
-</body>
-</html>
+     <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+   <script src="js/jquery-3.3.1.slim.min.js"></script>
+   <script src="js/popper.min.js"></script>
+   <script src="js/bootstrap.min.js"></script>
+   <script src="js/jquery-3.3.1.min.js"></script>
+  
+  
+  <script type="text/javascript">
+        
+		$(document).ready(function(){
+		  $(".xp-menubar").on('click',function(){
+		    $('#sidebar').toggleClass('active');
+			$('#content').toggleClass('active');
+		  });
+		  
+		   $(".xp-menubar,.body-overlay").on('click',function(){
+		     $('#sidebar,.body-overlay').toggleClass('show-nav');
+		   });
+		  
+		});
+		
+    function clearValue(input) {
+    input.value = '';
+  }
+</script>
+  
+  
+
+
+
+  </body>
+  
+  </html>
+
+
