@@ -12,7 +12,7 @@
   <meta name="description" content="" />
   <meta name="author" content="" />
 
- 
+
 
 
 
@@ -39,11 +39,14 @@
 
 <body>
   <div class="top_container">
-    <!-- header section strats -->
+    <!-- header section  -->
     <header class="header_section">
       <div class="container">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-      
+
+          <a class="navbar-brand" href="index.html">
+            <img src="img/logo.jpg" alt="" style="width: 150px; height: auto;">
+          </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -72,12 +75,12 @@
                 </li>
 
                 <li class="nav-item">
-  <button class="btn btn-primary" onclick="window.location.href='login.php'">Log in</button>
-</li>
+                  <button class="btn btn-primary" onclick="window.location.href='login.php'">Log in</button>
+                </li>
 
 
               </ul>
-              
+
             </div>
         </nav>
       </div>
@@ -85,14 +88,11 @@
     <section class="hero_section ">
       <div class="hero-container container">
         <div class="hero_detail-box">
-        
+
           <h1>
-          Welcome to Banisil National High School
+            Welcome to Banisil National High School
           </h1>
-          <p>
-            There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in
-            some form, by injected humour, or randomised
-          </p>
+
           <div class="hero_btn-continer">
             <a href="" class="call_to-btn btn_white-border">
               <span>
@@ -102,43 +102,18 @@
             </a>
           </div>
         </div>
-        <div class="hero_img-container">
-          <div>
-            <img src="img/logo.jpg" alt="" class="img-fluid">
-          </div>
-        </div>
+            <!-- popup Login form -->
+            
+
+<!-- End popup login form -->
+
       </div>
-    </section>
+  </div>
+  </section>
   </div>
   <!-- end header section -->
 
-  <!-- about section -->
-  <section class="about_section layout_padding">
-    <div class="container">
-      <h2 class="main-heading ">
-        About School
-      </h2>
-      <p class="text-center">
-        There are many variations of passages of Lorem Ipsum available, but the majority hThere are many variations of
-        passages of Lorem Ipsum available, but the majority h
-      </p>
-      <div class="about_img-box ">
-        <img src="images/kids.jpg" alt="" class="img-fluid w-100">
-      </div>
-      <div class="d-flex justify-content-center mt-5">
-        <a href="" class="call_to-btn  ">
 
-          <span>
-            Read More
-          </span>
-          <img src="images/right-arrow.png" alt="">
-        </a>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- about section -->
 
   <!-- teacher section -->
   <section class="teacher_section layout_padding-bottom">
@@ -146,7 +121,7 @@
       <h2 class="main-heading ">
         Our Principal
       </h2>
-    
+
       <div class="teacher_container layout_padding2">
         <div class="card-deck">
           <div class="card">
@@ -203,7 +178,7 @@
       <h2 class="main-heading ">
         Strand/Program we offer
       </h2>
-    
+
       <div class="layout_padding-top">
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
           <div class="carousel-inner">
@@ -243,12 +218,12 @@
   </section>
 
 
-  
+
 
 
   <!-- end contact section -->
 
-  
+
 
 
 
@@ -293,7 +268,7 @@
       });
     }
   </script>
- 
+
 </body>
 
 </html>
