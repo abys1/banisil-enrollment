@@ -114,7 +114,7 @@
                 exit();
             } elseif (empty($password)) {
                 header("Location: homepage.php?error=Password must be filled");
-                exit();
+                exit();  
             } else {
               $sql = "SELECT tbl_userinfo.user_id, tbl_usercredentials.username, tbl_usercredentials.password, tbl_user_level.level, tbl_user_status.status
               FROM tbl_userinfo
