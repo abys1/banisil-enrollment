@@ -41,7 +41,7 @@ if($conn->query($sql) === TRUE) {
             $sql = "INSERT INTO tbl_user_level (userinfo_id, level) VALUES ('$userinfo_id', 'STUDENT')";
 
             if($conn->query($sql) === TRUE) {
-                $sql = "INSERT INTO tbl_user_status (userinfo_id, status) VALUES ('$userinfo_id', 0)";
+                $sql = "INSERT INTO tbl_user_status (userinfo_id, status) VALUES ('$userinfo_id', 1)";
 
                 if($conn->query($sql) === TRUE){
                     header("Location: admin_student.php?Student Account Added Successfully");

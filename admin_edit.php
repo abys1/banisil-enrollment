@@ -195,11 +195,12 @@ if (isset($_GET['user_id']) && isset($_GET['userinfo_id'])) {
           <select id="sub" name="strand" value="<?php echo $row['program']?>">
             <option value="" selected hidden>Select Strand</option>
             <option value="abm">ABM</option>
-            <option value="humss">Humss</option>
-            <option value="stem">Stem</option>
+            <option value="humss">HUMMS</option>
+            <option value="stem">STEM</option>
             <option value="eim">EIM</option>
             <option value="fbs">FBS</option>
-            <option value="smaw">Smaw</option>
+            <option value="smaw">SMAW</option>
+            <option value="ict">ICT</option>
           </select>
     </div>
 

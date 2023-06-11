@@ -27,39 +27,38 @@ include 'dbcon.php';
 if (isset($_GET['subject_id'])) {
     $subject_id = $_GET['subject_id'];
 
-  
-    $query = "SELECT * FROM tbl_subjects
-    WHERE subject_id = subject_id LIMIT 1";
+    $query = "SELECT * FROM tbl_subjects WHERE subject_id = subject_id LIMIT 1";
     $result = mysqli_query($conn, $query);
-  
+
     if ($result && mysqli_num_rows($result) > 0) {
-      $row = mysqli_fetch_assoc($result);
+        $row = mysqli_fetch_assoc($result);
     } else {
-      echo "No records found in the tbl_userinfo table.";
-      exit();
+        echo "No records found";
+        exit();
     }
-  } else {
+} else {
     echo "No user ID provided.";
     exit();
-  }
+}
 
-  if(isset($_POST['btnSubmit'])){
-    
+if (isset($_POST['btnSubmit'])) {
     $strand = $_POST['strand'];
     $grade = $_POST['grade'];
     $subjects = $_POST['subject'];
     $schedules = $_POST['schedules'];
 
-    $sql = "UPDATE tbl_subjects SET strand = '$strand', grade = '$grade', subjects = '$subjects', schedules = '$schedules'";
-    if($conn->query($sql) === TRUE){
-        header("Location: admin_subject.php?msg=Subject Added Successfully");
+    $sql = "UPDATE tbl_subjects SET strand = '$strand', grade = '$grade', subjects = '$subjects', schedules = '$schedules' WHERE subject_id = '$subject_id'";
+
+    if ($conn->query($sql) === TRUE) {
+        header("Location: admin_subject.php?msg=Edit Added Successfully");
         exit();
-    } else{
-        header("Location: admin_subject.php?msg=Unavaible To Add Subject");
+    } else {
+        header("Location: admin_subject.php?msg=Unable To Edit Subject");
         exit();
     }
-    }
+}
 ?>
+
 
 <div class="form">
     <form action="" method="POST">
@@ -69,11 +68,12 @@ if (isset($_GET['subject_id'])) {
                   <select id="sub" name="strand" required>
                     <option value="" selected disabled>Select Strand</option>
                     <option value="abm">ABM</option>
-                    <option value="humss">Humss</option>
-                    <option value="stem">Stem</option>
+                    <option value="humss">HUMMS</option>
+                    <option value="stem">STEM</option>
                     <option value="eim">EIM</option>
                     <option value="fbs">FBS</option>
-                    <option value="smaw">Smaw</option>
+                    <option value="smaw">SMAW</option>
+                    <option value="ict">ICT</option>
                   </select>
             </div>
             <div class="col-md-6 mt-md-0 mt-3">
@@ -86,7 +86,7 @@ if (isset($_GET['subject_id'])) {
             </div>
             <div class="col-md-6 mt-md-0 mt-3">
                 <label>Subjects<span style="color: red;">*</span></label>
-                <input type="text" class="form-control" name="subject" required>
+                <input type="text" class="form-control" name="subject" required placeholder="<?php echo $row['subjects']?>">
             </div>
             <div class="col-md-6 mt-md-0 mt-3">
                 <label>Schedules<span style="color: red;">*</span></label>

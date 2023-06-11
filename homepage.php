@@ -34,6 +34,16 @@
 
   <link rel="stylesheet" href="css/css-circular-prog-bar.css">
 
+  <style>
+    .error {
+    text-align: center;
+    background: #f59595fb;
+    color: #b92c2c;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+}
+  </style>
 
 
 </head>
@@ -85,28 +95,70 @@
           <h1>
             Welcome to Banisil National High School
           </h1>
-
           <div class="hero_btn-continer">
-            <a href="" class="call_to-btn btn_white-border">
-              <span>
-                Contact
-              </span>
-              <img src="img/right-arrow.png" alt="">
-            </a>
           </div>
         </div>
         <!-- popup Login form -->
 
         <!-- popup Login form -->
         <?php
+        session_start();
         include 'dbcon.php';
-        if(isset($_POST['btnLogin'])){
-          
+
+        if (isset($_POST['btnLogin'])) {
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+
+            if (empty($username)) {
+                header("Location: homepage.php?error=Username must be filled");
+                exit();
+            } elseif (empty($password)) {
+                header("Location: homepage.php?error=Password must be filled");
+                exit();
+            } else {
+                $sql = "SELECT tbl_userinfo.user_id, tbl_usercredentials.username, tbl_usercredentials.password, tbl_user_level.level as level
+                        FROM tbl_userinfo
+                        JOIN tbl_usercredentials ON tbl_userinfo.user_id = tbl_usercredentials.userinfo_id
+                        JOIN tbl_user_level ON tbl_userinfo.user_id = tbl_user_level.userinfo_id
+                        WHERE tbl_user_level.level IN ('STUDENT', 'ADMIN')
+                        AND tbl_usercredentials.username = '$username'";
+
+                $result = mysqli_query($conn, $sql);
+
+                if ($result && mysqli_num_rows($result) > 0) {
+                    $row = mysqli_fetch_assoc($result);
+                    $storedPassword = $row['password'];
+                    $userLevel = $row['level'];
+
+                    if (password_verify($password, $storedPassword)) {
+                        // Store user information in session variables
+                        $_SESSION['user_id'] = $row['user_id'];
+                        $_SESSION['username'] = $username;
+                        $_SESSION['user_level'] = $userLevel;
+
+                        if ($userLevel === 'STUDENT') {
+                            header("Location: student.php");
+                            exit();
+                        } elseif ($userLevel === 'ADMIN') {
+                            header("Location: admin_dashboard.php?user_id=" . $row['user_id']);
+                            exit();
+                        }
+                    }
+                }
+                header("Location: homepage.php?error=Invalid username or password");
+                exit();
+            }
         }
         ?>
+
         <div id="loginPopup" class="login_popup">
           <div class="login_content">
             <h3>Login</h3>
+            <?php if (isset($_GET['error'])) { ?>
+                <p class="error">
+                    <?php echo $_GET['error']; ?>
+                </p>
+            <?php } ?>
             <form action="#" method="POST">
               <!-- Add your login form fields here -->
               <input type="text" placeholder="Username" name="username">

@@ -35,7 +35,13 @@
     width: 100%;
     margin: auto;
   }
-
+  .active {
+    font-size: 15px;
+  }
+  
+  .inactive {
+    font-size: 15px;
+  }
 
       </style>
       
@@ -284,9 +290,9 @@
             <td>
             <?php
             if($row['status'] == 1){
-              echo '<i class="material-icons" data-toggle="tooltip" title="Activated">power_settings_new</i>';
+              echo '<span class="active">ACTIVE</span>';
             } else {
-              echo '<i class="material-icons" data-toggle="tooltip" title="Deactivated" style="transform: rotate(180deg);">power_settings_new</i>';
+              echo '<span class="inactive">INACTIVE</span>';
             }
             ?>
             </td>
@@ -323,7 +329,7 @@
 <div id="addEmployeeModal" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form action="#" method="POST">
+      <form action="admin_student_add.php" method="POST">
         <div class="modal-header">
           <h5 class="modal-title">Add Student</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -453,6 +459,7 @@
                   <option value="eim">EIM</option>
                   <option value="fbs">FBS</option>
                   <option value="smaw">SMAW</option>
+                  <option value="ict">ICT</option>
                 </select>
               </div>
             </div>

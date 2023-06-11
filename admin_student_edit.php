@@ -95,10 +95,10 @@ if (isset($_GET['user_id']) && isset($_GET['userinfo_id'])) {
                         $sql = "UPDATE tbl_user_level SET level = 'STUDENT' WHERE userinfo_id = '$userinfo_id'";
 
                         if ($conn->query($sql) === TRUE) {
-                            $sql = "UPDATE tbl_user_status SET status = 0 WHERE userinfo_id = '$userinfo_id'";
+                            $sql = "UPDATE tbl_user_status SET status = 1 WHERE userinfo_id = '$userinfo_id'";
 
                             if ($conn->query($sql) === TRUE) {
-                                header("Location: admin_pending.php?msg=Student Information Updated Successfully");
+                                header("Location: admin_student.php?msg=Student Information Updated Successfully");
                                 exit();
                             }
                         }
@@ -195,11 +195,12 @@ if (isset($_GET['user_id']) && isset($_GET['userinfo_id'])) {
           <select id="sub" name="strand" value="<?php echo $row['program']?>">
             <option value="" selected hidden>Select Strand</option>
             <option value="abm">ABM</option>
-            <option value="humss">Humss</option>
-            <option value="stem">Stem</option>
+            <option value="humms">HUMMS</option>
+            <option value="stem">STEM</option>
             <option value="eim">EIM</option>
             <option value="fbs">FBS</option>
-            <option value="smaw">Smaw</option>
+            <option value="smaw">SMAW</option>
+            <option value="ict">ICT</option>
           </select>
     </div>
 

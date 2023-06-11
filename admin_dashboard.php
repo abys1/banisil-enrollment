@@ -189,26 +189,27 @@
                     <div class="row">
                         <?php
                             include 'dbcon.php';
-                            $sql = "SELECT COUNT(tbl_userinfo.user_id) AS totalStudents, tbl_user_status.status AS student_count
-                                    FROM tbl_userinfo
-                                    JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
-                                    JOIN tbl_user_status ON tbl_user_status.userinfo_id = tbl_userinfo.user_id
-                                    WHERE tbl_user_level.level = 'STUDENT' AND tbl_user_status.status = 1";
+                            $sql = "SELECT COUNT(tbl_userinfo.user_id) AS count
+                            FROM tbl_userinfo
+                            JOIN tbl_user_status ON tbl_user_status.userinfo_id = tbl_userinfo.user_id
+                            JOIN tbl_user_level ON tbl_user_level.userinfo_id = tbl_userinfo.user_id
+                            WHERE tbl_user_status.status = 1 AND tbl_user_level.level = 'STUDENT'";
+                            
 
                             $result = mysqli_query($conn, $sql);
 
                             if ($result) {
                                 $row = mysqli_fetch_assoc($result);
-                                $studentCount = $row['student_count'];
+                                $count = $row['count'];
                             } else {
 
-                                $studentCount = "No Records Found";
+                                $count = "No Records Found";
                             }
                             mysqli_close($conn);
                         ?>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-primary text-white mb-4">
-                                <div class="card-body"><?php echo $studentCount; ?> Enrolled Students</div>
+                                <div class="card-body"><?php echo $count; ?> Enrolled Students</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <a class="small text-white stretched-link" href="admin_student.php">View Details</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
@@ -243,26 +244,26 @@
 
                         <?php
                             include 'dbcon.php';
-                            $sql = "SELECT COUNT(tbl_userinfo.user_id) AS totalStudents, tbl_user_status.status AS student_count
-                                    FROM tbl_userinfo
-                                    JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
-                                    JOIN tbl_user_status ON tbl_user_status.userinfo_id = tbl_userinfo.user_id
-                                    WHERE tbl_user_level.level = 'STUDENT' AND tbl_user_status.status = 0";
+                            $sql = "SELECT COUNT(tbl_userinfo.user_id) AS count
+                            FROM tbl_userinfo
+                            JOIN tbl_user_status ON tbl_user_status.userinfo_id = tbl_userinfo.user_id
+                            JOIN tbl_user_level ON tbl_user_level.userinfo_id = tbl_userinfo.user_id
+                            WHERE tbl_user_status.status = 0 AND tbl_user_level.level = 'STUDENT'";
 
                             $result = mysqli_query($conn, $sql);
 
                             if ($result) {
                                 $row = mysqli_fetch_assoc($result);
-                                $studentCount = $row['student_count'];
+                                $count = $row['count'];
                             } else {
 
-                                $studentCount = "No Records Found";
+                                $count = "No Records Found";
                             }
                             mysqli_close($conn);
                         ?>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-primary text-white mb-4">
-                                <div class="card-body"><?php echo $studentCount;?> Pending Students</div>
+                                <div class="card-body"><?php echo $count;?> Pending Students</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <a class="small text-white stretched-link" href="admin_student.php">View Details</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>

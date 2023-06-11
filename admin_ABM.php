@@ -22,6 +22,15 @@
 	
 	<!--google material icon-->
       <link href="https://fonts.googleapis.com/css2?family=Material+Icons"rel="stylesheet">
+      <style>
+        .active {
+          font-size: 15px;
+        }
+        
+        .inactive {
+          font-size: 15px;
+        }
+      </style>
 
   </head>
   <body>
@@ -188,7 +197,7 @@
     <div class="table-title">
       <div class="row">
         <div class="col-sm-6 p-0 d-flex justify-content-lg-start justify-content-center">
-          <h2 class="ml-lg-2">Manage Student</h2>
+          <h2 class="ml-lg-2">ABM Student</h2>
         </div>
       </div>
     </div>
@@ -229,7 +238,7 @@
       <th>Grade</th>
       <th>Program/Strand</th>
       <th>LRN</th>
-      <th>Actions</th>
+      <th>STATUS</th>
     </tr>
   </thead>
   <tbody>
@@ -241,12 +250,13 @@
         <td><?php echo $row['program']; ?></td>
         <td><?php echo $row['lrn'] ?></td>
         <td>
-        <a href="admin_student_edit.php?user_id=<?php echo $row['user_id']?>" class="edit">
-        <i class="fas fa-pencil" data-toggle="tooltip" title="Edit">&#xE254;</i>
-        </a>
-        <a href="admin_student_delete.php?user_id=<?php echo $row['user_id']?>" class="delete">
-        <i class="fas fa-trash" data-toggle="tooltip" title="delete"></i>
-        </a>
+        <?php
+            if($row['status'] == 1){
+              echo '<span class="active">ACTIVE</span>';
+            } else {
+              echo '<span class="inactive">INACTIVE</span>';
+            }
+        ?>
         </td>
       </tr>
     <?php endforeach; ?>
@@ -277,85 +287,6 @@
 </div>
 
 </div>
-<!-- Edit Modal HTML -->
-<div id="editEmployeeModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form>
-        <div class="modal-header">
-          <h4 class="modal-title">Edit Student Info</h4>
-          <button type="button" class="close" data-dismiss="modal" 
-		  aria-hidden="true">&times;</button>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label>First Name</label>
-            <input type="text" class="form-control" name="firstname">
-          </div>
-          <div class="form-group">
-            <label>Last Name</label>
-            <input type="text" class="form-control" name="lastname">
-          </div>
-          <div class="mb-3">
-                <label class="form-label">Grade:</label>
-                <select class="form-select" name="grade">
-                <option value="" disabled selected>Select Grade</option>
-                <option value="grade11">Grade 11</option>
-                <option value="grade12">Grade 12</option>
-                <option value="transferee">Transferee</option>
-                </select>
-          </div>
-          <div class="mb-3">
-                  <label class="form-label">Strand/Program: </label>
-                  <select class="form-select" name="strand">
-                  <option value="" disabled selected>Select Strand</option>
-                  <option value="abm">ABM</option>
-                  <option value="stem">STEM</option>
-                  <option value="humms">HUMMS</option>
-                  <option value="eim">EIM</option>
-                  <option value="fbs">FBS</option>
-                  <option value="smaw">SMAW</option>
-                  </select>
-          </div>
-          <div class="mb-3">
-                    <label class="form-label">LRN</label>
-                    <input type="text" class="form-control" name="lrn" id="lrn">
-          </div>
-        <div class="modal-footer">
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-          <input type="submit" class="btn btn-info" value="Save">
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-
-
-<!-- Delete Modal HTML -->
-<div id="deleteEmployeeModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form>
-        <div class="modal-header">
-          <h4 class="modal-title">Delete Employee</h4>
-          <button type="button" class="close" data-dismiss="modal" 
-		  aria-hidden="true">&times;</button>
-        </div>
-        <div class="modal-body">
-          <p>Are you sure you want to delete these Records?</p>
-          <p class="text-warning"><small>This action cannot be undone.</small></p>
-        </div>
-        <div class="modal-footer">
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-          <input type="submit" class="btn btn-danger" value="Delete">
-        </div>
-      </form>
-    </div>
-	</div>
-  </div>
-				
-		   
 			  </div>
 			 
 			 

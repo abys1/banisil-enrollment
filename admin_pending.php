@@ -298,55 +298,7 @@
     <?php endif; ?>
   </ul>
 </div>
-    <!-- <table class="table table-striped table-hover" id="pending_table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Full Name</th>
-          <th>Admit Type</th>
-          <th>Grade</th>
-          <th>Program/Strand</th>
-          <th>Term</th>
-          <th>LRN</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Thomas Sue</td>
-          <td>Transferee</td>
-          <td>12</td>
-          <td>STEM</td>
-          <td>1st SEM</td>
-          <td>128503070025</td>
-          <td>
-            <a href="admin_confirm.html" class="confirm" data-toggle="modal">
-                <i class="material-icons" data-toggle="tooltip" title="Confirm">&#xE5CA;</i>
-            </a>
-            <a href="#decline" class="decline" data-toggle="modal">
-                <i class="material-icons" data-toggle="tooltip" title="Decline">&#xE5CD;</i>
-            </a>
-            <a href="#decline" class="edit" data-toggle="modal">
-                <i class="material-icons" data-toggle="tooltip" title="Edit">create</i>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="clearfix">
-      <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-      <ul class="pagination">
-        <li class="page-item disabled"><a href="#">Previous</a></li>
-        <li class="page-item"><a href="#" class="page-link">1</a></li>
-        <li class="page-item"><a href="#" class="page-link">2</a></li>
-        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-        <li class="page-item"><a href="#" class="page-link">4</a></li>
-        <li class="page-item"><a href="#" class="page-link">5</a></li>
-        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-      </ul>
-    </div>
-  </div> -->
+
 </div>
 
 			  </div>

@@ -25,6 +25,15 @@
 	<!--google material icon-->
       <link href="https://fonts.googleapis.com/css2?family=Material+Icons"rel="stylesheet">
 
+      <style>
+  .active {
+    font-size: 15px;
+  }
+  .inactive {
+    font-size: 15px;
+  }
+
+      </style>
   </head>
   <body>
   
@@ -252,7 +261,7 @@ $result = mysqli_query($conn, $sql);
       <td><?php echo $row['subjects']; ?></td>
       <td><?php echo $row['schedules'] ?></td>
       <td>
-            <a href="admin_subject_edit.php?subject_id=<?php echo $row['subject_id']?>?>"class="confirm">
+            <a href="admin_subject_edit.php?subject_id=<?php echo $row['subject_id']?>"class="confirm">
                 <i class="material-icons" data-toggle="tooltip" title="Edit">create</i>
             </a>
             <a href="admin_subject_activate.php?subject_id=<?php echo $row['subject_id']?>"class="confirm">
@@ -265,9 +274,9 @@ $result = mysqli_query($conn, $sql);
             <td>
             <?php
             if($row['status'] == 1){
-              echo 'Active';
+              echo '<span class="active">ACTIVE</span>';
             } else {
-              echo 'Inactive';
+              echo '<span class="inactive">INACTIVE</span>';
             }
             ?>
             </td>
