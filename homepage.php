@@ -151,14 +151,20 @@
         <!-- popup Login form -->
 
         <!-- popup Login form -->
+        <?php
+        include 'dbcon.php';
+        if(isset($_POST['btnLogin'])){
+          
+        }
+        ?>
         <div id="loginPopup" class="login_popup">
           <div class="login_content">
             <h3>Login</h3>
-            <form>
+            <form action="#" method="POST">
               <!-- Add your login form fields here -->
-              <input type="text" placeholder="Username">
-              <input type="password" placeholder="Password">
-              <button type="submit">Login</button>
+              <input type="text" placeholder="Username" name="username">
+              <input type="password" placeholder="Password" name="password">
+              <button type="submit" name="btnLogin">Login</button>
             </form>
             <span class="close_btn" onclick="closeLoginPopup()">&times;</span>
           </div>
@@ -197,19 +203,6 @@
       </div>
     </div>
   </section>
-
-
-
-
-  <div class="d-flex justify-content-center mt-3">
-    <a href="" class="call_to-btn  ">
-
-      <span>
-        See More
-      </span>
-      <img src="img/right-arrow.png" alt="">
-    </a>
-  </div>
   </div>
   </section>
 
