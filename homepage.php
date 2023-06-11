@@ -116,35 +116,36 @@
                 header("Location: homepage.php?error=Password must be filled");
                 exit();
             } else {
-                $sql = "SELECT tbl_userinfo.user_id, tbl_usercredentials.username, tbl_usercredentials.password, tbl_user_level.level as level
-                        FROM tbl_userinfo
-                        JOIN tbl_usercredentials ON tbl_userinfo.user_id = tbl_usercredentials.userinfo_id
-                        JOIN tbl_user_level ON tbl_userinfo.user_id = tbl_user_level.userinfo_id
-                        WHERE tbl_user_level.level IN ('STUDENT', 'ADMIN')
-                        AND tbl_usercredentials.username = '$username'";
-
-                $result = mysqli_query($conn, $sql);
-
-                if ($result && mysqli_num_rows($result) > 0) {
-                    $row = mysqli_fetch_assoc($result);
-                    $storedPassword = $row['password'];
-                    $userLevel = $row['level'];
-
-                    if (password_verify($password, $storedPassword)) {
-                        // Store user information in session variables
-                        $_SESSION['user_id'] = $row['user_id'];
-                        $_SESSION['username'] = $username;
-                        $_SESSION['user_level'] = $userLevel;
-
-                        if ($userLevel === 'STUDENT') {
-                            header("Location: student.php");
-                            exit();
-                        } elseif ($userLevel === 'ADMIN') {
-                            header("Location: admin_dashboard.php?");
-                            exit();
-                        }
-                    }
-                }
+              $sql = "SELECT tbl_userinfo.user_id, tbl_usercredentials.username, tbl_usercredentials.password, tbl_user_level.level, tbl_user_status.status
+              FROM tbl_userinfo
+              JOIN tbl_usercredentials ON tbl_userinfo.user_id = tbl_usercredentials.userinfo_id
+              JOIN tbl_user_level ON tbl_userinfo.user_id = tbl_user_level.userinfo_id
+              JOIN tbl_user_status ON tbl_userinfo.user_id = tbl_user_status.userinfo_id
+              WHERE tbl_user_level.level IN ('STUDENT', 'ADMIN') AND tbl_user_status.status = 1
+              AND tbl_usercredentials.username = '$username'";
+      
+              $result = mysqli_query($conn, $sql);
+              
+              if ($result && mysqli_num_rows($result) > 0) {
+                  $row = mysqli_fetch_assoc($result);
+                  $storedPassword = $row['password'];
+                  $userLevel = $row['level'];
+              
+                  if (password_verify($password, $storedPassword) && $row['status'] == 1) {
+                      // Store user information in session variables
+                      $_SESSION['user_id'] = $row['user_id'];
+                      $_SESSION['username'] = $username;
+                      $_SESSION['user_level'] = $userLevel;
+              
+                      if ($userLevel === 'STUDENT') {
+                          header("Location: student_schedule.php");
+                          exit();
+                      } elseif ($userLevel === 'ADMIN') {
+                          header("Location: admin_dashboard.php?");
+                          exit();
+                      }
+                  }
+              }
                 header("Location: homepage.php?error=Invalid username or password");
                 exit();
             }

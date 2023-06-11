@@ -161,7 +161,7 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="website">Gender</label>
-                                <input type="url" class="form-control" id="website" name="gender"  placeholder="<?php echo $row['gender']?>">
+                                <input type="text" class="form-control" id="website" name="gender"  placeholder="<?php echo $row['gender']?>">
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
