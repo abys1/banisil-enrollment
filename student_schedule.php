@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-        <title>Admin dashboard</title>
+        <title>Student Dashboard</title>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 	    <!-- Bootstrap CSS -->
@@ -115,7 +115,7 @@
                       </a>
                       <ul class="dropdown-menu small-menu">
                           <li>
-                            <a href="#">
+                          <a href="profile.php?user_id=<?php echo $_SESSION['user_id']?>">
                             <span class="material-icons">person_outline</span>Profile</a>
                           </li>
                           <li>
@@ -170,11 +170,11 @@ $totalPages = ceil($rowCount / $limit);
 $offset = ($page - 1) * $limit;
 
 $sql = "SELECT tbl_enrollment.program, tbl_subjects.strand, tbl_subjects.grade, tbl_subjects.subjects, tbl_subjects.day, tbl_subjects.schedules, tbl_userinfo.user_id, tbl_user_level.level
-        FROM tbl_enrollment
-        JOIN tbl_subjects ON tbl_enrollment.program = tbl_subjects.strand
-        JOIN tbl_userinfo ON tbl_enrollment.userinfo_id = tbl_userinfo.user_id
-        JOIN tbl_user_level ON tbl_enrollment.userinfo_id = tbl_user_level.userinfo_id
-        WHERE tbl_enrollment.program IN ('ABM', 'STEM', 'HUMMS', 'EIM', 'FBS', 'SMAW', 'ICT') AND tbl_user_level.level = 'STUDENT'
+FROM tbl_enrollment
+JOIN tbl_subjects ON tbl_enrollment.program = tbl_subjects.strand
+JOIN tbl_userinfo ON tbl_enrollment.userinfo_id = tbl_userinfo.user_id
+JOIN tbl_user_level ON tbl_enrollment.userinfo_id = tbl_user_level.userinfo_id
+WHERE tbl_enrollment.program IN ('ABM', 'STEM', 'HUMMS', 'EIM', 'FBS', 'SMAW', 'ICT') AND tbl_user_level.level = 'STUDENT' AND tbl_enrollment.grade = tbl_subjects.grade AND tbl_enrollment.userinfo_id = '$user_id'
         LIMIT $limit OFFSET $offset";
 
 
@@ -188,17 +188,15 @@ if (!$result) {
   <thead>
     <tr>
       <th>Strand</th>
-      <th>Grade</th>
       <th>Subjects</th>
       <th>Day</th>
-      <th>Schedules</th>
+      <th>Time</th>
     </tr>
   </thead>
   <tbody>
     <?php while ($row = mysqli_fetch_assoc($result)): ?>
     <tr>
       <td><?php echo $row['strand']?></td>
-      <td><?php echo $row['grade']; ?></td>
       <td><?php echo $row['subjects']; ?></td>
       <td><?php echo $row['day']; ?></td>
       <td><?php echo '<span class="active">' . $row['schedules'] . '</span>'; ?></td>
