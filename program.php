@@ -43,11 +43,8 @@
     <header class="header_section">
       <div class="container">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="index.html">
-            <img src="img/logo.png" alt="">
-            <span>
-              Adward
-            </span>
+        <a class="navbar-brand" href="index.html">
+            <img src="img/logo.png" alt="" style="width: 100px; height: auto;">
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,28 +55,21 @@
             <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
               <ul class="navbar-nav  ">
                 <li class="nav-item active">
-                  <a class="nav-link" href="index.html"> Home <span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="homepage.php"> Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item ">
-                  <a class="nav-link" href="about.html"> About </a>
-                </li>
-
-                <li class="nav-item ">
-                  <a class="nav-link" href="teacher.html"> Teacher </a>
+             
+                <li class="nav-item">
+                  <a class="nav-link" href="program.php"> Program </a>
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="vehicle.html"> vehicle </a>
+                  <a class="nav-link" href="student_enrollment.php">Enroll Now</a>
                 </li>
 
-                <li class="nav-item">
-                  <a class="nav-link" href="contact.html">Contact Us</a>
-                </li>
+              
 
               </ul>
-              <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
-                <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
-              </form>
+              
             </div>
         </nav>
       </div>
@@ -92,28 +82,30 @@
   <section class="vehicle_section layout_padding">
     <div class="container">
       <h2 class="main-heading ">
-        Vehicles Facility
+        Strand/Program we offer
       </h2>
-      <p class="text-center">
-        There are many variations of passages of Lorem Ipsum available, but the majority hThere are many variations of
-        passages of Lorem Ipsum available, but the majority h
-      </p>
+
       <div class="layout_padding-top">
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active">
               <div class="vehicle_img-box ">
-                <img src="img/bus.png" alt="" class="img-fluid w-100">
+                <img src="img/abm.png" alt="" class="img-fluid w-100">
               </div>
             </div>
             <div class="carousel-item">
               <div class="vehicle_img-box ">
-                <img src="img/bus.png" alt="" class="img-fluid w-100">
+                <img src="img/humss.jpg" alt="" class="img-fluid w-100">
               </div>
             </div>
             <div class="carousel-item">
               <div class="vehicle_img-box ">
-                <img src="img/bus.png" alt="" class="img-fluid w-100">
+                <img src="img/stem.jpg" alt="" class="img-fluid w-100">
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="vehicle_img-box ">
+                <img src="img/tvl.jpg" alt="" class="img-fluid w-100">
               </div>
             </div>
           </div>
@@ -130,7 +122,6 @@
 
     </div>
   </section>
-
 
   <!-- vehicle section -->
 

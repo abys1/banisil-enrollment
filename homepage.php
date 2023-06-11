@@ -33,6 +33,60 @@
 
 
   <link rel="stylesheet" href="css/css-circular-prog-bar.css">
+  <style>
+  /* Styles for login popup form */
+  .login_popup {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 1px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .login_content {
+    position: absolute;
+    left: 50%; /* Center horizontally */
+    top: 40%; /* Center vertically */
+    transform: translate(-50%, -50%); /* Adjust center position */
+    background-color: #fff;
+    max-width: 400px;
+    padding: 20px;
+  }
+
+  .login_content h3 {
+    margin-top: 0;
+  }
+
+  .login_content input[type="text"],
+  .login_content input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .login_content button {
+    display: block;
+    margin: 0 auto; /* Center horizontally */
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+
+  .close_btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
 
 
 </head>
@@ -45,7 +99,7 @@
         <nav class="navbar navbar-expand-lg custom_nav-container ">
 
           <a class="navbar-brand" href="index.html">
-            <img src="img/logo.jpg" alt="" style="width: 150px; height: auto;">
+            <img src="img/logo.png" alt="" style="width: 150px; height: auto;">
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,9 +112,7 @@
                 <li class="nav-item active">
                   <a class="nav-link" href="homepage.php"> Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item ">
-                  <a class="nav-link" href="about.php"> About </a>
-                </li>
+             
                 <li class="nav-item">
                   <a class="nav-link" href="program.php"> Program </a>
                 </li>
@@ -70,9 +122,8 @@
                 </li>
 
                 <li class="nav-item">
-                  <button class="btn btn-primary" onclick="window.location.href='login.php'">Log in</button>
+                  <button class="btn btn-primary" onclick="showLoginPopup()">Log in</button>
                 </li>
-
 
               </ul>
 
@@ -97,10 +148,24 @@
             </a>
           </div>
         </div>
-            <!-- popup Login form -->
-            
+        <!-- popup Login form -->
 
-<!-- End popup login form -->
+        <!-- popup Login form -->
+        <div id="loginPopup" class="login_popup">
+          <div class="login_content">
+            <h3>Login</h3>
+            <form>
+              <!-- Add your login form fields here -->
+              <input type="text" placeholder="Username">
+              <input type="password" placeholder="Password">
+              <button type="submit">Login</button>
+            </form>
+            <span class="close_btn" onclick="closeLoginPopup()">&times;</span>
+          </div>
+        </div>
+        <!-- End popup login form -->
+
+        <!-- End popup login form -->
 
       </div>
   </div>
@@ -110,59 +175,42 @@
 
 
 
-  <!-- teacher section -->
+  <!-- principal section -->
   <section class="teacher_section layout_padding-bottom">
     <div class="container">
-      <h2 class="main-heading ">
+      <h2 class="main-heading">
         Our Principal
       </h2>
 
       <div class="teacher_container layout_padding2">
         <div class="card-deck">
           <div class="card">
-            <img class="card-img-top" src="img/teacher-1.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Den Mark</h5>
+            <div class="card-body d-flex align-items-center justify-content-center">
+              <img class="card-img-top" src="img/principal.png" alt="Card image cap"
+                style="width: 500px; height: auto;">
             </div>
-          </div>
-          <div class="card">
-            <img class="card-img-top" src="img/teacher-2.jpg" alt="Card image cap">
             <div class="card-body">
-              <h5 class="card-title">Leena jorj</h5>
+              <h5 class="card-title">EDDIE H. ATAY</h5>
             </div>
-
-          </div>
-          <div class="card">
-            <img class="card-img-top" src="img/teacher-3.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Magi Den</h5>
-
-            </div>
-
-          </div>
-
-          <div class="card">
-            <img class="card-img-top" src="img/teacher-4.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">jonson mark</h5>
-
-            </div>
-
           </div>
         </div>
       </div>
-
-
-      <div class="d-flex justify-content-center mt-3">
-        <a href="" class="call_to-btn  ">
-
-          <span>
-            See More
-          </span>
-          <img src="img/right-arrow.png" alt="">
-        </a>
-      </div>
     </div>
+  </section>
+
+
+
+
+  <div class="d-flex justify-content-center mt-3">
+    <a href="" class="call_to-btn  ">
+
+      <span>
+        See More
+      </span>
+      <img src="img/right-arrow.png" alt="">
+    </a>
+  </div>
+  </div>
   </section>
 
   <!-- teacher section -->
@@ -263,6 +311,16 @@
       });
     }
   </script>
+  <script>
+    function showLoginPopup() {
+      document.getElementById("loginPopup").style.display = "block";
+    }
+
+    function closeLoginPopup() {
+      document.getElementById("loginPopup").style.display = "none";
+    }
+  </script>
+
 
 </body>
 
