@@ -475,7 +475,7 @@
             <div class="col-md-6 mt-md-0 mt-3">
               <div class="form-group">
                 <label>Last School Attended</label>
-                <input type="text" class="form-control" name="last" value="For transferee only" onclick="clearValue(this)">
+                <input type="text" class="form-control" name="last" placeholder="For transferee only">
               </div>
             </div>
           </div>
@@ -557,10 +557,6 @@ button.addEventListener("click", function(event) {
 		   });
 		  
 		});
-
-    function clearValue(input) {
-    input.value = '';
-  }
 </script>
   
   

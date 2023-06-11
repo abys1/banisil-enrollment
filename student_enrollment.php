@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enroll</title>
+    <title>Student Enrollment</title>
     <link rel="stylesheet" href="css/enroll.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js">
@@ -130,23 +130,8 @@ Kindly fill-out the online application form for a fast and efficient admissions 
     </div>
     <div class="col-md-6 mt-md-0 mt-3">
         <label>Last school attended</label>
-        <input type="text" class="form-control" name="last" value="For transferee only" onclick="clearValue(this)">
+        <input type="text" class="form-control" name="last" placeholder="For transferee only">
     </div>
-
-    <!-- <div class="h3">Create Account</div>
-
-<div class="col-md-6 mt-md-0 mt-3">
-      <label>User Name<span style="color: red;">*</span></label>
-      <input type="text" class="form-control" name="username">
-</div>
-<div class="col-md-6 mt-md-0 mt-3">
-      <label>Password<span style="color: red;">*</span></label>
-      <input type="text" class="form-control" name="password">
-</div>
-<div class="col-md-6 mt-md-0 mt-3">
-      <label>Confirm Password<span style="color: red;">*</span></label>
-      <input type="text" class="form-control" name="cfpassword">
-</div> -->
 
 <button class="btn btn-primary mt-3" id="submit-btn" name="btnSubmit" type="submit">Submit</button>
 </form>
@@ -164,9 +149,6 @@ Kindly fill-out the online application form for a fast and efficient admissions 
   });
 });
 
-  function clearValue(input) {
-    input.value = '';
-  }
 </script>
 </body>
 </html>
