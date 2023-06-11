@@ -3,7 +3,7 @@
       if (isset($_GET['logout'])) {
       session_unset();
       session_destroy();
-      header("Location: login.php?Logout");
+      header("Location: homepage.php?Logout");
       exit();
       }
 ?>
@@ -58,7 +58,7 @@
                 </li>
 
                 <li class="">
-                    <a href="admin_teacher.php"><i class="fas fa-user"></i><span>Teachers</span></a>
+                    <a href="admin_subject.php"><i class="fas fa-user"></i><span>Subjects</span></a>
                 </li>
                 
                 <li class="">

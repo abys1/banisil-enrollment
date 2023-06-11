@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -5,13 +6,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-    <title>Admin dashboard</title>
+        <title>Admin dashboard</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 	    <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	    <!----css3---->
         <link rel="stylesheet" href="css/custom.css">
-		
 		
 		<!--google fonts -->
 	
@@ -34,7 +36,7 @@
 		
 		<!-------------------------sidebar------------>
 		     <!-- Sidebar  -->
-         <nav id="sidebar">
+        <nav id="sidebar">
             <div class="sidebar-header">
                 <h3><img src="img/logo.jpg" class="img-fluid"/><br>Banisil National High School</br></h3>
             </div>
@@ -187,69 +189,97 @@
 				<div class="col-md-12">
 				<div class="table-wrapper">
     <div class="table-title">
+    <?php
+    if (isset($_GET["msg"])) {
+      $msg = $_GET["msg"];
+      echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+      ' . $msg . '
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>';
+    }
+    ?>
       <div class="row">
         <div class="col-sm-6 p-0 d-flex justify-content-lg-start justify-content-center">
-          <h2 class="ml-lg-2">Manage Student</h2>
+          <h2 class="ml-lg-2">Manage Teachers</h2>
+        </div>
+        <div class="col-sm-6 p-0 d-flex justify-content-lg-end justify-content-center">
+          <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal">
+		  <i class="material-icons">&#xE147;</i> <span>Add New Teacher</span></a>
+          
         </div>
       </div>
     </div>
     <?php
-    include 'dbcon.php';
+include 'dbcon.php';
 
-    $limit = 5; 
-    $page = isset($_GET['page']) ? $_GET['page'] : 1; 
 
-    $sqlCount = "SELECT COUNT(*) AS total FROM tbl_userinfo
-              JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
-              JOIN tbl_enrollment ON tbl_enrollment.userinfo_id = tbl_userinfo.user_id
-              WHERE tbl_user_level.level = 'STUDENT' AND tbl_enrollment.program = 'ICT'";
-    $resultCount = mysqli_query($conn, $sqlCount);
-    $rowCount = mysqli_fetch_assoc($resultCount)['total'];
+$limit = 10; 
+$page = isset($_GET['page']) ? $_GET['page'] : 1; 
 
-    $totalPages = ceil($rowCount / $limit);
+$sqlCount = "SELECT COUNT(*) AS total FROM tbl_userinfo
+             JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
+             WHERE tbl_user_level.level = 'TEACHER'";
+$resultCount = mysqli_query($conn, $sqlCount);
+$rowCount = mysqli_fetch_assoc($resultCount)['total'];
 
-    $offset = ($page - 1) * $limit;
+$totalPages = ceil($rowCount / $limit);
 
-    $sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.middlename, tbl_userinfo.lastname, tbl_userinfo.suffix, tbl_enrollment.userinfo_id, tbl_enrollment.admit_type, tbl_enrollment.grade, tbl_enrollment.program, tbl_enrollment.term, tbl_enrollment.lrn, tbl_enrollment.lsa, tbl_user_status.status, tbl_user_level.level
-            FROM tbl_userinfo
-            JOIN tbl_enrollment ON tbl_userinfo.user_id = tbl_enrollment.userinfo_id
-            JOIN tbl_user_status ON tbl_userinfo.user_id = tbl_user_status.userinfo_id
-            JOIN tbl_user_level ON tbl_userinfo.user_id = tbl_user_level.userinfo_id
-            WHERE tbl_user_level.level = 'STUDENT' AND tbl_enrollment.program = 'ICT' AND tbl_user_status.status = '1'
-            LIMIT $limit OFFSET $offset";
+$offset = ($page - 1) * $limit;
 
-    $result = mysqli_query($conn, $sql);
-    ?>
+$sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.middlename, tbl_userinfo.lastname, tbl_userinfo.suffix, tbl_enrollment.userinfo_id, tbl_enrollment.admit_type, tbl_enrollment.grade, tbl_enrollment.program, tbl_enrollment.term, tbl_enrollment.lrn, tbl_enrollment.lsa, tbl_user_status.status, tbl_user_level.level, tbl_contactinfo.contact_num
+        FROM tbl_userinfo
+        JOIN tbl_enrollment ON tbl_userinfo.user_id = tbl_enrollment.userinfo_id
+        JOIN tbl_user_status ON tbl_userinfo.user_id = tbl_user_status.userinfo_id
+        JOIN tbl_user_level ON tbl_userinfo.user_id = tbl_user_level.userinfo_id
+        JOIN tbl_contactinfo ON tbl_userinfo.user_id - tbl_contactinfo.userinfo_id
+        WHERE tbl_user_level.level = 'TEACHER'
+        LIMIT $limit OFFSET $offset";
 
-<table class="table table-striped table-hover" id="eim_table">
+$result = mysqli_query($conn, $sql);
+?>
+
+<table class="table table-striped table-hover" id="teacher_table">
   <thead>
     <tr>
       <th>ID</th>
       <th>Full Name</th>
-      <th>Grade</th>
-      <th>Program/Strand</th>
-      <th>LRN</th>
+      <th>Grade Handle</th>
+      <th>Program/Strand Handle</th>
+      <th>Contact Number</th>
       <th>Actions</th>
+      <th>Status</th>
     </tr>
   </thead>
   <tbody>
-    <?php foreach ($result as $row): ?>
-      <tr>
-        <td><?php echo $row['user_id'] ?></td>
-        <td><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></td>
-        <td><?php echo $row['grade']; ?></td>
-        <td><?php echo $row['program']; ?></td>
-        <td><?php echo $row['lrn'] ?></td>
-        <td>
-        <a href="admin_student_edit.php?user_id=<?php echo $row['user_id']?>" class="edit">
-        <i class="fas fa-pencil" data-toggle="tooltip" title="Edit">&#xE254;</i>
-        </a>
-        <a href="admin_student_delete.php?user_id=<?php echo $row['user_id']?>" class="delete">
-        <i class="fas fa-trash" data-toggle="tooltip" title="delete"></i>
-        </a>
-        </td>
-      </tr>
-    <?php endforeach; ?>
+    <?php while ($row = mysqli_fetch_assoc($result)): ?>
+    <tr>
+      <td><?php echo $row['user_id'] ?></td>
+      <td><?php echo $row['firstname'] . ' ' . $row['middlename'] . ' ' . $row['lastname'] . ' ' . $row['suffix']; ?></td>
+      <td><?php echo $row['grade']; ?></td>
+      <td><?php echo $row['program']; ?></td>
+      <td><?php echo $row['contact_num'] ?></td>
+      <td>
+            <a href="admin_teacher_edit.php?user_id=<?php echo $row['user_id']?>&userinfo_id=<?php echo $row['userinfo_id']?>"class="confirm">
+                <i class="material-icons" data-toggle="tooltip" title="Edit">create</i>
+            </a>
+            <a href="admin_teacher_activate.php?user_id=<?php echo $row['user_id']?>"class="confirm">
+                <i class="material-icons" data-toggle="tooltip" title="Confirm">&#xE5CA;</i>
+            </a>
+            <a href="admin_teacher_deactivate.php?user_id=<?php echo $row['user_id']?>"class="decline">
+                <i class="material-icons" data-toggle="tooltip" title="Decline">&#xE5CD;</i>
+            </a>
+            </td>
+            <td>
+            <?php
+            if($row['status'] == 1){
+              echo '<i class="material-icons" data-toggle="tooltip" title="Activated">power_settings_new</i>';
+            } else {
+              echo '<i class="material-icons" data-toggle="tooltip" title="Deactivated" style="transform: rotate(180deg);">power_settings_new</i>';
+            }
+            ?>
+            </td>
+    </tr>
+    <?php endwhile; ?>
   </tbody>
 </table>
 
@@ -276,103 +306,103 @@
   </ul>
 </div>
 </div>
-<!-- Edit Modal HTML -->
+
+<!-- Modal -->
 <div id="addEmployeeModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form>
-        <div class="modal-header">
-          <h4 class="modal-title">Add Employee</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form action="admin_teacher_add.php" method="POST">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Teacher</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="error" id="error" style="display: none;"></div>
+            <div>
+            <label style="margin-bottom: 20px;">User Credentials</label>
+            </div>
+            <div class="row">
+            <div class="col-md-6 mt-md-0 mt-3">
+            <label>First Name <span style="color: red;">*</span></label>
+            <input type="text" class="form-control" name="firstname" required>
         </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label>Name</label>
-            <input type="text" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label>Address</label>
-            <textarea class="form-control" required></textarea>
-          </div>
-          <div class="form-group">
-            <label>Phone</label>
-            <input type="text" class="form-control" required>
-          </div>
+        <div class="col-md-6 mt-md-0 mt-3">
+            <label>Middle Name</span></label>
+            <input type="text" class="form-control" name="middlename">
         </div>
-        <div class="modal-footer">
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-          <input type="submit" class="btn btn-success" value="Add">
+        <div class="col-md-6 mt-md-0 mt-3">
+            <label>Last Name <span style="color: red;">*</span></label>
+            <input type="text" class="form-control" name="lastname" required>
         </div>
-      </form>
+        <div class="col-md-6 mt-md-0 mt-3">
+            <label>Suffix Name</label>
+            <input type="text" class="form-control" name="suffixname">
+        </div>
     </div>
-  </div>
-</div>
-<!-- Edit Modal HTML -->
-<div id="editEmployeeModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form>
-        <div class="modal-header">
-          <h4 class="modal-title">Edit Employee</h4>
-          <button type="button" class="close" data-dismiss="modal" 
-		  aria-hidden="true">&times;</button>
+    <div class="row">
+        <div class="col-md-6 mt-md-0 mt-3">
+            <label>Age <span style="color: red;">*</span></label>
+            <input type="number" class="form-control" name="age" required>
         </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label>Name</label>
-            <input type="text" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label>Address</label>
-            <textarea class="form-control" required></textarea>
-          </div>
-          <div class="form-group">
-            <label>Phone</label>
-            <input type="text" class="form-control" required>
-          </div>
+        <div class="col-md-6 mt-md-0 mt-3">
+            <label>Birthday <span style="color: red;">*</span></label>
+            <input type="date" class="form-control" name="birthday" required>
         </div>
-        <div class="modal-footer">
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-          <input type="submit" class="btn btn-info" value="Save">
-        </div>
-      </form>
     </div>
-  </div>
-</div>
-
-
-
-<!-- Delete Modal HTML -->
-<div id="deleteEmployeeModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form>
-        <div class="modal-header">
-          <h4 class="modal-title">Delete Employee</h4>
-          <button type="button" class="close" data-dismiss="modal" 
-		  aria-hidden="true">&times;</button>
+  
+        <div class="h3">Contact Information</div>
+    <div class="row">
+    <div class="col-md-6 mt-md-0 mt-3">
+            <label>Email <span style="color: red;">*</span></label>
+            <input type="text" class="form-control" name="email" required>
         </div>
-        <div class="modal-body">
-          <p>Are you sure you want to delete these Records?</p>
-          <p class="text-warning"><small>This action cannot be undone.</small></p>
+        <div class="col-md-6 mt-md-0 mt-3">
+            <label>Contact Number <span style="color: red;">*</span></label>
+            <input type="number" class="form-control" name="contact_number" required>
         </div>
-        <div class="modal-footer">
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-          <input type="submit" class="btn btn-danger" value="Delete">
+        <div class="col-md-6 mt-md-0 mt-3">
+            <label>Street<span style="color: red;">*</span></label>
+            <input type="text" class="form-control" name="street" required>
         </div>
-      </form>
+        <div class="col-md-6 mt-md-0 mt-3">
+            <label>Barangay<span style="color: red;">*</span></label>
+            <input type="text" class="form-control" name="barangay" required>
+        </div>
+        <div class="col-md-6 mt-md-0 mt-3">
+          <label>City<span style="color: red;">*</span></label>
+          <input type="text" class="form-control" name="city" required>
     </div>
-	</div>
-  </div>
-				
+    <div class="h3">Teaching</div>
+    <div class="col-md-6 mt-md-0 mt-3">
+          <label>Grade<span style="color: red;">*</span></label>
+          <select id="sub" name="grade" required>
+            <option value="" selected hidden>Choose Option</option>
+            <option value="11">Grade 11</option>
+            <option value="12">Grade 12</option>
+            </select>
+    </div>
+
+     <div class="col-md-6 mt-md-0 mt-3">
+          <label>Strand<span style="color: red;">*</span></label>
+          <select id="sub" name="strand" required>
+            <option value="" selected hidden>Choose Option</option>
+            <option value="abm">ABM</option>
+            <option value="humss">Humss</option>
+            <option value="stem">Stem</option>
+            <option value="eim">EIM</option>
+            <option value="fbs">FBS</option>
+            <option value="smaw">Smaw</option>
+          </select>
+    </div>              
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" name="btnAdd">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>		
 		   
 			  </div>
 			 
@@ -390,14 +420,11 @@
 <!----------html code compleate----------->
 
 
-
-
-
 <script>
 // Get the input element, button, and table
 var input = document.getElementById("searchInput");
 var button = document.getElementById("searchButton");
-var table = document.getElementById("eim_table");
+var table = document.getElementById("teacher_table");
 
 // Add event listener for the button click
 button.addEventListener("click", function(event) {
@@ -430,6 +457,9 @@ button.addEventListener("click", function(event) {
 </script>
 
 
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
   
      <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -453,6 +483,9 @@ button.addEventListener("click", function(event) {
 		  
 		});
 		
+    function clearValue(input) {
+    input.value = '';
+  }
 </script>
   
   
