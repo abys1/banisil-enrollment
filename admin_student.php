@@ -27,9 +27,16 @@
 	<!--google material icon-->
       <link href="https://fonts.googleapis.com/css2?family=Material+Icons"rel="stylesheet">
       <style>
-        .modal-dialog {
-          max-width: 800px; /* Set the desired width */
-        }
+      
+ 
+  /* Adjusted width for modal */
+  #addEmployeeModal .modal-dialog {
+    max-width: 800px;
+    width: 100%;
+    margin: auto;
+  }
+
+
       </style>
       
   </head>
@@ -45,7 +52,7 @@
 		     <!-- Sidebar  -->
          <nav id="sidebar">
             <div class="sidebar-header">
-                <h3><img src="img/logo.jpg" class="img-fluid"/><br>Banisil National High School</br></h3>
+                <h3><img src="img/logo.png" class="img-fluid"/><br>Banisil National High School</br></h3>
             </div>
             <ul class="list-unstyled components">
 			<li  class="active">
@@ -316,7 +323,7 @@
 <div id="addEmployeeModal" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form action="admin_student_add.php" method="POST">
+      <form action="#" method="POST">
         <div class="modal-header">
           <h5 class="modal-title">Add Student</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -324,118 +331,156 @@
         <div class="modal-body">
           <div class="error" id="error" style="display: none;"></div>
           <div>
-          <label style="margin-bottom: 20px;">Personal Information</label>
+            <label style="margin-bottom: 20px;">Personal Information</label>
           </div>
           <div class="row">
-          <div class="col-md-6 mt-md-0 mt-3">
-            <label>First Name <span style="color: red;">*</span></label>
-            <input type="text" class="form-control" name="firstname" required>
-        </div>
-        <div class="col-md-6 mt-md-0 mt-3">
-            <label>Middle Name</span></label>
-            <input type="text" class="form-control" name="middlename">
-        </div>
-        <div class="col-md-6 mt-md-0 mt-3">
-            <label>Last Name <span style="color: red;">*</span></label>
-            <input type="text" class="form-control" name="lastname" required>
-        </div>
-        <div class="col-md-6 mt-md-0 mt-3">
-            <label>Suffix Name</label>
-            <input type="text" class="form-control" name="suffixname">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 mt-md-0 mt-3">
-            <label>Age <span style="color: red;">*</span></label>
-            <input type="number" class="form-control" name="age" required>
-        </div>
-        <div class="col-md-6 mt-md-0 mt-3">
-            <label>Birthday <span style="color: red;">*</span></label>
-            <input type="date" class="form-control" name="birthday" required>
-        </div>
-        <div class="col-md-6 mt-md-0 mt-3">
-          <label>Grade<span style="color: red;">*</span></label>
-          <select id="sub" name="gender">
-            <option value="" selected hidden>Select Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="prefer">Prefer not to say</option>
-            </select>
-    </div>
-    </div>
-  
-        <div class="h3">Contact Information</div>
-    <div class="row">
-    <div class="col-md-6 mt-md-0 mt-3">
-            <label>Email <span style="color: red;">*</span></label>
-            <input type="text" class="form-control" name="email" required>
-        </div>
-        <div class="col-md-6 mt-md-0 mt-3">
-            <label>Contact Number <span style="color: red;">*</span></label>
-            <input type="number" class="form-control" name="contact_number" required>
-        </div>
-        <div class="col-md-6 mt-md-0 mt-3">
-            <label>Street<span style="color: red;">*</span></label>
-            <input type="text" class="form-control" name="street" required>
-        </div>
-        <div class="col-md-6 mt-md-0 mt-3">
-            <label>Barangay<span style="color: red;">*</span></label>
-            <input type="text" class="form-control" name="barangay" required>
-        </div>
-        <div class="col-md-6 mt-md-0 mt-3">
-          <label>City<span style="color: red;">*</span></label>
-          <input type="text" class="form-control" name="city" required>
-    </div>
-    <div class="h3">Enrollment</div>
-    <div class=" col-md-6 mt-md-0 mt-3">
-        <label>Admit Type<span style="color: red;">*</span></label>
-        <select id="sub" name="admit" required>
-            <option value="" selected hidden>Choose Option</option>
-            <option value="old">Old Student</option>
-            <option value="new">New Student</option>
-            <option value="transferee">Transferee</option>
-        </select>
-    </div>
-    <div class="col-md-6 mt-md-0 mt-3">
-          <label>Grade<span style="color: red;">*</span></label>
-          <select id="sub" name="grade" required>
-            <option value="" selected hidden>Choose Option</option>
-            <option value="11">Grade 11</option>
-            <option value="12">Grade 12</option>
-            </select>
-    </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+              <div class="form-group">
+                <label>First Name <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" name="firstname" required>
+              </div>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+              <div class="form-group">
+                <label>Middle Name</label>
+                <input type="text" class="form-control" name="middlename">
+              </div>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+              <div class="form-group">
+                <label>Last Name <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" name="lastname" required>
+              </div>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+              <div class="form-group">
+                <label>Suffix Name</label>
+                <input type="text" class="form-control" name="suffixname">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mt-md-0 mt-3">
+              <div class="form-group">
+                <label>Age <span style="color: red;">*</span></label>
+                <input type="number" class="form-control" name="age" required>
+              </div>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+              <div class="form-group">
+                <label>Birthday <span style="color: red;">*</span></label>
+                <input type="date" class="form-control" name="birthday" required>
+              </div>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+              <div class="form-group">
+                <label>Gender <span style="color: red;">*</span></label>
+                <select class="form-control" name="gender" required>
+                  <option value="" selected hidden>Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="prefer">Prefer not to say</option>
+                </select>
+              </div>
+            </div>
+          </div>
 
-     <div class="col-md-6 mt-md-0 mt-3">
-          <label>Strand<span style="color: red;">*</span></label>
-          <select id="sub" name="strand" required>
-            <option value="" selected hidden>Choose Option</option>
-            <option value="abm">ABM</option>
-            <option value="humss">Humss</option>
-            <option value="stem">Stem</option>
-            <option value="eim">EIM</option>
-            <option value="fbs">FBS</option>
-            <option value="smaw">Smaw</option>
-          </select>
-    </div>
+          <div class="h3">Contact Information</div>
+          <div class="row">
+            <div class="col-md-6 mt-md-0 mt-3">
+              <div class="form-group">
+                <label>Email <span style="color: red;">*</span></label>
+                <input type="email" class="form-control" name="email" required>
+              </div>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+              <div class="form-group">
+                <label>Contact Number <span style="color: red;">*</span></label>
+                <input type="tel" class="form-control" name="contact_number" required>
+              </div>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+              <div class="form-group">
+                <label>Street <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" name="street" required>
+              </div>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+              <div class="form-group">
+                <label>Barangay <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" name="barangay" required>
+              </div>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+              <div class="form-group">
+                <label>City <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" name="city" required>
+              </div>
+            </div>
+          </div>
 
-    <div class="col-md-6 mt-md-0 mt-3">
-          <label>Term<span style="color: red;">*</span></label>
-          <select id="sub" name="term" required>
-            <option value="" selected hidden>Choose Option</option>
-            <option value="1st">1st Term</option>
-            <option value="2nd">2nd Term</option>
-          </select>
-    </div>
-    <div class="col-md-6 mt-md-0 mt-3">
-          <label>LRN<span style="color: red;">*</span></label>
-          <input type="number" class="form-control" name="lrn" required>
-    </div>
-    <div class="col-md-6 mt-md-0 mt-3">
-        <label>Last school attended</label>
-        <input type="text" class="form-control" name="last" value="For transferee only" onclick="clearValue(this)">
-    </div>
-              
-        </div>
+          <div class="h3">Enrollment</div>
+          <div class="row">
+            <div class="col-md-6 mt-md-0 mt-3">
+              <div class="form-group">
+                <label>Admit Type <span style="color: red;">*</span></label>
+                <select class="form-control" name="admit" required>
+                  <option value="" selected hidden>Choose Option</option>
+                  <option value="old">Old Student</option>
+                  <option value="new">New Student</option>
+                  <option value="transferee">Transferee</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+              <div class="form-group">
+                <label>Grade <span style="color: red;">*</span></label>
+                <select class="form-control" name="grade" required>
+                  <option value="" selected hidden>Choose Option</option>
+                  <option value="11">Grade 11</option>
+                  <option value="12">Grade 12</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+              <div class="form-group">
+                <label>Strand <span style="color: red;">*</span></label>
+                <select class="form-control" name="strand" required>
+                  <option value="" selected hidden>Choose Option</option>
+                  <option value="abm">ABM</option>
+                  <option value="humss">HUMSS</option>
+                  <option value="stem">STEM</option>
+                  <option value="eim">EIM</option>
+                  <option value="fbs">FBS</option>
+                  <option value="smaw">SMAW</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+              <div class="form-group">
+                <label>Term <span style="color: red;">*</span></label>
+                <select class="form-control" name="term" required>
+                  <option value="" selected hidden>Choose Option</option>
+                  <option value="1st">1st Term</option>
+                  <option value="2nd">2nd Term</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+              <div class="form-group">
+                <label>LRN <span style="color: red;">*</span></label>
+                <input type="number" class="form-control" name="lrn" required>
+              </div>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+              <div class="form-group">
+                <label>Last School Attended</label>
+                <input type="text" class="form-control" name="last" value="For transferee only" onclick="clearValue(this)">
+              </div>
+            </div>
+          </div>
+
+        </div><br>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
           <button type="submit" class="btn btn-primary" name="btnAdd">Add</button>
@@ -444,20 +489,7 @@
     </div>
   </div>
 </div>
-		   
 
-				
-			  </div>
-			 
-			 
-			 <!---footer---->
-			 
-			 
-		</div>
-		
-
-</div>
-</div>
 
 
 <!----------html code compleate----------->
