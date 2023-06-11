@@ -261,6 +261,9 @@
             <td><?php echo $row['program']; ?></td>
             <td><?php echo $row['lrn'] ?></td>
             <td>
+            <a href="admin_student_add_account.php?user_id=<?php echo $row['user_id']?>&userinfo_id=<?php echo $row['userinfo_id']?>" class="edit">
+              <i class="material-icons" data-toggle="tooltip" title="Add Student Account">add</i>
+            </a>
             <a href="admin_student_edit.php?user_id=<?php echo $row['user_id']?>&userinfo_id=<?php echo $row['userinfo_id']?>"class="confirm">
                 <i class="material-icons" data-toggle="tooltip" title="Edit">create</i>
             </a>
