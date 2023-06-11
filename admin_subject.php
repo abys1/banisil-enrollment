@@ -200,11 +200,11 @@
     ?>
       <div class="row">
         <div class="col-sm-6 p-0 d-flex justify-content-lg-start justify-content-center">
-          <h2 class="ml-lg-2">Manage Teachers</h2>
+          <h2 class="ml-lg-2">Manage Subjects</h2>
         </div>
         <div class="col-sm-6 p-0 d-flex justify-content-lg-end justify-content-center">
           <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal">
-		  <i class="material-icons">&#xE147;</i> <span>Add New Teacher</span></a>
+		  <i class="material-icons">&#xE147;</i> <span>Add Subjects</span></a>
           
         </div>
       </div>
@@ -216,9 +216,8 @@ include 'dbcon.php';
 $limit = 10; 
 $page = isset($_GET['page']) ? $_GET['page'] : 1; 
 
-$sqlCount = "SELECT COUNT(*) AS total FROM tbl_userinfo
-             JOIN tbl_user_level ON tbl_user_level.user_level_id = tbl_userinfo.user_id
-             WHERE tbl_user_level.level = 'TEACHER'";
+$sqlCount = "SELECT COUNT(*) AS total FROM tbl_subjects
+             WHERE subject_id = 'subject_id'";
 $resultCount = mysqli_query($conn, $sqlCount);
 $rowCount = mysqli_fetch_assoc($resultCount)['total'];
 
@@ -226,13 +225,7 @@ $totalPages = ceil($rowCount / $limit);
 
 $offset = ($page - 1) * $limit;
 
-$sql = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.middlename, tbl_userinfo.lastname, tbl_userinfo.suffix, tbl_enrollment.userinfo_id, tbl_enrollment.admit_type, tbl_enrollment.grade, tbl_enrollment.program, tbl_enrollment.term, tbl_enrollment.lrn, tbl_enrollment.lsa, tbl_user_status.status, tbl_user_level.level, tbl_contactinfo.contact_num
-        FROM tbl_userinfo
-        JOIN tbl_enrollment ON tbl_userinfo.user_id = tbl_enrollment.userinfo_id
-        JOIN tbl_user_status ON tbl_userinfo.user_id = tbl_user_status.userinfo_id
-        JOIN tbl_user_level ON tbl_userinfo.user_id = tbl_user_level.userinfo_id
-        JOIN tbl_contactinfo ON tbl_userinfo.user_id - tbl_contactinfo.userinfo_id
-        WHERE tbl_user_level.level = 'TEACHER'
+$sql = "SELECT * FROM tbl_subjects
         LIMIT $limit OFFSET $offset";
 
 $result = mysqli_query($conn, $sql);
@@ -242,10 +235,10 @@ $result = mysqli_query($conn, $sql);
   <thead>
     <tr>
       <th>ID</th>
-      <th>Full Name</th>
-      <th>Grade Handle</th>
-      <th>Program/Strand Handle</th>
-      <th>Contact Number</th>
+      <th>Strand</th>
+      <th>Grade</th>
+      <th>Subjects</th>
+      <th>Schedules</th>
       <th>Actions</th>
       <th>Status</th>
     </tr>
@@ -253,28 +246,28 @@ $result = mysqli_query($conn, $sql);
   <tbody>
     <?php while ($row = mysqli_fetch_assoc($result)): ?>
     <tr>
-      <td><?php echo $row['user_id'] ?></td>
-      <td><?php echo $row['firstname'] . ' ' . $row['middlename'] . ' ' . $row['lastname'] . ' ' . $row['suffix']; ?></td>
+      <td><?php echo $row['subject_id'] ?></td>
+      <td><?php echo $row['strand']?></td>
       <td><?php echo $row['grade']; ?></td>
-      <td><?php echo $row['program']; ?></td>
-      <td><?php echo $row['contact_num'] ?></td>
+      <td><?php echo $row['subjects']; ?></td>
+      <td><?php echo $row['schedules'] ?></td>
       <td>
-            <a href="admin_teacher_edit.php?user_id=<?php echo $row['user_id']?>&userinfo_id=<?php echo $row['userinfo_id']?>"class="confirm">
+            <a href="admin_subject_edit.php?subject_id=<?php echo $row['subject_id']?>?>"class="confirm">
                 <i class="material-icons" data-toggle="tooltip" title="Edit">create</i>
             </a>
-            <a href="admin_teacher_activate.php?user_id=<?php echo $row['user_id']?>"class="confirm">
+            <a href="admin_subject_activate.php?subject_id=<?php echo $row['subject_id']?>"class="confirm">
                 <i class="material-icons" data-toggle="tooltip" title="Confirm">&#xE5CA;</i>
             </a>
-            <a href="admin_teacher_deactivate.php?user_id=<?php echo $row['user_id']?>"class="decline">
+            <a href="admin_subject_deactivate.php?subject_id=<?php echo $row['subject_id']?>"class="decline">
                 <i class="material-icons" data-toggle="tooltip" title="Decline">&#xE5CD;</i>
             </a>
             </td>
             <td>
             <?php
             if($row['status'] == 1){
-              echo '<i class="material-icons" data-toggle="tooltip" title="Activated">power_settings_new</i>';
+              echo 'Active';
             } else {
-              echo '<i class="material-icons" data-toggle="tooltip" title="Deactivated" style="transform: rotate(180deg);">power_settings_new</i>';
+              echo 'Inactive';
             }
             ?>
             </td>
@@ -311,89 +304,46 @@ $result = mysqli_query($conn, $sql);
 <div id="addEmployeeModal" class="modal fade">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form action="admin_teacher_add.php" method="POST">
+        <form action="admin_subject_add.php" method="POST">
           <div class="modal-header">
-            <h5 class="modal-title">Add Teacher</h5>
+            <h5 class="modal-title">Add Subjects</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
             <div class="error" id="error" style="display: none;"></div>
             <div>
-            <label style="margin-bottom: 20px;">User Credentials</label>
+            <label style="margin-bottom: 20px;">Subject Information</label>
             </div>
             <div class="row">
             <div class="col-md-6 mt-md-0 mt-3">
-            <label>First Name <span style="color: red;">*</span></label>
-            <input type="text" class="form-control" name="firstname" required>
-        </div>
-        <div class="col-md-6 mt-md-0 mt-3">
-            <label>Middle Name</span></label>
-            <input type="text" class="form-control" name="middlename">
-        </div>
-        <div class="col-md-6 mt-md-0 mt-3">
-            <label>Last Name <span style="color: red;">*</span></label>
-            <input type="text" class="form-control" name="lastname" required>
-        </div>
-        <div class="col-md-6 mt-md-0 mt-3">
-            <label>Suffix Name</label>
-            <input type="text" class="form-control" name="suffixname">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 mt-md-0 mt-3">
-            <label>Age <span style="color: red;">*</span></label>
-            <input type="number" class="form-control" name="age" required>
-        </div>
-        <div class="col-md-6 mt-md-0 mt-3">
-            <label>Birthday <span style="color: red;">*</span></label>
-            <input type="date" class="form-control" name="birthday" required>
-        </div>
-    </div>
-  
-        <div class="h3">Contact Information</div>
-    <div class="row">
-    <div class="col-md-6 mt-md-0 mt-3">
-            <label>Email <span style="color: red;">*</span></label>
-            <input type="text" class="form-control" name="email" required>
-        </div>
-        <div class="col-md-6 mt-md-0 mt-3">
-            <label>Contact Number <span style="color: red;">*</span></label>
-            <input type="number" class="form-control" name="contact_number" required>
-        </div>
-        <div class="col-md-6 mt-md-0 mt-3">
-            <label>Street<span style="color: red;">*</span></label>
-            <input type="text" class="form-control" name="street" required>
-        </div>
-        <div class="col-md-6 mt-md-0 mt-3">
-            <label>Barangay<span style="color: red;">*</span></label>
-            <input type="text" class="form-control" name="barangay" required>
-        </div>
-        <div class="col-md-6 mt-md-0 mt-3">
-          <label>City<span style="color: red;">*</span></label>
-          <input type="text" class="form-control" name="city" required>
-    </div>
-    <div class="h3">Teaching</div>
-    <div class="col-md-6 mt-md-0 mt-3">
-          <label>Grade<span style="color: red;">*</span></label>
-          <select id="sub" name="grade" required>
-            <option value="" selected hidden>Choose Option</option>
-            <option value="11">Grade 11</option>
-            <option value="12">Grade 12</option>
-            </select>
-    </div>
-
-     <div class="col-md-6 mt-md-0 mt-3">
-          <label>Strand<span style="color: red;">*</span></label>
-          <select id="sub" name="strand" required>
-            <option value="" selected hidden>Choose Option</option>
-            <option value="abm">ABM</option>
-            <option value="humss">Humss</option>
-            <option value="stem">Stem</option>
-            <option value="eim">EIM</option>
-            <option value="fbs">FBS</option>
-            <option value="smaw">Smaw</option>
-          </select>
-    </div>              
+                  <label>Strand<span style="color: red;">*</span></label>
+                  <select id="sub" name="strand" required>
+                    <option value="" selected disabled>Select Strand</option>
+                    <option value="abm">ABM</option>
+                    <option value="humss">Humss</option>
+                    <option value="stem">Stem</option>
+                    <option value="eim">EIM</option>
+                    <option value="fbs">FBS</option>
+                    <option value="smaw">Smaw</option>
+                  </select>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+                  <label>Grade<span style="color: red;">*</span></label>
+                  <select id="sub" name="grade" required>
+                    <option value="" selected disabled>Select Grade</option>
+                    <option value="11">Grade 11</option>
+                    <option value="12">Grade 12</option>
+                    </select>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+                <label>Subjects<span style="color: red;">*</span></label>
+                <input type="text" class="form-control" name="subject" required>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+                <label>Schedules<span style="color: red;">*</span></label>
+                <input type="time" class="form-control" name="schedules">
+            </div>
+      </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
