@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2023 at 11:15 PM
+-- Generation Time: Jun 11, 2023 at 06:01 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -20,18 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `enrollmentdb`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_admin`
---
-
-CREATE TABLE `tbl_admin` (
-  `admin_id` int(11) NOT NULL,
-  `username` varchar(244) NOT NULL,
-  `password` varchar(244) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -54,10 +42,7 @@ CREATE TABLE `tbl_contactinfo` (
 --
 
 INSERT INTO `tbl_contactinfo` (`contact_id`, `userinfo_id`, `email`, `contact_num`, `city`, `barangay`, `street`) VALUES
-(1, 1, 'ryanlaroco@gmail.com', 12312, 'first', 'student', 'first'),
-(4, 4, 'ryanlaroco@gmail.com', 12312, 'first', 'student', 'first'),
-(5, 5, 'Student@gmail.com', 231231, 'Student', 'Student', 'Student'),
-(13, 13, 'sssd@gmail.com', 23, 'ss', 'ss', 'ss');
+(1, 1, 'jvburdo@gmail.com', 1231231, 'Gensan', 'conel', 'guadalupe');
 
 -- --------------------------------------------------------
 
@@ -81,10 +66,30 @@ CREATE TABLE `tbl_enrollment` (
 --
 
 INSERT INTO `tbl_enrollment` (`enrollment_id`, `userinfo_id`, `admit_type`, `grade`, `program`, `term`, `lrn`, `lsa`) VALUES
-(1, 1, 'new', '12', 'abm', '2nd', 222, 'For transferee only'),
-(4, 4, '', '', '', '', 222, 'For transferee only'),
-(5, 5, 'old', '11', 'humss', '1st', 231231, ''),
-(13, 13, 'transferee', '12', 'smaw', '1st', 231231, '');
+(1, 1, 'new', '11', 'abm', '1st', 1123123121, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_subjects`
+--
+
+CREATE TABLE `tbl_subjects` (
+  `subject_id` int(11) NOT NULL,
+  `strand` varchar(244) NOT NULL,
+  `grade` varchar(244) NOT NULL,
+  `subjects` varchar(244) NOT NULL,
+  `schedules` time NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_subjects`
+--
+
+INSERT INTO `tbl_subjects` (`subject_id`, `strand`, `grade`, `subjects`, `schedules`, `status`) VALUES
+(1, 'abm', '11', 'Financial Management', '10:00:00', 1),
+(2, 'humss', '12', 'Humanitas', '13:30:00', 1);
 
 -- --------------------------------------------------------
 
@@ -104,7 +109,7 @@ CREATE TABLE `tbl_usercredentials` (
 --
 
 INSERT INTO `tbl_usercredentials` (`usercredentials_id`, `userinfo_id`, `username`, `password`) VALUES
-(4, 1, '', '$2y$10$8VFvkvfJqa8CDA89Iic/TeqmhwdbYeZF/tm.KtlwQGbp27PmG0RZa');
+(1, 1, 'RyanXD', '$2y$10$axEHvL4AyXvRWW7w8QGwMOG1SsHnwXaGlETYXhXNo4cf/NuU/jX2m');
 
 -- --------------------------------------------------------
 
@@ -128,10 +133,7 @@ CREATE TABLE `tbl_userinfo` (
 --
 
 INSERT INTO `tbl_userinfo` (`user_id`, `firstname`, `middlename`, `lastname`, `suffix`, `gender`, `birthday`, `age`) VALUES
-(1, 'Ryan', 'XD', 'laroco', 'watapampa', '', '2023-06-03', 23),
-(4, 'Ryan', 'XD', 'laroco', 'watapampa', '', '2023-06-03', 23),
-(5, 'Student', 'Student', 'Student', 'Student', 'male', '2023-06-06', 22),
-(13, 'ss', 'ss', 'ss', 'ss', 'male', '2023-05-31', 22);
+(1, 'Ryan', 'Cutie', 'laroco', 'XD', 'male', '2023-06-03', 22);
 
 -- --------------------------------------------------------
 
@@ -150,10 +152,7 @@ CREATE TABLE `tbl_user_level` (
 --
 
 INSERT INTO `tbl_user_level` (`user_level_id`, `userinfo_id`, `level`) VALUES
-(1, 1, 'STUDENT'),
-(4, 4, 'STUDENT'),
-(5, 5, 'STUDENT'),
-(13, 13, 'STUDENT');
+(1, 1, 'STUDENT');
 
 -- --------------------------------------------------------
 
@@ -172,20 +171,11 @@ CREATE TABLE `tbl_user_status` (
 --
 
 INSERT INTO `tbl_user_status` (`status_id`, `userinfo_id`, `status`) VALUES
-(1, 1, 1),
-(4, 4, 0),
-(5, 5, 0),
-(13, 13, 1);
+(1, 1, 1);
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `tbl_admin`
---
-ALTER TABLE `tbl_admin`
-  ADD PRIMARY KEY (`admin_id`);
 
 --
 -- Indexes for table `tbl_contactinfo`
@@ -200,6 +190,12 @@ ALTER TABLE `tbl_contactinfo`
 ALTER TABLE `tbl_enrollment`
   ADD PRIMARY KEY (`enrollment_id`),
   ADD KEY `userinfo_id` (`userinfo_id`);
+
+--
+-- Indexes for table `tbl_subjects`
+--
+ALTER TABLE `tbl_subjects`
+  ADD PRIMARY KEY (`subject_id`);
 
 --
 -- Indexes for table `tbl_usercredentials`
@@ -233,46 +229,46 @@ ALTER TABLE `tbl_user_status`
 --
 
 --
--- AUTO_INCREMENT for table `tbl_admin`
---
-ALTER TABLE `tbl_admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `tbl_contactinfo`
 --
 ALTER TABLE `tbl_contactinfo`
-  MODIFY `contact_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `contact_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_enrollment`
 --
 ALTER TABLE `tbl_enrollment`
-  MODIFY `enrollment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `enrollment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tbl_subjects`
+--
+ALTER TABLE `tbl_subjects`
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tbl_usercredentials`
 --
 ALTER TABLE `tbl_usercredentials`
-  MODIFY `usercredentials_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `usercredentials_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_userinfo`
 --
 ALTER TABLE `tbl_userinfo`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tbl_user_level`
 --
 ALTER TABLE `tbl_user_level`
-  MODIFY `user_level_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `user_level_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tbl_user_status`
 --
 ALTER TABLE `tbl_user_status`
-  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
