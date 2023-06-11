@@ -156,7 +156,7 @@
                       </a>
                       <ul class="dropdown-menu small-menu">
                           <li>
-                            <a href="#">
+                          <a href="profile.php?user_id=<?php echo $_SESSION['user_id']?>">
                             <span class="material-icons">person_outline</span>Profile</a>
                           </li>
                           <li>
@@ -191,7 +191,7 @@
     <div class="table-title">
       <div class="row">
         <div class="col-sm-6 p-0 d-flex justify-content-lg-start justify-content-center">
-          <h2 class="ml-lg-2">Manage Student</h2>
+          <h2 class="ml-lg-2">STEM Student</h2>
         </div>
       </div>
     </div>

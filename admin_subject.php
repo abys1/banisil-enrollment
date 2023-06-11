@@ -243,6 +243,7 @@ $result = mysqli_query($conn, $sql);
       <th>Strand</th>
       <th>Grade</th>
       <th>Subjects</th>
+      <th>Day</th>
       <th>Schedules</th>
       <th>Actions</th>
       <th>Status</th>
@@ -255,6 +256,7 @@ $result = mysqli_query($conn, $sql);
       <td><?php echo $row['strand']?></td>
       <td><?php echo $row['grade']; ?></td>
       <td><?php echo $row['subjects']; ?></td>
+      <td><?php echo $row['day']; ?></td>
       <td><?php echo $row['schedules'] ?></td>
       <td>
             <a href="admin_subject_edit.php?subject_id=<?php echo $row['subject_id']?>"class="confirm">
@@ -330,6 +332,7 @@ $result = mysqli_query($conn, $sql);
                     <option value="eim">EIM</option>
                     <option value="fbs">FBS</option>
                     <option value="smaw">Smaw</option>
+                    <option value="ict">ICT</option>
                   </select>
             </div>
             <div class="col-md-6 mt-md-0 mt-3">
@@ -342,10 +345,24 @@ $result = mysqli_query($conn, $sql);
             </div>
             <div class="col-md-6 mt-md-0 mt-3">
                 <label>Subjects<span style="color: red;">*</span></label>
-                <input type="text" class="form-control" name="subject" required>
+                <input type="text" style="width: 338px" class="form-control" name="subject" required>
+            </div>
+            <div>
+            <label style="margin-bottom: 20px;">Schedule</label>
             </div>
             <div class="col-md-6 mt-md-0 mt-3">
-                <label>Schedules<span style="color: red;">*</span></label>
+                  <label>Day<span style="color: red;">*</span></label>
+                  <select id="sub" name="day" required>
+                    <option value="" selected disabled>Select Day</option>
+                    <option value="monday">Monday</option>
+                    <option value="tuesday">Tuesday</option>
+                    <option value="wednesday">Wednesday</option>
+                    <option value="thursday">Thursday</option>
+                    <option value="friday">Friday</option>
+                  </select>
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+                <label>Time<span style="color: red;">*</span></label>
                 <input type="time" class="form-control" name="schedules">
             </div>
       </div>

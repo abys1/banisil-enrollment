@@ -35,7 +35,7 @@ if (isset($_GET['user_id']) && isset($_GET['userinfo_id'])) {
     JOIN tbl_user_status ON tbl_userinfo.user_id = tbl_user_status.userinfo_id
     JOIN tbl_user_level ON tbl_userinfo.user_id = tbl_user_level.userinfo_id
     JOIN tbl_contactinfo ON tbl_userinfo.user_id = tbl_contactinfo.userinfo_id
-    WHERE tbl_userinfo.user_id = user_id LIMIT 1";
+    WHERE tbl_userinfo.user_id = '$user_id' LIMIT 1";
     $result = mysqli_query($conn, $query);
   
     if ($result && mysqli_num_rows($result) > 0) {

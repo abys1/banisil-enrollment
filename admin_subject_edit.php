@@ -27,7 +27,7 @@ include 'dbcon.php';
 if (isset($_GET['subject_id'])) {
     $subject_id = $_GET['subject_id'];
 
-    $query = "SELECT * FROM tbl_subjects WHERE subject_id = subject_id LIMIT 1";
+    $query = "SELECT * FROM tbl_subjects WHERE subject_id = '$subject_id' LIMIT 1";
     $result = mysqli_query($conn, $query);
 
     if ($result && mysqli_num_rows($result) > 0) {
@@ -45,9 +45,10 @@ if (isset($_POST['btnSubmit'])) {
     $strand = $_POST['strand'];
     $grade = $_POST['grade'];
     $subjects = $_POST['subject'];
+    $day = $_POST['day'];
     $schedules = $_POST['schedules'];
 
-    $sql = "UPDATE tbl_subjects SET strand = '$strand', grade = '$grade', subjects = '$subjects', schedules = '$schedules' WHERE subject_id = '$subject_id'";
+    $sql = "UPDATE tbl_subjects SET strand = '$strand', grade = '$grade', subjects = '$subjects', day = '$day', schedules = '$schedules' WHERE subject_id = '$subject_id' LIMIT 1";
 
     if ($conn->query($sql) === TRUE) {
         header("Location: admin_subject.php?msg=Edit Added Successfully");
@@ -87,6 +88,17 @@ if (isset($_POST['btnSubmit'])) {
             <div class="col-md-6 mt-md-0 mt-3">
                 <label>Subjects<span style="color: red;">*</span></label>
                 <input type="text" class="form-control" name="subject" required placeholder="<?php echo $row['subjects']?>">
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+                  <label>Day<span style="color: red;">*</span></label>
+                  <select id="sub" name="day" required>
+                    <option value="" selected disabled>Select Day</option>
+                    <option value="monday">Monday</option>
+                    <option value="tuesday">Tuesday</option>
+                    <option value="wednesday">Wednesday</option>
+                    <option value="thursday">Thursday</option>
+                    <option value="friday">Friday</option>
+                  </select>
             </div>
             <div class="col-md-6 mt-md-0 mt-3">
                 <label>Schedules<span style="color: red;">*</span></label>

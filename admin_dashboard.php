@@ -149,7 +149,7 @@
                       </a>
                       <ul class="dropdown-menu small-menu">
                           <li>
-                            <a href="#">
+                            <a href="profile.php?user_id=<?php echo $_SESSION['user_id']?>">
                             <span class="material-icons">person_outline</span>Profile</a>
                           </li>
                           <li>

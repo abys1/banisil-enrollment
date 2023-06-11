@@ -25,29 +25,30 @@
 include 'dbcon.php';
 
 if (isset($_GET['user_id']) && isset($_GET['userinfo_id'])) {
-    $user_id = $_GET['user_id'];
-    $userinfo_id = $_GET['userinfo_id'];
-  
-    $query = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.middlename, tbl_userinfo.lastname, tbl_userinfo.suffix, tbl_userinfo.age, tbl_userinfo.birthday, tbl_enrollment.userinfo_id, tbl_enrollment.admit_type, tbl_enrollment.grade, tbl_enrollment.program, tbl_enrollment.term, tbl_enrollment.lrn, tbl_enrollment.lsa, tbl_user_status.status, tbl_user_level.level,
-    tbl_contactinfo.email, tbl_contactinfo.contact_num, tbl_contactinfo.city, tbl_contactinfo.barangay, tbl_contactinfo.street
-    FROM tbl_userinfo
-    JOIN tbl_enrollment ON tbl_userinfo.user_id = tbl_enrollment.userinfo_id
-    JOIN tbl_user_status ON tbl_userinfo.user_id = tbl_user_status.userinfo_id
-    JOIN tbl_user_level ON tbl_userinfo.user_id = tbl_user_level.userinfo_id
-    JOIN tbl_contactinfo ON tbl_userinfo.user_id = tbl_contactinfo.userinfo_id
-    WHERE tbl_userinfo.user_id = user_id LIMIT 1";
-    $result = mysqli_query($conn, $query);
-  
-    if ($result && mysqli_num_rows($result) > 0) {
+  $user_id = $_GET['user_id'];
+  $userinfo_id = $_GET['userinfo_id'];
+
+  $query = "SELECT tbl_userinfo.user_id, tbl_userinfo.firstname, tbl_userinfo.middlename, tbl_userinfo.lastname, tbl_userinfo.suffix, tbl_userinfo.age, tbl_userinfo.birthday, tbl_enrollment.userinfo_id, tbl_enrollment.admit_type, tbl_enrollment.grade, tbl_enrollment.program, tbl_enrollment.term, tbl_enrollment.lrn, tbl_enrollment.lsa, tbl_user_status.status, tbl_user_level.level,
+  tbl_contactinfo.email, tbl_contactinfo.contact_num, tbl_contactinfo.city, tbl_contactinfo.barangay, tbl_contactinfo.street
+  FROM tbl_userinfo
+  JOIN tbl_enrollment ON tbl_userinfo.user_id = tbl_enrollment.userinfo_id
+  JOIN tbl_user_status ON tbl_userinfo.user_id = tbl_user_status.userinfo_id
+  JOIN tbl_user_level ON tbl_userinfo.user_id = tbl_user_level.userinfo_id
+  JOIN tbl_contactinfo ON tbl_userinfo.user_id = tbl_contactinfo.userinfo_id
+  WHERE tbl_userinfo.user_id = '$user_id' LIMIT 1";
+  $result = mysqli_query($conn, $query);
+
+  if ($result && mysqli_num_rows($result) > 0) {
       $row = mysqli_fetch_assoc($result);
-    } else {
+  } else {
       echo "No records found in the tbl_userinfo table.";
       exit();
-    }
-  } else {
-    echo "No user ID provided.";
-    exit();
   }
+} else {
+  echo "No user ID provided.";
+  exit();
+}
+
 
   if(isset($_POST['btnSubmit'])){
     
