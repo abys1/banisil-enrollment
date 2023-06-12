@@ -170,11 +170,11 @@ $totalPages = ceil($rowCount / $limit);
 $offset = ($page - 1) * $limit;
 
 $sql = "SELECT tbl_enrollment.program, tbl_subjects.strand, tbl_subjects.grade, tbl_subjects.subjects, tbl_subjects.day, tbl_subjects.schedules, tbl_userinfo.user_id, tbl_user_level.level
-FROM tbl_enrollment
-JOIN tbl_subjects ON tbl_enrollment.program = tbl_subjects.strand
-JOIN tbl_userinfo ON tbl_enrollment.userinfo_id = tbl_userinfo.user_id
-JOIN tbl_user_level ON tbl_enrollment.userinfo_id = tbl_user_level.userinfo_id
-WHERE tbl_enrollment.program IN ('ABM', 'STEM', 'HUMMS', 'EIM', 'FBS', 'SMAW', 'ICT') AND tbl_user_level.level = 'STUDENT' AND tbl_enrollment.grade = tbl_subjects.grade AND tbl_enrollment.userinfo_id = '$user_id'
+        FROM tbl_enrollment
+        JOIN tbl_subjects ON tbl_enrollment.program = tbl_subjects.strand
+        JOIN tbl_userinfo ON tbl_enrollment.userinfo_id = tbl_userinfo.user_id
+        JOIN tbl_user_level ON tbl_enrollment.userinfo_id = tbl_user_level.userinfo_id
+        WHERE tbl_enrollment.program = tbl_subjects.strand AND tbl_enrollment.grade = tbl_subjects.grade AND tbl_enrollment.userinfo_id = $user_id
         LIMIT $limit OFFSET $offset";
 
 

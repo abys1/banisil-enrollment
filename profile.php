@@ -137,67 +137,67 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="fullName">First Name</label>
-                                <input type="text" class="form-control" id="fullName" name="firstname"  placeholder="<?php echo $row['firstname']?>">
+                                <input type="text" class="form-control" id="fullName" name="firstname"  value="<?php echo $row['firstname']?>">
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="fullName">Middle Name</label>
-                                <input type="text" class="form-control" id="fullName" name="middlename" placeholder="<?php echo $row['middlename']?>">
+                                <input type="text" class="form-control" id="fullName" name="middlename" value="<?php echo $row['middlename']?>">
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="fullName">Last Name</label>
-                                <input type="text" class="form-control" id="fullName" name="lastname"  placeholder="<?php echo $row['lastname']?>">
+                                <input type="text" class="form-control" id="fullName" name="lastname"  value="<?php echo $row['lastname']?>">
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="fullName">Suffix Name</label>
-                                <input type="text" class="form-control" id="fullName" name="suffixname" placeholder="<?php echo $row['suffix']?>">
+                                <input type="text" class="form-control" id="fullName" name="suffixname" value="<?php echo $row['suffix']?>">
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="website">Gender</label>
-                                <input type="text" class="form-control" id="website" name="gender"  placeholder="<?php echo $row['gender']?>">
+                                <input type="text" class="form-control" id="website" name="gender"  value="<?php echo $row['gender']?>">
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="website">Birthdate</label>
-                                <input type="date" class="form-control" id="website" name="birthday"  placeholder="<?php echo $row['birthday']?>">
+                                <input type="date" class="form-control" id="website" name="birthday"  value="<?php echo $row['birthday']?>">
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="eMail">Email</label>
-                                <input type="email" class="form-control" id="eMail" name="email"  placeholder="<?php echo $row['email']?>">
+                                <input type="email" class="form-control" id="eMail" name="email"  value="<?php echo $row['email']?>">
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="phone">Phone</label>
-                                <input type="number" class="form-control" id="phone" name="contact_number"  placeholder="<?php echo $row['contact_num']?>">
+                                <input type="number" class="form-control" id="phone" name="contact_number"  value="<?php echo $row['contact_num']?>">
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="website">Grade</label>
-                                <input type="text" class="form-control" id="website" name="grade"  placeholder="<?php echo $row['grade']?>">
+                                <input type="text" class="form-control" id="website" name="grade"  value="<?php echo $row['grade']?>">
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="website">Strand</label>
-                                <input type="text" class="form-control" id="website" name="strand"  placeholder="<?php echo $row['program']?>">
+                                <input type="text" class="form-control" id="website" name="strand"  value="<?php echo $row['program']?>">
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="website">LRN</label>
-                                <input type="number" class="form-control" id="website" name="lrn"  placeholder="<?php echo $row['lrn']?>">
+                                <input type="number" class="form-control" id="website" name="lrn"  value="<?php echo $row['lrn']?>">
                             </div>
                         </div>
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -206,7 +206,7 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="fullName">Username</label>
-                                <input type="text" class="form-control" id="fullName" name="username"  placeholder="<?php echo $row['username']?>">
+                                <input type="text" class="form-control" id="fullName" name="username"  value="<?php echo $row['username']?>">
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -229,19 +229,19 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="Street">Street</label>
-                                <input type="text" class="form-control" id="Street" name="street"  placeholder="<?php echo $row['street']?>">
+                                <input type="text" class="form-control" id="Street" name="street"  value="<?php echo $row['street']?>">
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="ciTy">Barangay</label>
-                                <input type="text" class="form-control" id="ciTy" name="barangay"  placeholder="<?php echo $row['barangay']?>">
+                                <input type="text" class="form-control" id="ciTy" name="barangay"  value="<?php echo $row['barangay']?>">
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="sTate">City</label>
-                                <input type="text" class="form-control" id="sTate" name="city"  placeholder="<?php echo $row['city']?>">
+                                <input type="text" class="form-control" id="sTate" name="city"  value="<?php echo $row['city']?>">
                             </div>
                         </div>
                     </div>
